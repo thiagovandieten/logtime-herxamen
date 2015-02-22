@@ -1,0 +1,160 @@
+==================================================
+=            LOGTIME WEBSITE STRUCTUUR           =
+==================================================
+:TIP: gebruik voor je mappen zoals images, js, css, etc. een _ aan het begin van de naam. Zo blijven deze mappen mooi bij elkaar staan op en houd je een nette structuur, anders staat alles door elkaar. 
+
+Hieronder is de mappenstuctuur te zien van de website, dit is echter een voorbeeld met voorbeeld bestanden, deze kunnen dus naar wens verandert worden, maar het is slim om deze structuur met namen aan te houden.
+
+[] = map
+
+[ public_html ]
+    [ _css ]
+    [ _img ]
+    [ _js ]
+    [ include ]
+        [ elements ]
+            navigatie.php
+            footer.php
+            sidebar.php
+        [ pages ]
+            [ handling ]
+                [ 404.php ]
+            home.php
+            pagina.php
+    config.php
+    content.php
+    links.php
+    metatags.php
+    scripts.php
+.htacces
+favicon.ico
+index.php
+
+
+
+
+==================================================
+=                   .HTACCES                     =
+==================================================
+De website wordt geladen => .htacces wordt gelezen.
+.htacces
+
+=> hierin worden als eerste de zogenoemde trailing slashes verwijdert. Dit zijn de slashes aan het einde van een url (het is optioneel om dit aan te zetten)
+=> Daarna worden de url niveaus verdeelt in aparte stukjes. Elk niveau in de url (www.logtime.nl/niveau1/niveau2 etc.) wordt als een aparte url aangemaakt. Zo is niveau1 dus url1, niveau2 url2 enz. In deze .htacces zitten 6 niveaus oftewel je kunt een url maken die bijvoorbeeld zo lang/diep is: www.logtime.nl/niveau1/ niveau2/ niveau3/ niveau4/ niveau5/ niveau6
+
+==================================================
+=                   INDEX.PHP - TOP              =
+==================================================
+Het eerstvolgende bestand na de .htacces is de index.php.
+index.php
+=> hier worden als allereerst de verdeelde stukjes url (zie .htacces) in een variable ingeladen. 
+Zoals hieronder te zien is.
+$url1 = $_GET['url1'];
+$url2 = $_GET['url2'];
+$url3 = $_GET['url3'];
+$url4 = $_GET['url4'];
+
+omdat je deze urls bovenin de index.php aanmaakt kun je ze altijd en overal in de website (maakt niet uit hoe diep je zit, oproepen)
+
+==================================================
+=                   CONFIG.PHP                   =
+==================================================
+=> Nu wordt het config.php bestand ingeladen.
+config.php
+=> hierin wordt de database connectie gemaakt en wordt eventueel een variable genaamd $website (optioneel) aangemaakt met de hostname van de website (www.websitenaam.nl).
+
+
+==================================================
+=                   CONTENT.PHP                  =
+==================================================
+=> als volgt wordt de content.php bestand ingeladen.
+content.php
+=> In dit bestand worden de onderdelen aangeroepen uit de database. Op basis van het onderdeel id kan er met een query de paginas opgeroepen worden, omdat de pagina altijd gekoppeld is aan een onderdeel id.
+
+ 
+Zodra de query een resultaat heeft wordt de variable pagina toegewezen aan deze pagina. Voor de homepage is er een uitzondering gemaakt, deze staat dus los van de rest van de paginas. 
+zie hieronder.
+if($url1 == '' || $url1 == 'home') {
+     $pagina = 'home.php';
+}
+else {
+     $pagina = 'pagina.php';
+}
+Daarna wordt de content die aan de pagina is gekoppeld in de database verdeeld over variablen.
+$pagina_id          = $rec['pagina_id'];
+$titel              = $rec['titel'];
+$body               = $rec['body'];
+$kop                = $rec['kop'];
+$tekst              = $rec['tekst'];
+$element            = $rec['element'];
+
+Wanneer er geen pagina wordt gevonden krijgt $pagina de waarde van de 404.php pagina.
+
+$pagina = 'handling/404.php';
+
+==================================================
+=                INDEX.PHP - <HEAD>              =
+==================================================
+Nu begint de html opmaak, iedereen weet deze en anders is er wel een te vinden op internet.
+
+in de head van de website gooien we niet alle linkjes zomaar los er zodat de index.php een chaos is. We verdelen de metatags, links en scripts in aparte bestanden (metatags.php, links.php, scripts.php) Dit doen we om het overzicht te bewaren. deze php bestanden includen we dus hier in de head.
+
+daaronder komt de <title></title> tag (mag ook boven de includes, is maar net wat je fijn vindt).
+
+de <head> is al snel klaar dus nu gaan we de content van de website inladen.
+
+==================================================
+=               INDEX.PHP - STRUCTUUR            =
+==================================================
+
+De opmaak van deze structuur is gebasseerd op het maken van een responsive website met losse elementen, dus de content zit niet allemaal in een <div> maar wordt allemaal in losse <sections> gegooid zodat je deze elementen allemaal makkelijk responsive kan maken en dat je geen gedoe hebt met overlappingen etc. Dit is overigens aan de developer of hij dit zo houdt.
+
+==================================================
+=               INDEX.PHP - CONTENT              =
+==================================================
+De indeling van het inladen van de content hangt af van de indeling van de website. In dit geval heb ik zoals gewend de navigatie bovenaan ingeladen in een <article> genaamd masthead (optioneel). in deze <article> wordt navigatie.php ingeladen
+
+==================================================
+=                   NAVIGATIE.PHP -              =
+==================================================
+De navigatie wordt dynamisch ingeladen op de volgende manier:
+Alle onderdelen worden opgehaald uit de database, dan worden de gegevens opgeslagen in een variable.
+
+er wordt een check gemaakt die er voor dient om een link in de navigatie actief te maken.
+dan wordt het menu item in de while loop gemaakt zoals hieronder te zien is.
+
+De variablen hebben we hierboven ingeladen die je nu dus in je menuitem kan verwerken.
+<li><a href="'.$url.'" class="'.$class.'">'.$onderdeel.'</a></li>
+
+
+==================================================
+=              INDEX.PHP - PAGINA                =
+==================================================
+Nu gaan we de pagina's inladen met de bijbehorende content. Er wordt weer een <section> aangemaakt met daarin een include met de variable pagina ($pagina) deze variable is gevuld in de content.php zoals hierboven besproken. 
+
+:INFO: home kreeg de $pagina = 'home.php' mee en de overige paginas kregen de $pagina = 'pagina.php' mee :INFO:
+
+
+==================================================
+=                     HOME.PHP                   =
+==================================================
+Deze pagina kun je zelf invullen, of je hem vult met gegevens uit de database of gewoon zelf content 'hardcoded' invoerd, dat maakt niet zoveel uit, deze pagina staat los van alle anderen en wordt dus ook alleen maar op de homepage ingeladen. 
+
+
+==================================================
+=                   PAGINA.PHP                   =
+==================================================
+
+Deze pagina bevat een <div> element (of hoe de developer dit opbouwt om de content netjes uit te lijnen) met daarin de variablen die ook voorafgaand in content.php gemaakt waren. 
+
+:INFO: eerst werden de onderdelen ingeladen die bij die url horen, daarna werd de pagina ingeladen aan de hand van de onderdeel id, er werden meteen variablen aangemaakt met de gegevens uit de database. :INFO:
+
+==================================================
+=                      ELEMENTEN                 =
+==================================================
+Aan de pagina kan een element gekoppeld worden door de kolom 'element' te vullen met een .php bestand. Dit element wordt tegelijk met de andere content in content.php ingeladen. Heb je bijvoorbeeld een pagina die een sidebar bevat en de rest van de paginas niet, dan kun je dit door een keer in de database het element sidebar.php toe te voegen aan de daar voor bestemde pagina en deze wordt dan ingeladen in pagina.php.
+
+==================================================
+=                  !!BELANGRIJK!!                =
+==================================================
+De hier eerder genoemde pagina.php bestanden kunnen naar wens worden toegevoegd. Stel je hebt een contact pagina en je kunt de data niet in de database kwijt, maak dan in includes > pages een contact.php bestand aan en maak dan een elseif statement voor je else check aan in je content.php en check op je url of deze contact is, zoja dan kun je de procedure van de else statement copieren en als waarde bij $pagina = 'contact.php' invoeren.
