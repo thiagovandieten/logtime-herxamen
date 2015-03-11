@@ -1739,3 +1739,17 @@ tr.studenten-overzicht td{
     border: 0px;
     color: #666;
 }
+
+.errorlog{
+    width: 100%;
+    background: #e84c3d;
+    color: #fff;
+    padding: 10px;
+}
+
+.succseslog{
+    width: 100%;
+    background: #2ecc71;
+    color: #fff;
+    padding: 10px;
+}

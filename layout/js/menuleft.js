@@ -170,6 +170,7 @@ function createPie(dataElement, pieElement) {
     }
 }
 createPie(".pieID.legend", ".pieID.pie");
+createPie(".pieIDd.legend", ".pieIDd.pie");
 
 
 
@@ -183,3 +184,6 @@ var picker = $input.pickadate('picker')
 // $('button').on('click', function() {
 //     picker.set('disable', true);
 // });
+
+
+
