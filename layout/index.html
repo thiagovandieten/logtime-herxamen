@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>LogTime | Welcome</title>
+    <link rel="stylesheet" type="text/css" href="css/mediaquery.css" />
+    <link rel="stylesheet" type="text/css" href="css/contenttoggle.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+
+    <link rel="stylesheet" href="css/default-date.css">
+    <link rel="stylesheet" href="css/default.date.css">
+
+
+
+</head>
+<body>
+<div class="top-header">
+
+    <img src="images/menu.png" alt="menu" id="showLeftPush">
+    <div class="title-place">
+        <h1>Logtime</h1>
+    </div>
+    <div class="mob-noti">
+        <img src="images/noti.png" alt="meldingen" id="showRight">
+        <span class="noti-aantal-mob">9</span>
+    </div>
+    <span class="noti-aantal">9</span>
+    <a href="#" id="notificationLink"><img src="images/noti.png" alt="meldingen" class="noti"></a>
+    <div id="notificationContainer">
+        <div id="notificationTitle">Notificatie</div>
+        <div id="notificationsBody" class="notifications">
+            [Hier komen notifications]
+
+
+        </div>
+        <div id="notificationFooter"><a href="#">Bekijk alles</a></div>
+    </div>
+    <a href="/persoonlijke-instellingen"><img src="images/icons/instellingen-mob.png" alt="Instellingen" class="destop-instellingen" title="Instellingen">
+        <p>Voornaam Achternaam</p>
+    </a>
+    <img src="images/avatar-empty.png" alt="avatar" class="avatar">
+
+
+</div>
+<div class="cbp-spmenu-push cbp-spmenu-push-toright" id="wrapper">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+        <div class="noti-mob-instellingen">
+            <div class="mob-aantal-gelezen">
+                <a href="#">  2 ongelezen</a>
+            </div>
+            <div class="mob-markeer-alles">
+                <a href="#">Markeer alles als gelezen <img src="images/icons/oog.png" alt="gelezen"</a>
+            </div>
+        </div>
+        <div class="mob-notification">
+            <img src="images/icons/avatar-empty.png" alt="avatar">
+            <p><b>Leerling naam </b>is aangewezen als
+                nieuwe projectleider van de groep.</p>
+            <span>12 feb 2014 12:45</span>
+        </div>
+
+        <div class="mob-notification">
+            <img src="images/icons/avatar-empty.png" alt="avatar">
+            <p><b>Leerling naam </b>is aangewezen als
+                nieuwe projectleider van de groep.</p>
+            <span>12 feb 2014 12:45</span>
+        </div>
+
+        <div class="mob-notification">
+            <img src="images/icons/avatar-empty.png" alt="avatar">
+            <p><b>Leerling naam </b>is aangewezen als
+                nieuwe projectleider van de groep.</p>
+            <span>12 feb 2014 12:45</span>
+        </div>
+    </nav>
+
+    <script>
+        $(document).ready(
+                function() {
+                    $("#urend").click(function() {
+                        $("#urenreg").toggle();
+                    });
+                });
+
+        $(document).mouseup(function (e)
+        {
+            var container = $("#urenreg");
+
+            if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+            {
+                container.hide();
+            }
+        });
+    </script>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left menu-mob-width cbp-spmenu-open" id="cbp-spmenu-s1">
+        <div class="profiel-mob">
+           <img src="images/avatar-empty.png" alt="avatar" class="avatar">
+            <a href="/persoonlijke-instellingen">
+                <p>Volledige naam</p>
+            </a>
+           <img src="images/icons/instellingen-mob.png" alt="Instellingen" class="mob-instellingen" title="Instellingen">
+        </div>
+        <div style="clear:both"></div> <!-- AUB Clearfix gebruiken! -->
+
+        <a href="#"><span><img src="images/icons/dashboard.png" alt="Dashboard"></span>Dashboard</a>
+        <div id="urend"> <a href="#"><span><img src="images/icons/urenreg.png" alt="uren"></span>Uren registreren</a></div>
+        <a href="#"><span><img src="images/icons/logboek.png" alt="Logboek"></span>Logboek</a>
+        <a href="#"><span><img src="images/icons/instellingen.png" alt="Instellingen"></span>Groeps instellingen</a>
+        <a href="#"><span><img src="images/icons/map.png" alt="Project aanmaken"></span>Project beheer</a>
+        <a href="#"><span><img src="images/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
+        <a href="#"><span><img src="images/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
+
+
+
+        <div id="urenreg">
+            <div class="uren-wrapper">
+                <h2>Uren bijwerken</h2>
+                {{Form::open(array('route' => 'logboek.store', 'method' => 'POST')) }}
+                {{Form::select('project' , $userProjects['Projects'])}}
+                {{Form::select('taak' , $userProjects['Tasks'])}}
+                {{Form::text('date' , date('Y/m/d'), ['class'=>'datum-pop'] )}}
+                {{Form::text('starttijd' , '00:00'  , ['class' => 'uren'])}}
+                <p class="uren-tot">tot</p>
+                {{Form::text('stoptijd' , '00:00'  , ['class' => 'uren'])}}
+                {{Form::textarea('omschrijving' , 'Omschrijving')}}
+                {{Form::submit('Bijwerken', ['class' => 'bijwerken'])}}
+                {{Form::close() }}
+                </div>
+        </div>
+
+
+    </nav>
+    <section class="ac-container container-mob">
+        <div>
+            <input id="ac-0" name="accordion-1" type="checkbox" />
+            <label class="uren-mob-invullen" for="ac-0"><img src="images/icons/uren-mob.png">Uren invullen</label>
+            <article class="ac-small-mob">
+
+                <h3>Uren bijwerken</h3>
+                <form method="post">
+                    <select>
+                        <option>Kies een project</option>
+                        <option>Logtime</option>
+                        <option>Pizza today</option>
+                        <option>Malcom</option>
+                    </select>
+
+                    <select>
+                        <option>Onderdeel</option>
+                        <option>Fase 4</option>
+                    </select>
+                    <select>
+                        <option>Taak</option>
+                        <option>Fase4A</option>
+                    </select>
+                    <input type="date" id="input_01" placeholder="Datum" name="date" class="datepicker">
+                    <input type="text" placeholder="00:00"  id="uren-klein">
+                    <p class="uren-tot">tot</p>
+                    <input type="text" placeholder="00:00"  id="uren-klein">
+                    <textarea placeholder="Omschrijving"></textarea>
+                    <input type="submit" class="bijwerken" value=" ">
+                </form>
+            </article>
+        </div>
+    </section>
+
+
+    @yield('content')
+
+    </section>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="js/notificatie.js"></script>
+    <script src="js/modernizr.custom.js"></script>
+    <script src="js/menuleft.js"></script>
+    <script src="js/legacy.js"></script>
+    <script src="js/Chart.js"></script>
+
+</body>
+</html><!---------------------Credits---------------------
+
+        Class:          4D0W
+        Webdesign:      Fatih celik
+        Mobile design:  Dennis eilander
+        Programmers:    Thiago van Dieten
+                        Philip Heemskerk
+                        Yannick Berendsen
+                        Fatih Celik
+                        Dennis Eilander
+
+        © 2014-2015 by Orange source. All Rights Reserved.
+        -------------------------------------------------->
