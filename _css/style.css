@@ -206,7 +206,7 @@ nav select, #input_01{
 
 #wrapper{
     margin: 49px 0px 0px 0px;
-    width: 84.8%;
+    /*width: 84.8%;*/
 }
 
 .title-place{
@@ -1521,7 +1521,7 @@ input[type='checkbox']:checked + span {
 }
 
 
-.personal-settings input[type='text'],  .personal-settings input[type='password'], .personal-settings textarea{
+.personal-settings input[type='text'], .personal-settings input[type='email'], .personal-settings input[type='phone'],  .personal-settings input[type='password'], .personal-settings textarea{
     width: 100%;
     background: #e2e2e2;
     border-radius: 3px;
