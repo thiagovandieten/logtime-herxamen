@@ -1,0 +1,100 @@
+.ac-container{
+    width: 97%;
+    margin: 20px 0px 6px 20px;
+    text-align: left;
+    position: relative;
+    z-index: 13;
+
+}
+.ac-container label{
+	padding: 5px 20px;
+	position: relative;
+	z-index: 20;
+    overflow: auto;
+	display: block;
+	cursor: pointer;
+	color: #666;
+    min-height: 40px;
+	line-height: 33px;
+	font-size: 21px;
+	background: #eaeaea;
+    border-left: 5px solid #6588ae;
+    margin-bottom: 10px;
+}
+.ac-container label:hover{
+	background: #eaeaea;
+}
+.ac-container input:checked + label,
+.ac-container input:checked + label:hover{
+	background: #eaeaea;
+	color: #3d7489;
+
+}
+.ac-container label:after,
+.ac-container input:checked + label:after{
+	content: '';
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	right: 13px;
+	top: 7px;
+	background: transparent url(../images/arrow_down.png) no-repeat center center;	
+}
+.ac-container input:checked + label:after{
+	background-image: url(../images/arrow_up.png);
+}
+
+.ac-container input[type='checkbox'], .ac-container input[type='radio']{
+    display: none;
+}
+.ac-container input{
+	display: block;
+}
+.ac-container article{
+	background: rgba(255, 255, 255, 0.5);
+	margin-top: -1px;
+	overflow: auto;
+	height: 0px;
+	position: relative;
+	z-index: 10;
+	-webkit-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	-moz-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	-o-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	-ms-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+}
+
+.ac-container article::after{
+    height: 200px;
+}
+.ac-container article p{
+	color: #666;
+	line-height: 23px;
+	font-size: 14px;
+	padding: 20px;
+	text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+}
+.ac-container input:checked ~ article{
+	-webkit-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	-moz-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	-o-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	-ms-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+    width: 98%;
+}
+.ac-container input:checked ~ article.ac-small{
+    height: auto;
+    margin-bottom: 10px;
+    width: 100%;
+    overflow: hidden;
+}
+.ac-container input:checked ~ article.ac-medium{
+    min-height: 40px;
+    margin-bottom: 10px;
+    width: 98%;
+}
+.ac-container input:checked ~ article.ac-large{
+    min-height: 40px;
+    margin-bottom: 10px;
+    width: 98%;
+}

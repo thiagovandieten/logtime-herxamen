@@ -10,5 +10,5 @@
 		die ('Er kan geen verbinding tot stand worden gebracht. Foutmelding: ' . mysqli_connect_error());	
 	}
 
-	$website = 'http://'.$_SERVER['HTTP_HOST'];
+	$website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
 ?>

@@ -1,29 +1,29 @@
 <?php
 if($url1 == '') {
-	$url1 = 'home';
+	$url1 = 'dashboard';
 	$onderdeel_id = '1';
 }
 /**
  * @param $url1
  */
-function selectPagesFile($url1)
-{
-    switch($url1) {
-        case($url1 == '' || $url1 == 'home'):
-            return 'home.php';
-            break;
-        case($url1 == 'projecten'):
-            return 'projecten.php';
-            break;
-        default:
-            return 'pagina.php';
-            break;
-    }
-}
+// function selectPagesFile($url1)
+// {
+//     switch($url1) {
+//         case($url1 == '' || $url1 == 'dashboard'):
+//             return 'dashboard.php';
+//             break;
+//         case($url1 == 'projecten'):
+//             return 'projecten.php';
+//             break;
+//         default:
+//             return 'pagina.php';
+//             break;
+//     }
+// }
 
-if($url1 == 'home') {
-	$pagina = 'home.php';
-	$body = 'home';
+if($url1 == 'dashboard') {
+	$pagina = 'dashboard.php';
+	$body = 'dashboard';
 	$onderdeel_id = '1';
 }
 else{
@@ -46,13 +46,13 @@ else{
 
         if($count >= 1) {
         //Hier kiest hij dus welke pages file hij gaat gebruiken!
-            $pagina = selectPagesFile($url1);
+            $pagina             = $rec['body'] . '.php';
             $pagina_id          = $rec['pagina_id'];
-                    $titel              = $rec['titel'];
-                    $body               = $rec['body'];
-                    $kop                = $rec['kop'];
-                    $tekst              = $rec['tekst'];
-                    $element            = $rec['element'];
+            $titel              = $rec['titel'];
+            $body               = $rec['body'];
+            $kop                = $rec['kop'];
+            $tekst              = $rec['tekst'];
+            $element            = $rec['element'];
         }
         else {
            $pagina = 'handling/404.php';
@@ -60,6 +60,6 @@ else{
     }
     else {
            $pagina = 'handling/404.php';
-        }
+    }
 }
 ?>

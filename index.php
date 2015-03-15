@@ -26,7 +26,7 @@ include('include/content.php');
          <!--Scripts-->  
          <?php include('include/scripts.php'); ?>
 
-         <title>Logtime v2 | <?php echo $titel; ?></title>
+         <title>Logtime v2 | <?php if($url1 == '' || $url1 == 'dashboard'){echo 'Dashboard';} else{echo $titel;} ?></title>
     </head>
     <body>
     
@@ -34,41 +34,53 @@ include('include/content.php');
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-            <!-- Header - Navigatie -->
-            <section class="container">
-                <article class="masthead">
-                       <?php include('include/elements/navigatie.php'); ?>
-                </article>
-            </section>
+        <!-- Top Header -->
+        <?php include('include/elements/top-header.php'); ?>
+
+
+
+
+
+        <div class="cbp-spmenu-push cbp-spmenu-push-toright" id="wrapper">           
+            <!-- Navigatie -->
+            <?php include('include/elements/navigatie.php'); ?>
 
             <!-- Content inladen -->
-            <section class="container">
-                <?php include ('include/pages/'.$pagina); ?>
-            </section> 
+            <?php include ('include/pages/'.$pagina); ?>
 
             <!-- Footer -->
             <section class="footer">
                 <?php //include('include/elements/footer.php'); ?>
             </section>
-   
+        </div>
         
-        
-        
-        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="_js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 
-        <script src="_js/plugins.js"></script>
-        <script src="_js/main.js"></script>
+        <script src="_js/notificatie.js"></script>
+        <script src="_js/modernizr.custom.js"></script>
+        <script src="_js/menuleft.js"></script>
+        <script src="_js/legacy.js"></script>
+        <script src="_js/Chart.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
+            $(document).ready(
+                    function() {
+                        $("#urend").click(function() {
+                            $("#urenreg").toggle();
+                        });
+                    });
+
+            $(document).mouseup(function (e)
+            {
+                var container = $("#urenreg");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                        && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.hide();
+                }
+            });
         </script>
+        
     </body>
 </html>
