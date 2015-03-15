@@ -3,6 +3,24 @@ if($url1 == '') {
 	$url1 = 'home';
 	$onderdeel_id = '1';
 }
+/**
+ * @param $url1
+ */
+function selectPagesFile($url1)
+{
+    switch($url1) {
+        case($url1 == '' || $url1 == 'home'):
+            return 'home.php';
+            break;
+        case($url1 == 'projecten'):
+            return 'projecten.php';
+            break;
+        default:
+            return 'pagina.php';
+            break;
+    }
+}
+
 if($url1 == 'home') {
 	$pagina = 'home.php';
 	$body = 'home';
@@ -27,14 +45,9 @@ else{
         $rec    = mysqli_fetch_array($result);
 
         if($count >= 1) {
-
-                    if($url1 == '' || $url1 == 'home') {
-                        $pagina = 'home.php';
-                    }
-                    else {
-                        $pagina = 'pagina.php';
-                    }
-                    $pagina_id          = $rec['pagina_id'];
+        //Hier kiest hij dus welke pages file hij gaat gebruiken!
+            $pagina = selectPagesFile($url1);
+            $pagina_id          = $rec['pagina_id'];
                     $titel              = $rec['titel'];
                     $body               = $rec['body'];
                     $kop                = $rec['kop'];
