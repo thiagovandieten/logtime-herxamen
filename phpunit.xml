@@ -1,0 +1,18 @@
+<phpunit printerFile="vendor/whatthejeff/nyancat-phpunit-resultprinter/src/NyanCat/PHPUnit/ResultPrinter.php"
+         printerClass="NyanCat\PHPUnit\ResultPrinter">
+    <testsuites>
+        <testsuite name="My Test suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <blacklist>
+            <directory>vendor</directory>
+        </blacklist>
+
+        <whitelist>
+            <directory>classes</directory>
+        </whitelist>
+    </filter>
+</phpunit>
