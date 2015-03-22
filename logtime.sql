@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2015 at 12:57 AM
+-- Generation Time: Mar 22, 2015 at 05:53 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -38,6 +38,13 @@ CREATE TABLE IF NOT EXISTS `adresses` (
   PRIMARY KEY (`adress_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
+--
+-- Dumping data for table `adresses`
+--
+
+INSERT INTO `adresses` (`adress_id`, `street`, `housenumber`, `city`, `zipcode`, `created_at`, `updated_at`, `active`) VALUES
+(1, 'straat', '3', 'harderwijk', '8077SG', '2015-03-18 22:59:14', '2015-03-18 22:59:14', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -45,12 +52,22 @@ CREATE TABLE IF NOT EXISTS `adresses` (
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
-  `categorie_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `categorie_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `category_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`categorie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `category`, `created_at`, `updated_at`) VALUES
+(1, 'Fase 4', '2015-03-18 22:56:33', '2015-03-18 22:56:33'),
+(2, 'Fase 5', '2015-03-18 22:56:40', '2015-03-18 22:56:40'),
+(3, 'Fase 6', '2015-03-18 22:56:33', '2015-03-19 19:31:12'),
+(4, 'Fase 7', '2015-03-18 22:56:40', '2015-03-19 19:31:16');
 
 -- --------------------------------------------------------
 
@@ -67,11 +84,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `company` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`customer_id`),
-  KEY `customers_project_group_id_foreign` (`projectgroup_id`),
-  KEY `customers_project_id_foreign` (`project_id`),
-  KEY `customers_adress_id_foreign` (`adress_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -87,11 +101,8 @@ CREATE TABLE IF NOT EXISTS `estimated_time` (
   `user_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`estimated_time_id`),
-  KEY `estimated_time_project_group_id_foreign` (`projectgroup_id`),
-  KEY `estimated_time_task_id_foreign` (`task_id`),
-  KEY `estimated_time_user_id_foreign` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`estimated_time_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -106,9 +117,31 @@ CREATE TABLE IF NOT EXISTS `forgotten_passwordtokens` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`forgotten_passwordtoken_id`),
-  KEY `forgotten_password_tokens_user_id_foreign` (`user_id`)
+  PRIMARY KEY (`forgotten_passwordtoken_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grade`
+--
+
+CREATE TABLE IF NOT EXISTS `grade` (
+  `grade_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `grade` int(10) NOT NULL,
+  `grade_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `location_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`grade_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `grade`
+--
+
+INSERT INTO `grade` (`grade_id`, `grade`, `grade_name`, `location_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 'lions', 1, '2015-03-19 19:32:42', '2015-03-19 19:32:42');
 
 -- --------------------------------------------------------
 
@@ -123,8 +156,7 @@ CREATE TABLE IF NOT EXISTS `holidays` (
   `periode_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`holiday_id`),
-  KEY `holidays_periode_id_foreign` (`periode_id`)
+  PRIMARY KEY (`holiday_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -140,7 +172,14 @@ CREATE TABLE IF NOT EXISTS `leveltypes` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`leveltype_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `leveltypes`
+--
+
+INSERT INTO `leveltypes` (`leveltype_id`, `leveltype_name`, `created_at`, `updated_at`, `active`) VALUES
+(1, 'Student', '2015-03-18 22:55:57', '2015-03-18 22:55:57', 1);
 
 -- --------------------------------------------------------
 
@@ -149,12 +188,19 @@ CREATE TABLE IF NOT EXISTS `leveltypes` (
 --
 
 CREATE TABLE IF NOT EXISTS `locations` (
-  `location_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`location_id`, `location`, `created_at`, `updated_at`) VALUES
+(1, 'Harderwijk', '2015-03-18 22:55:34', '2015-03-18 22:55:34');
 
 -- --------------------------------------------------------
 
@@ -169,20 +215,8 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   `login_failed` tinyint(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`login_attempt_id`),
-  KEY `login_attempts_user_id_foreign` (`user_id`)
+  PRIMARY KEY (`login_attempt_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `migrations`
---
-
-CREATE TABLE IF NOT EXISTS `migrations` (
-  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -236,7 +270,7 @@ INSERT INTO `onderdelen` (`onderdeel_id`, `onderdeel`, `onderdeel_url`, `created
 --
 
 CREATE TABLE IF NOT EXISTS `paginas` (
-  `pagina_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pagina_id` int(11) NOT NULL AUTO_INCREMENT,
   `onderdeel_id` int(11) NOT NULL,
   `naam` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `titel` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -258,7 +292,7 @@ INSERT INTO `paginas` (`pagina_id`, `onderdeel_id`, `naam`, `titel`, `body`, `ko
 (1, 1, 'Dashboard', 'Dashboard', '', 'Dashboard', 'Je bevind je nu op het dashboard. Hier vind je een overzicht van de gemaakte en lopende projecten van jouw. Je kunt de projecten inzien en bekijken hoe ver iedereen is met zijn of haar taken.', '', '2015-03-15 20:05:39', '2015-03-15 23:35:35', 1),
 (2, 2, 'Projectbeheer', 'Projectbeheer', 'project-beheer', 'Projectbeheer', 'Hier vind je het projectenoverzicht van jouw groep. Klik een project aan en bekijk de statistieken van dit project.', '', '2015-03-15 20:05:39', '2015-03-15 23:05:42', 1),
 (3, 3, 'Persoonlijke instellingen', 'Persoonlijke instellingen', 'persoonlijke-instellingen', 'Persoonlijke instellingen', 'Hier vind je je persoonlijke instellingen. Wijzig je instellingen en sla ze daarna op.', '', '2015-03-15 20:05:39', '2015-03-15 23:45:39', 1),
-(4, 4, 'Logboek', 'Logboek', '', 'Logboek', 'Hier vind je een overzicht van je gelogte uren. Voeg nieuwe uren toe of wijzig de bestaande.', '', '2015-03-15 22:33:51', '2015-03-15 22:33:51', 1),
+(4, 4, 'Logboek', 'Logboek', 'logboek', 'Logboek', 'Hier vind je een overzicht van je gelogte uren. Voeg nieuwe uren toe of wijzig de bestaande.', '', '2015-03-15 22:33:51', '2015-03-18 20:07:34', 1),
 (5, 5, 'Groepsinstellingen', 'Groepsinstellingen', 'groepsinstellingen', 'Groepsinstellingen', 'Hier vind je de groepsinstellingen van jouw groep. Pas de instellingen aan en sla deze daarna op.', '', '2015-03-15 22:48:42', '2015-03-15 22:49:06', 1);
 
 -- --------------------------------------------------------
@@ -268,16 +302,22 @@ INSERT INTO `paginas` (`pagina_id`, `onderdeel_id`, `naam`, `titel`, `body`, `ko
 --
 
 CREATE TABLE IF NOT EXISTS `periodes` (
-  `periode_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `periode_id` int(11) NOT NULL AUTO_INCREMENT,
   `startdate` date NOT NULL,
   `stopdate` date NOT NULL,
-  `periode_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `periode` int(10) NOT NULL,
   `location_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`periode_id`),
-  KEY `periodes_location_id_foreign` (`location_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`periode_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `periodes`
+--
+
+INSERT INTO `periodes` (`periode_id`, `startdate`, `stopdate`, `periode`, `location_id`, `created_at`, `updated_at`) VALUES
+(1, '2014-06-16', '2015-07-03', 1, 1, '2015-03-18 22:59:59', '2015-03-19 18:27:16');
 
 -- --------------------------------------------------------
 
@@ -291,10 +331,8 @@ CREATE TABLE IF NOT EXISTS `projectcategories` (
   `project_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`projectcategories_id`),
-  KEY `categories_projects_categorie_id_foreign` (`categorie_id`),
-  KEY `categories_projects_project_id_foreign` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`projectcategories_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -305,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `projectcategories` (
 CREATE TABLE IF NOT EXISTS `projectgroup` (
   `projectgroup_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `leveltype_id` int(10) DEFAULT NULL,
-  `year_id` int(10) unsigned NOT NULL,
+  `grade_id` int(10) unsigned NOT NULL,
   `adress_id` int(10) unsigned DEFAULT NULL,
   `location_id` int(10) unsigned NOT NULL,
   `coach_id` int(10) unsigned DEFAULT NULL,
@@ -317,13 +355,15 @@ CREATE TABLE IF NOT EXISTS `projectgroup` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`projectgroup_id`),
-  KEY `project_groups_year_id_foreign` (`year_id`),
-  KEY `project_groups_adress_id_foreign` (`adress_id`),
-  KEY `project_groups_location_id_foreign` (`location_id`),
-  KEY `project_groups_coach_id_foreign` (`coach_id`),
-  KEY `project_groups_leader_id_foreign` (`leader_id`)
+  PRIMARY KEY (`projectgroup_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `projectgroup`
+--
+
+INSERT INTO `projectgroup` (`projectgroup_id`, `leveltype_id`, `grade_id`, `adress_id`, `location_id`, `coach_id`, `leader_id`, `task_id`, `code`, `projectgroup_name`, `image_path`, `created_at`, `updated_at`, `active`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 1, '', 'orangesource', 'placeholder.png', '2015-03-19 19:37:53', '2015-03-19 19:37:53', 1);
 
 -- --------------------------------------------------------
 
@@ -338,9 +378,7 @@ CREATE TABLE IF NOT EXISTS `projectgroup_categories` (
   `is_done` tinyint(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`projectgroup_categorie_id`),
-  KEY `group_project_categories_group_project_periode_id_foreign` (`projectgroup_periode_id`),
-  KEY `group_project_categories_categorie_id_foreign` (`categorie_id`)
+  PRIMARY KEY (`projectgroup_categorie_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -357,11 +395,8 @@ CREATE TABLE IF NOT EXISTS `projectgroup_periode` (
   `periode_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`projectgroup_periode_id`),
-  KEY `group_project_periode_project_group_id_foreign` (`projectgroup_id`),
-  KEY `group_project_periode_project_id_foreign` (`project_id`),
-  KEY `group_project_periode_periode_id_foreign` (`periode_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`projectgroup_periode_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -370,17 +405,25 @@ CREATE TABLE IF NOT EXISTS `projectgroup_periode` (
 --
 
 CREATE TABLE IF NOT EXISTS `projects` (
-  `project_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `project_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `project_id` int(11) NOT NULL AUTO_INCREMENT,
+  `project` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `task_id` int(11) DEFAULT NULL,
   `location_id` int(10) unsigned NOT NULL,
   `leveltype_id` int(10) unsigned DEFAULT NULL,
+  `done` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`project_id`),
-  KEY `projects_location_id_foreign` (`location_id`)
+  PRIMARY KEY (`project_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`project_id`, `project`, `task_id`, `location_id`, `leveltype_id`, `done`, `created_at`, `updated_at`, `active`) VALUES
+(1, 'Logtime', 1, 1, 1, 0, '2015-03-18 22:57:37', '2015-03-18 22:58:16', 1),
+(2, 'Pizzatoday', 1, 1, 1, 0, '2015-03-18 22:57:37', '2015-03-18 22:58:16', 1);
 
 -- --------------------------------------------------------
 
@@ -394,9 +437,8 @@ CREATE TABLE IF NOT EXISTS `studentwage` (
   `project_group_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`studentwage_id`),
-  KEY `student_wage_project_group_id_foreign` (`project_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`studentwage_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -419,14 +461,24 @@ CREATE TABLE IF NOT EXISTS `subgroups` (
 --
 
 CREATE TABLE IF NOT EXISTS `tasks` (
-  `task_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `taskname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `task_id` int(11) NOT NULL AUTO_INCREMENT,
+  `task` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `categorie_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`task_id`),
-  KEY `tasks_categorie_id_foreign` (`categorie_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`task_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`task_id`, `task`, `categorie_id`, `created_at`, `updated_at`) VALUES
+(1, 'Fase 4a', 1, '2015-03-18 22:57:15', '2015-03-18 22:57:15'),
+(2, 'Fase 5a', 2, '2015-03-18 22:57:15', '2015-03-18 22:57:15'),
+(3, 'Fase 5B', 2, '2015-03-18 22:57:15', '2015-03-18 22:57:15'),
+(4, 'Fase 6A', 3, '2015-03-18 22:57:15', '2015-03-18 22:57:15'),
+(5, 'Fase 7C', 4, '2015-03-18 22:57:15', '2015-03-18 22:57:15');
 
 -- --------------------------------------------------------
 
@@ -436,19 +488,41 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 
 CREATE TABLE IF NOT EXISTS `userlogs` (
   `userlog_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `start_time` time NOT NULL,
-  `stop_time` time NOT NULL,
-  `totaltime_in_hours` time NOT NULL,
+  `starttime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `stoptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `totaltime` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `task_id` int(10) unsigned NOT NULL,
+  `project` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `category` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `task` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`userlog_id`),
-  KEY `user_logs_user_id_foreign` (`user_id`),
-  KEY `user_logs_task_id_foreign` (`task_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+  PRIMARY KEY (`userlog_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
+
+--
+-- Dumping data for table `userlogs`
+--
+
+INSERT INTO `userlogs` (`userlog_id`, `starttime`, `stoptime`, `totaltime`, `description`, `date`, `user_id`, `project`, `category`, `task`, `created_at`, `updated_at`) VALUES
+(11, '', '02:42', '2.00', '', '2015-03-09', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-20 01:42:45', '2015-03-20 01:42:45'),
+(12, '', '02:42', '2.00', '', '2015-03-09', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-20 01:42:46', '2015-03-20 01:42:46'),
+(15, '', '02:42', '2.00', '', '2015-03-05', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-20 01:42:53', '2015-03-20 01:42:53'),
+(16, '', '02:42', '2.00', '', '2015-03-20', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-20 01:42:56', '2015-03-20 01:42:56'),
+(20, '', '02:43', '2.00', '', '2015-03-20', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-20 01:43:02', '2015-03-20 01:43:02'),
+(26, '12:34', '23:45', '11.00', 'asdfasdf', '', 1, 'Logtime', 'Fase 4', 'Fase 5B', '2015-03-22 15:32:28', '2015-03-22 15:32:28'),
+(28, '', '16:34', '16.00', '', '', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 15:34:09', '2015-03-22 15:34:09'),
+(29, '', '16:34', '16.00', 'jfghjfghjfghjfgh', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 15:34:17', '2015-03-22 15:34:17'),
+(30, '12:34', '17::1', '5.00', 'Test, aangemaakt in uren modal', '2015-03-17', 1, 'Pizzatoday', 'Fase 5', 'Fase 5a', '2015-03-22 16:20:12', '2015-03-22 16:20:12'),
+(31, '12:34', '17::1', '5.00', 'Test, aangemaakt in uren modal', '2015-03-17', 1, 'Pizzatoday', 'Fase 5', 'Fase 5a', '2015-03-22 16:20:12', '2015-03-22 16:20:12'),
+(32, '12:34', '12:45', '0.00', 'jghkghjk', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 16:20:56', '2015-03-22 16:20:56'),
+(34, '12:34', '13:15', '1.00', 'testest', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 16:22:02', '2015-03-22 16:22:02'),
+(35, 'start', '17:22', '17.00', 'description', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 16:23:24', '2015-03-22 16:23:24'),
+(36, 'st:ar', '17:23', '17.00', 'description', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 16:23:44', '2015-03-22 16:23:44'),
+(37, '14:58', '15:48', '1.00', 'testingg', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 4a', '2015-03-22 16:24:46', '2015-03-22 16:24:46'),
+(38, '', '17:51', '17.00', 'testttttt', '2015-03-22', 1, 'Logtime', 'Fase 4', 'Fase 5a', '2015-03-22 16:51:39', '2015-03-22 16:51:39');
 
 -- --------------------------------------------------------
 
@@ -462,9 +536,7 @@ CREATE TABLE IF NOT EXISTS `usernotifications` (
   `notification_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`usernotification_id`),
-  KEY `user_notifications_user_id_foreign` (`user_id`),
-  KEY `user_notifications_notification_id_foreign` (`notification_id`)
+  PRIMARY KEY (`usernotification_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -487,16 +559,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `usertype_id` int(10) unsigned NOT NULL,
   `location_id` int(10) unsigned NOT NULL,
   `projectgroup_id` int(10) unsigned DEFAULT NULL,
+  `leader` int(10) unsigned NOT NULL DEFAULT '0',
   `adress_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`user_id`),
-  KEY `users_user_type_id_foreign` (`usertype_id`),
-  KEY `users_location_id_foreign` (`location_id`),
-  KEY `users_project_group_id_foreign` (`projectgroup_id`),
-  KEY `users_adress_id_foreign` (`adress_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `usercode`, `password`, `firstname`, `lastname`, `email`, `user_image_path`, `phone_number`, `lasttime_online`, `remember_token`, `usertype_id`, `location_id`, `projectgroup_id`, `leader`, `adress_id`, `created_at`, `updated_at`, `active`) VALUES
+(1, '262503', '', 'Dennis', 'Eilander', 'eilander.dennis@gmail.com', 'placeholder.png', '0612345678', '2015-03-19 19:40:00', NULL, 1, 1, 1, 0, 1, '2015-03-19 19:40:00', '2015-03-19 19:40:00', 1);
 
 -- --------------------------------------------------------
 
@@ -510,7 +586,15 @@ CREATE TABLE IF NOT EXISTS `usertypes` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`usertype_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `usertypes`
+--
+
+INSERT INTO `usertypes` (`usertype_id`, `usertype`, `created_at`, `updated_at`) VALUES
+(1, 'student', '2015-03-19 19:41:19', '2015-03-19 19:41:19'),
+(2, 'docent', '2015-03-19 19:41:19', '2015-03-19 19:41:19');
 
 -- --------------------------------------------------------
 
@@ -525,159 +609,8 @@ CREATE TABLE IF NOT EXISTS `user_subgroups` (
   `subgroup_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_subgroup_id`),
-  KEY `user_sub_groups_user_id_foreign` (`user_id`),
-  KEY `user_sub_groups_project_group_id_foreign` (`projectgroup_id`),
-  KEY `user_sub_groups_sub_group_id_foreign` (`subgroup_id`)
+  PRIMARY KEY (`user_subgroup_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `years`
---
-
-CREATE TABLE IF NOT EXISTS `years` (
-  `year_id` int(10) unsigned NOT NULL,
-  `year` varchar(9) COLLATE utf8_unicode_ci NOT NULL,
-  `nickname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `location_id` int(10) unsigned NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`year_id`),
-  KEY `years_location_id_foreign` (`location_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `customers`
---
-ALTER TABLE `customers`
-  ADD CONSTRAINT `customers_adress_id_foreign` FOREIGN KEY (`adress_id`) REFERENCES `adresses` (`adress_id`),
-  ADD CONSTRAINT `customers_project_group_id_foreign` FOREIGN KEY (`projectgroup_id`) REFERENCES `projectgroup` (`projectgroup_id`),
-  ADD CONSTRAINT `customers_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`);
-
---
--- Constraints for table `estimated_time`
---
-ALTER TABLE `estimated_time`
-  ADD CONSTRAINT `estimated_time_project_group_id_foreign` FOREIGN KEY (`projectgroup_id`) REFERENCES `projectgroup` (`projectgroup_id`),
-  ADD CONSTRAINT `estimated_time_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`),
-  ADD CONSTRAINT `estimated_time_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `forgotten_passwordtokens`
---
-ALTER TABLE `forgotten_passwordtokens`
-  ADD CONSTRAINT `forgotten_password_tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `holidays`
---
-ALTER TABLE `holidays`
-  ADD CONSTRAINT `holidays_periode_id_foreign` FOREIGN KEY (`periode_id`) REFERENCES `periodes` (`periode_id`);
-
---
--- Constraints for table `login_attempts`
---
-ALTER TABLE `login_attempts`
-  ADD CONSTRAINT `login_attempts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `periodes`
---
-ALTER TABLE `periodes`
-  ADD CONSTRAINT `periodes_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`);
-
---
--- Constraints for table `projectcategories`
---
-ALTER TABLE `projectcategories`
-  ADD CONSTRAINT `categories_projects_categorie_id_foreign` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`categorie_id`),
-  ADD CONSTRAINT `categories_projects_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`);
-
---
--- Constraints for table `projectgroup`
---
-ALTER TABLE `projectgroup`
-  ADD CONSTRAINT `project_groups_adress_id_foreign` FOREIGN KEY (`adress_id`) REFERENCES `adresses` (`adress_id`),
-  ADD CONSTRAINT `project_groups_coach_id_foreign` FOREIGN KEY (`coach_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `project_groups_leader_id_foreign` FOREIGN KEY (`leader_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `project_groups_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`),
-  ADD CONSTRAINT `project_groups_year_id_foreign` FOREIGN KEY (`year_id`) REFERENCES `years` (`year_id`);
-
---
--- Constraints for table `projectgroup_categories`
---
-ALTER TABLE `projectgroup_categories`
-  ADD CONSTRAINT `group_project_categories_categorie_id_foreign` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`categorie_id`),
-  ADD CONSTRAINT `group_project_categories_group_project_periode_id_foreign` FOREIGN KEY (`projectgroup_periode_id`) REFERENCES `projectgroup_periode` (`projectgroup_periode_id`);
-
---
--- Constraints for table `projectgroup_periode`
---
-ALTER TABLE `projectgroup_periode`
-  ADD CONSTRAINT `group_project_periode_periode_id_foreign` FOREIGN KEY (`periode_id`) REFERENCES `periodes` (`periode_id`),
-  ADD CONSTRAINT `group_project_periode_project_group_id_foreign` FOREIGN KEY (`projectgroup_id`) REFERENCES `projectgroup` (`projectgroup_id`),
-  ADD CONSTRAINT `group_project_periode_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`);
-
---
--- Constraints for table `projects`
---
-ALTER TABLE `projects`
-  ADD CONSTRAINT `projects_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`);
-
---
--- Constraints for table `studentwage`
---
-ALTER TABLE `studentwage`
-  ADD CONSTRAINT `student_wage_project_group_id_foreign` FOREIGN KEY (`project_group_id`) REFERENCES `projectgroup` (`projectgroup_id`);
-
---
--- Constraints for table `tasks`
---
-ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_categorie_id_foreign` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`categorie_id`);
-
---
--- Constraints for table `userlogs`
---
-ALTER TABLE `userlogs`
-  ADD CONSTRAINT `user_logs_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`),
-  ADD CONSTRAINT `user_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `usernotifications`
---
-ALTER TABLE `usernotifications`
-  ADD CONSTRAINT `user_notifications_notification_id_foreign` FOREIGN KEY (`notification_id`) REFERENCES `notifications` (`notification_id`),
-  ADD CONSTRAINT `user_notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_adress_id_foreign` FOREIGN KEY (`adress_id`) REFERENCES `adresses` (`adress_id`),
-  ADD CONSTRAINT `users_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`),
-  ADD CONSTRAINT `users_project_group_id_foreign` FOREIGN KEY (`projectgroup_id`) REFERENCES `projectgroup` (`projectgroup_id`),
-  ADD CONSTRAINT `users_user_type_id_foreign` FOREIGN KEY (`usertype_id`) REFERENCES `usertypes` (`usertype_id`);
-
---
--- Constraints for table `user_subgroups`
---
-ALTER TABLE `user_subgroups`
-  ADD CONSTRAINT `user_sub_groups_project_group_id_foreign` FOREIGN KEY (`projectgroup_id`) REFERENCES `projectgroup` (`projectgroup_id`),
-  ADD CONSTRAINT `user_sub_groups_sub_group_id_foreign` FOREIGN KEY (`subgroup_id`) REFERENCES `categories` (`categorie_id`),
-  ADD CONSTRAINT `user_sub_groups_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
--- Constraints for table `years`
---
-ALTER TABLE `years`
-  ADD CONSTRAINT `years_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`location_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
