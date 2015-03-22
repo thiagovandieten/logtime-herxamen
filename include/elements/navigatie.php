@@ -89,28 +89,12 @@
     <div id="urenreg">
         <div class="uren-wrapper">
             <h2>Uren bijwerken</h2>
-            <select name="project">
-                <!--Project keuze -->
-                <option>Project kiezen</option>
-                <option>Logtime</option>
-                <option>Malcome</option>
-            </select>
-            <!--Taak keuze -->
-            <select name="taak">
-                <option>Taak kiezen</option>
-                <option>Fase 0a de briefing</option>
-                <option>Fase 0b nulmeting</option>
-            </select>
-            <!--Hier de datum van vandaag tonen -->
-            <input type="date" name="datum" class="datum-pop">
-            <!--begintijd alleen cijfers mogelijk-->
-            <input type="text" name="starttijd" placeholder="00:00" class="uren">
-            <p class="uren-tot">tot</p>
-            <!--eindtijd alleen cijfers mogelijk-->
-            <input type="text" name="eindtijd" placeholder="00:00" class="uren">
-            <textarea name="omschrijving" placeholder="Omschrijving"></textarea>
-            <input type="submit" name="bijwerken" class="bijwerken">
+            <?php include('include/elements/uren-invullen-actie.php') ?>
+            <?php include('include/elements/uren-invullen-form.php') ?>
         </div>
     </div>
+
+    
+
 </nav>
 

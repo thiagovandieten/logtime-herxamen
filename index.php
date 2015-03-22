@@ -9,8 +9,9 @@ $url4 = $_GET['url4'];
 
 session_start();
 
-include('include/config.php');
-include('include/content.php');
+require ('include/config.php');
+require ('include/functions.php');
+require ('include/content.php');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
