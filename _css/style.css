@@ -1751,11 +1751,27 @@ tr.studenten-overzicht td{
     padding: 4px;
 }
 
-.uren-overzicht input[type="text"] {
+.uren-overzicht input[type="text"]{
   background: none;
   border: none;
   width: 52%;
   border-bottom: 1px solid rgba(51, 51, 51, 0.13);
+}
+
+.uren-overzicht input[name="date"] {
+  background: none;
+  border: none;
+  width: 90%;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.13);
+}
+
+
+.uren-overzicht select{
+      outline: none;
+      background: none;
+      border: none;
+      width: 100%;
+      border-bottom: 1px solid rgba(51, 51, 51, 0.13);
 }
 
 .uren-overzicht textarea {
@@ -1810,6 +1826,13 @@ tr.studenten-overzicht td{
     display: -webkit-box;
     margin-top: -13px;
     margin-bottom: 13px;
+}
+
+.uren-overzicht td span.dagnaam{
+    font-size: 15px;
+    display: -webkit-box;
+    margin-top: -13px;
+    margin-bottom: 0px;
 }
 
 .uren-wrapper{

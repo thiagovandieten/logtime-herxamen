@@ -46,38 +46,38 @@
     <input type="text" placeholder="00:00" name="starttime" maxlength="5" id="uren-klein" onkeyup = "strip(this)" ; onblur = "autoTabTimes(this)">
     <!-- <p class="uren-tot">tot</p> -->
     <!--eindtijd alleen cijfers mogelijk-->
-    <input type="text" placeholder="00:00" name="stoptime" value="<?php if($_POST['starttime'] == ''){ echo date('H:i'); }?>" maxlength="5" id="uren-klein" onkeyup = "strip(this)" ; onblur = "autoTabTimes(this)">
+    <input type="text" placeholder="00:00" name="stoptime" maxlength="5" id="uren-klein" onkeyup = "strip(this)" ; onblur = "autoTabTimes(this)">
 
     <textarea placeholder="Omschrijving" name="description"></textarea>
     <input type="submit" class="bijwerken" name="bijwerken" value="Opslaan" >
 </form>
 
 <script type = "text/javascript">
-    function autoTabTimes(input) {
-        var len = input.value.length;
-        if (len<3) {
-            //alert ("Ongeldige tijdnotatie - vul de juiste notatie in");
-            input.value = "";
-            return false;
-        }
-        if (len==3){
-            input.value ="0" + input.value;
-        }
-        var final = input.value.split("");
-        var h = Number(final[0] + final[1]);
-        var m = Number(final[2] + final[3]);
-        if (h <0 || h >23 || m <0 || m >59) {
-            //alert ("Invalid time - re-enter it");
-            input.value = "";
-            return false;
-        }
-        var f = final[0]+final[1]+":"+final[2]+final[3];
-        input.value = f;
-        }
+    // function autoTabTimes(input) {
+    //     var len = input.value.length;
+    //     if (len<3) {
+    //         //alert ("Ongeldige tijdnotatie - vul de juiste notatie in");
+    //         input.value = "";
+    //         return false;
+    //     }
+    //     if (len==3){
+    //         input.value ="0" + input.value;
+    //     }
+    //     var final = input.value.split("");
+    //     var h = Number(final[0] + final[1]);
+    //     var m = Number(final[2] + final[3]);
+    //     if (h <0 || h >23 || m <0 || m >59) {
+    //         //alert ("Invalid time - re-enter it");
+    //         input.value = "";
+    //         return false;
+    //     }
+    //     var f = final[0]+final[1]+":"+final[2]+final[3];
+    //     input.value = f;
+    //     }
 
-        function strip(which) {
-        var x = which.value;
-        x = x.replace(/[^0-9]/g,"");  // allow only digits
-        which.value = x;
-    }
+    //     function strip(which) {
+    //     var x = which.value;
+    //     x = x.replace(/[^0-9]/g,"");  // allow only digits
+    //     which.value = x;
+    // }
 </script>
