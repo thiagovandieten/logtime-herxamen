@@ -27,32 +27,44 @@ if($url1 == 'dashboard') {
 	$onderdeel_id = '1';
 }
 else{
-    
     // De onderdelen zoeken
     $query  = "SELECT * FROM onderdelen WHERE actief = '1' AND onderdeel_url = '".$url1."' LIMIT 1";
-    $result = mysqli_query($dbc, $query);
-    $row    = mysqli_fetch_array($result);
-    $count  = mysqli_num_rows($result);
-
+ 	$db->query($query);	
+	$row = $db->resultset();
+	$count = $db->rowCount();
+	//$result = mysqli_query($dbc, $query);
+    
+	//$row    = mysqli_fetch_array($result);
+   // $count  = mysqli_num_rows($result);
+	
     if($count >= 1) {
-
-        $onderdeel_id = $row['onderdeel_id'];
+		
+		//Onderdeel id binnen halen
+		foreach($row as $value){
+			$onderdeel_id = $value['onderdeel_id'];	
+		}
 
         // De pagina's selecteren
-        $query  = "SELECT * FROM paginas WHERE onderdeel_id = '".$onderdeel_id."' AND actief = '1' LIMIT 1";
-        $result = mysqli_query($dbc, $query);
-        $count  = mysqli_num_rows($result);
-        $rec    = mysqli_fetch_array($result);
+      	$query  = "SELECT * FROM paginas WHERE onderdeel_id = '".$onderdeel_id."' AND actief = '1' LIMIT 1";
+       // $result = mysqli_query($dbc, $query);
+       // $count  = mysqli_num_rows($result);
+        //$rec    = mysqli_fetch_array($result);
+		
+		$db->query($query);	
+		$rec = $db->resultset();
+		$count = $db->rowCount();
 
         if($count >= 1) {
-        //Hier kiest hij dus welke pages file hij gaat gebruiken!
-            $pagina             = $rec['body'] . '.php';
-            $pagina_id          = $rec['pagina_id'];
-            $titel              = $rec['titel'];
-            $body               = $rec['body'];
-            $kop                = $rec['kop'];
-            $tekst              = $rec['tekst'];
-            $element            = $rec['element'];
+        	//Hier kiest hij dus welke pages file hij gaat gebruiken!
+            foreach($rec as $value){
+				$pagina             = $value['body'] . '.php';
+				$pagina_id          = $value['pagina_id'];
+				$titel              = $value['titel'];
+				$body               = $value['body'];
+				$kop                = $value['kop'];
+				$tekst              = $value['tekst'];
+				$element            = $value['element'];	
+			}
         }
         else {
            $pagina = 'handling/404.php';
