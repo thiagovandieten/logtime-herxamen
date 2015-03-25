@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_POST['bijwerken'])){
     // Userid definieren (tijdelijk)
     $user_id        = '1';
@@ -23,18 +24,9 @@ if(isset($_POST['bijwerken'])){
 
     $duration   = $hour.':'.$minute.':'.$second;
 
-    $project        = '"'.$dbc->real_escape_string($project).'"';
-    $category       = '"'.$dbc->real_escape_string($category).'"';
-    $task           = '"'.$dbc->real_escape_string($task).'"';
-    $date           = '"'.$dbc->real_escape_string($date).'"';
-    $user_id        = '"'.$dbc->real_escape_string($user_id).'"';
-    $starttime      = '"'.$dbc->real_escape_string($starttime).'"';
-    $stoptime       = '"'.$dbc->real_escape_string($stoptime).'"';
-    $duration       = '"'.$dbc->real_escape_string($duration).'"';
-    $description    = '"'.$dbc->real_escape_string($description).'"';
-
-
-    $insert_row = $dbc->query("INSERT INTO `userlogs` (starttime, stoptime, totaltime, description, date, user_id, project, category, task) 
-    VALUES($starttime, $stoptime, $duration, $description, $date, $user_id, $project, $category, $task)");
+    $db->query("INSERT INTO `userlogs` (`starttime`, `stoptime`, `totaltime`, `description`, `date`, `user_id`, `project`, `category`, `task`) 
+    VALUES('".$starttime."', '".$stoptime."', '".$duration."', '".$description."', '".$date."', '".$user_id."', '".$project."', '".$category."', '".$task."')");
+    $db->execute();
 }
+
 ?>

@@ -1,12 +1,13 @@
 <form method="post">             
     <?php
     $query_project  = "SELECT * FROM projects WHERE done = '0' AND active = '1'";
-    $result_project = mysqli_query($dbc, $query_project);
-    $count_project  = mysqli_num_rows($result_project);
-
+    $db->query($query_project); 
+    $data = $db->resultset();
+    $count = $db->rowCount();
+    
     // Project keuze
     echo '<select name="project">';
-    while($row_project = mysqli_fetch_array($result_project)) {
+    foreach($data as $row_project){
         echo '<option name="project" value="'.$row_project["project"].'" value="'.$row_project['project'].'">'.$row_project["project"].'</option>';
     }
     ?>
@@ -14,13 +15,13 @@
 
     <?php
     $query_cat  = "SELECT DISTINCT category FROM categories";
-    $result_cat = mysqli_query($dbc, $query_cat);
-    $count_cat  = mysqli_num_rows($result_cat);
-
+    $db->query($query_cat); 
+    $data = $db->resultset();
+    $count = $db->rowCount();
+    
     // Taak keuze
     echo '<select name="category">';
-    while($row_cat = mysqli_fetch_array($result_cat)) {
-
+    foreach($data as $row_cat){
         echo '<option name="category" value="'.$row_cat['category'].'">'.$row_cat['category'].'</option>';
     }
     ?>
@@ -28,20 +29,20 @@
 
     <?php
     $query_task  = "SELECT DISTINCT task FROM tasks";
-    $result_task = mysqli_query($dbc, $query_task);
-    $count_task  = mysqli_num_rows($result_task);
+    $db->query($query_task); 
+    $data = $db->resultset();
+    $count = $db->rowCount();
 
     // Taak keuze
     echo '<select name="task">';
-    while($row_task = mysqli_fetch_array($result_task)) {
-
+    foreach($data as $row_task){
         echo '<option name="tasks" value="'.$row_task['task'].'">'.$row_task['task'].'</option>';
     }
     
     ?>
     </select>
     <!--Datum van vandaag tonen -->
-    <input type="date" id="input_01" placeholder="Datum" name="date" value="<?php if($_POST['date'] == ''){ echo date('Y-m-d'); }?>" class="datepicker">
+    <input type="date" id="input_01" placeholder="Datum" name="date" value="<?php echo date('Y-m-d'); ?>" class="datepicker">
     <!--begintijd alleen cijfers mogelijk-->
     <input type="text" placeholder="00:00" name="starttime" maxlength="5" id="uren-klein" onkeyup = "strip(this)" ; onblur = "autoTabTimes(this)">
     <!-- <p class="uren-tot">tot</p> -->

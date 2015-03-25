@@ -1804,6 +1804,7 @@ tr.studenten-overzicht td{
     color: #fff;
     border-radius: 3px;
     background: #eb9001;
+    /*background: #66bb6a;*/
     cursor: pointer;
 }
 
@@ -1863,7 +1864,7 @@ tr.studenten-overzicht td{
     padding: 10px;
 }
 
-.succseslog{
+.succeslog{
     width: 100%;
     background: #2ecc71;
     color: #fff;

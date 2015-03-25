@@ -1,16 +1,20 @@
 <?php
-$dbHost 	= 'localhost';
-$dbUser 	= 'root'; 
-$dbPassword = '';
-$dbDatabase = 'logtime';
+error_reporting(E_ALL);
+spl_autoload_register(function ($class) {
+    include 'classes/' . $class . '.class.php';
+});
 
-$dbc = mysqli_connect ($dbHost, $dbUser, $dbPassword, $dbDatabase);
 
-if(!$dbc){
-	die ('Er kan geen verbinding tot stand worden gebracht. Foutmelding: ' . mysqli_connect_error());	
-}
+define('PROJECTGROUP_ID',$_SESSION['user']['projectgroup_id']);
+define('USER_ID',$_SESSION['user']['user_id']);
+
+## Inladen
+$db = new database;
+$loginClass = new login($db);
+$groupClass = new groupsettings($db, PROJECTGROUP_ID);
 
 date_default_timezone_set("Europe/Amsterdam");
 
 $website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
+
 ?>
