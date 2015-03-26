@@ -1,5 +1,5 @@
 <?php
-error_reporting(1);
+error_reporting(E_ALL);
 ob_start();
 
 $url1 = $_GET['url1'];

@@ -132,6 +132,15 @@ textarea, input::-moz-placeholder {
     cursor: pointer;
 }
 
+#close {
+      right: 5px;
+      padding: 2px 5px;
+      color: #ffffff;
+      font-size: 20px;
+      position: absolute;
+      top: 0;
+}
+
 .noti{
     float: right!important;
     margin: 15px 60px 15px 15px!important;
@@ -1518,7 +1527,8 @@ input[type='checkbox']:checked + span {
 
 .avatar-veranderen{
    position: absolute;
-    width: 70px;
+    
+   width: 80px;
     left: 0px;
     right: 0px;
     margin: auto;

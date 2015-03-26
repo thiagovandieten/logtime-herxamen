@@ -1,3 +1,20 @@
+<?php 
+$query  = "SELECT * FROM users WHERE user_id = '".$user_id."'";
+$db->query($query); 
+$data   = $db->resultset();
+$count  = $db->rowCount();
+
+foreach($data as $value){
+    $avatar      = $value['user_image_path'];
+    $firstname  = $value['firstname'];
+    $lastname   = $value['lastname'];
+}
+
+if($avatar == ''){
+    $avatar = 'placeholder.png';
+}
+?>
+
 <div class="top-header">
     <img src="_img/icons/menu.png" alt="menu" id="showLeftPush">
     <div class="title-place">
@@ -18,7 +35,7 @@
     </div>
     <!--Link naar persoonlijke instellingen -->
     <a href="persoonlijke-instellingen"><img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="destop-instellingen" title="Instellingen">
-        <p>Leerlingnaam</p><!--Leerlingnaam ophalen van db -->
+        <p><?php echo $firstname.'&nbsp;'.substr($lastname, 0, 1).'.'; ?></p><!--Leerlingnaam ophalen van db -->
     </a>
-    <img src="_img/icons/avatar-empty.png" alt="avatar" class="avatar"><!--Leerling avatar ophalen van db -->
+    <img src="_img/uploads/personal_avatar/<?php echo $avatar; ?>" alt="avatar" class="avatar"><!--Leerling avatar ophalen van db -->
 </div>

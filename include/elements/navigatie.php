@@ -1,3 +1,20 @@
+<?php 
+$query  = "SELECT * FROM users WHERE user_id = '".$user_id."'";
+$db->query($query); 
+$data   = $db->resultset();
+$count  = $db->rowCount();
+
+foreach($data as $value){
+    $avatar     = $value['user_image_path'];
+    $firstname  = $value['firstname'];
+    $lastname   = $value['lastname'];
+}
+
+if($avatar == ''){
+    $avatar = 'placeholder.png';
+}
+?>
+
 <!-- Rechter navigatie notifications -->
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
     <div class="noti-mob-instellingen">
@@ -11,21 +28,21 @@
 
     <!--Notifications voor mobiel omvang-->
     <div class="mob-notification">
-        <img src="_img/icons/avatar-empty.png" alt="avatar"><!--Leerling avatar ophalen van db-->
+        <img src="_img/uploads/personal_avatar/<?php echo $avatar; ?>" alt="avatar"><!--Leerling avatar ophalen van db-->
         <p><b>Leerling naam </b>is aangewezen als<!--Leerling naam ophalen van db-->
             nieuwe projectleider van de groep.</p>
         <span>12 feb 2014 12:45</span><!--Datum ophalen van db-->
     </div>
     <!--Notifications voor mobiel omvang-->
     <div class="mob-notification">
-        <img src="_img/icons/avatar-empty.png" alt="avatar"><!--Leerling avatar ophalen van db-->
+        <img src="_img/uploads/personal_avatar/<?php echo $avatar; ?>" alt="avatar"><!--Leerling avatar ophalen van db-->
         <p><b>Leerling naam </b>is aangewezen als<!--Leerling naam ophalen van db-->
             nieuwe projectleider van de groep.</p>
         <span>12 feb 2014 12:45</span><!--Datum ophalen van db-->
     </div>
     <!--Notifications voor mobiel omvang-->
     <div class="mob-notification">
-        <img src="_img/icons/avatar-empty.png" alt="avatar"><!--Leerling avatar ophalen van db-->
+        <img src="_img/uploads/personal_avatar/<?php echo $avatar; ?>" alt="avatar"><!--Leerling avatar ophalen van db-->
         <p><b>Leerling naam </b>is aangewezen als<!--Leerling naam ophalen van db-->
             nieuwe projectleider van de groep.</p>
         <span>12 feb 2014 12:45</span><!--Datum ophalen van db-->
@@ -35,8 +52,8 @@
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left menu-mob-width cbp-spmenu-open" id="cbp-spmenu-s1">
     <!--Profiel voor mobiele weergave-->
     <div class="profiel-mob">
-       <img src="_img/icons/avatar-empty.png" style="display: block; float: left!important" alt="avatar" class="avatar"><!--Avatar van leerling ophalen van db-->
-            <p>Volledige naam</p><!--Naam van leerlingen ophalen van db-->
+       <img src="_img/uploads/personal_avatar/<?php echo $avatar; ?>" style="display: block; float: left!important" alt="avatar" class="avatar"><!--Avatar van leerling ophalen van db-->
+            <p><?php echo $firstname.'&nbsp;'.$lastname; ?></p><!--Naam van leerlingen ophalen van db-->
 
        <img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="mob-instellingen" title="Instellingen">
     </div>
