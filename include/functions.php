@@ -5,6 +5,61 @@ function multiexplode ($delimiters,$string) {
     return  $launch;
 }
 
+// emailadres valideren
+function is_valid_email($email) {
+    $email = strtolower($email);
+    $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+    return ( preg_match($regex, $email) ) ? true : false;
+}
+
+// Postcode controleren op geldigheid
+function checkPC($cijfers, $letters) {
+    if (preg_match("/^[0-9]{4}$/i",$cijfers) && preg_match("/^[a-zA-Z]{2}$/i",$letters)) 
+        $valid = 1; 
+    return $valid;
+}
+// Telefoonnummer controleren op geldigheid
+function checkTelefoon($Telefoon) {
+    if(preg_match('/^[0-9]{10}$/i', $Telefoon))
+        $valid = 1;
+    return $valid; 
+}
+function checkPassword($password) {
+     //Makes it easy to implement grammar rules.
+     $password_flaws = array();
+    
+     $strlen = strlen($password);
+    
+     if($strlen <= 6)
+        $password_flaws[sizeof($password_flaws)] = "te kort!";
+    
+     $count_chars = count_chars($password, 3);
+    
+     if(strlen($count_chars) < $strlen / 2)
+        $password_flaws[sizeof($password_flaws)] = "te eenvoudig!";
+    
+     //The function returns an empty string if the password is "good".
+     $return_string = "";
+     $sizeof = sizeof($password_flaws);
+    
+     for($index = 0; $index < $sizeof; $index++)
+        {
+        if($index == 0)
+           $return_string .= "Je wachtwoord is ";
+    
+        if($index == $sizeof - 1 && $sizeof != 1)
+           $return_string .= " en ";
+    
+        //this is in case i have more than 3 sources of error.
+        if($index != 0 && $index != $sizeof - 1)
+           $return_string .= ", ";
+    
+        $return_string .= $password_flaws[$index];
+        }
+    
+     return($return_string);
+ }
+
 // Upload functie
 function uploadimg($bestand, $map="", $formaten="", $max_breedte, $max_hoogte, $kwaliteit) {
 	

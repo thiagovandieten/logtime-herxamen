@@ -1,5 +1,4 @@
 <?php
-
 if(isset($_POST['save'])){
     $log_id         = $_POST['log_id'];
     $project        = $_POST['project'];
@@ -245,8 +244,8 @@ elseif(isset($_POST['delete'])){
                     echo '</td>';
 
 
-                    echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5"></td>';
-                    echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5"></td>';
+                    echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onblur = "autoTabTimes(this)"></td>';
+                    echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onblur = "autoTabTimes(this)"></td>';
                     echo '<td>'.$totaltime.'</td>';
                     echo '<td><input type="text" id="date" name="date" value="'.$date.'"></td>';
                     echo '<td><textarea id="description" name="description">'.$description.'</textarea></td>';
@@ -271,6 +270,35 @@ elseif(isset($_POST['delete'])){
     </div>
 </section>
 
+<script type = "text/javascript">
+    function autoTabTimes(input) {
+    var len = input.value.length;
+        if (len<3) {
+        alert ("Invalid time - re-enter it");
+        input.value = "";
+        return false;
+        }
+        if (len==3){
+        input.value ="0" + input.value;
+        }
+        var final = input.value.split("");
+        var h = Number(final[0] + final[1]);
+        var m = Number(final[2] + final[3]);
+        if (h <0 || h >23 || m <0 || m >59) {
+        alert ("Invalid time - re-enter it");
+        input.value = "";
+        return false;
+        }
+        var f = final[0]+final[1]+":"+final[2]+final[3];
+        input.value = f;
+        }
+         
+        function strip(which) {
+        var x = which.value;
+        x = x.replace(/[^0-9]/g,"");  // allow only digits
+        which.value = x;
+    }
+</script>
 <script>
     $(document).ready(function()
     {

@@ -23,7 +23,10 @@ foreach($data_a as $value){
 	$street        	= $value['street'];
 	$housenumber   	= $value['housenumber'];
 	$city          	= $value['city'];
-	$zipcode     	= $value['zipcode'];
+	$zipcode     	= explode(" ", $value['zipcode']);
+
+	$numbers 		= $zipcode[0];
+	$characters 	= $zipcode[1];
 }
 
 $dir_dest = '_img/uploads/personal_avatar';
@@ -36,21 +39,28 @@ if(isset($_POST['save_ps'])){
 	$firstname       = $_POST['firstname'];
 	$lastname        = $_POST['lastname'];
 	$email           = $_POST['email'];
-	$phone_number    = $_POST['phone'];
+	$phone    		 = $_POST['phone'];
+	$phone_number 	 = preg_replace('/\s+/', '', $phone);
 	$street        	 = $_POST['street'];
 	$housenumber   	 = $_POST['housenumber'];
 	$city          	 = $_POST['city'];
-	$zipcode     	 = $_POST['zipcode'];
+	$numbers 		 = trim($_POST['numbers']);
+	$characters 	 = trim($_POST['characters']);
 
 	// Validation
-	if($firstname 		== ''){ $melding = 'Vul een voornaam in';}
-	if($lastname 		== ''){ $melding = 'Vul een achternaam in';}
-	if($email 			== ''){ $melding = 'Vul een email adres in';}
-	if($phone_number 	== ''){ $melding = 'Vul een mobiele nummer in';}
-	if($street 			== ''){ $melding = 'Vul een straatnaam in';}
-	if($housenumber 	== ''){ $melding = 'Vul een huisnummer in';}
-	if($city 			== ''){ $melding = 'Vul een woonplaats in';}
-	if($zipcode 		== ''){ $melding = 'Vul een postcode in';}		
+	if($firstname 					== ''){ $melding = 'Vul een voornaam in';}
+	elseif($lastname 				== ''){ $melding = 'Vul een achternaam in';}
+	elseif($email 					== ''){ $melding = 'Vul een email adres in';}
+	elseif(is_valid_email($email) 	!= 1){ $melding = 'Vul een geldig email adres in';}
+	elseif($phone_number 			== ''){ $melding = 'Vul een mobiele nummer in';}
+	elseif(checkTelefoon($phone_number)	!= 1){ $melding = 'Vul een geldig mobiele nummer in';}
+	elseif($street 					== ''){ $melding = 'Vul een straatnaam in';}
+	elseif($housenumber 			== ''){ $melding = 'Vul een huisnummer in';}
+	elseif($city 					== ''){ $melding = 'Vul een woonplaats in';}
+	elseif ((empty($numbers) || empty($characters))) { $melding = 'U heeft geen postcode ingevuld'; }
+	elseif (checkPC($numbers, $characters) != 1) { $melding = 'U heeft geen geldig postcode ingevuld'; }		
+
+	
 
 	// Check if avatar is set
 	if($_FILES['afbeelding']['name']) {
@@ -85,7 +95,7 @@ if(isset($_POST['save_ps'])){
         `street`     		= '".$street."',
         `housenumber`   	= '".$housenumber."',
         `city`     			= '".$city."',  
-        `zipcode`     		= '".$zipcode."' 
+        `zipcode`     		= '".$numbers.' '.ucfirst($characters)."' 
         WHERE `adress_id` 	= '".$adress_id."'");
         
         $db->execute();
@@ -180,10 +190,11 @@ if(isset($_POST['save_pw'])){
 		<input type="text" name="street" value="<?php echo $street; ?>">
 
 		<label for="housenumber">Huisnummer</label>
-		<input type="text" name="housenumber" value="<?php echo $housenumber; ?>">
+		<input type="text" maxlength="4" name="housenumber" value="<?php echo $housenumber; ?>">
 
 		<label for="zipcode">Postcode</label>
-		<input type="text" name="zipcode" value="<?php echo $zipcode; ?>">
+		<input name="numbers" maxlength="4" type="text" placeholder="1234" value="<?php echo $numbers; ?>" />
+   		<input name="characters" maxlength="2" type="text" placeholder="AB" value="<?php echo $characters; ?>" />
 
 		<label for="city">Woonplaats</label>
 		<input type="text" name="city" value="<?php echo $city; ?>">
@@ -192,7 +203,7 @@ if(isset($_POST['save_pw'])){
 		<input type="email" name="email" value="<?php echo $email; ?>">
 		 
 		<label for="phone">Mobiel</label>
-		<input type="phone" name="phone" value="<?php echo $phone_number; ?>">
+		<input type="phone" maxlength="11" name="phone" value="<?php echo $phone_number; ?>">
 		  
 		<input type="submit" name="save_ps" id="submit" value="Opslaan" class="bijwerken" />
 	</form>

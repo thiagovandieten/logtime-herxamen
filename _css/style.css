@@ -27,6 +27,11 @@ input[type="submit"]:active{
     opacity: 1;
 }
 
+input[type="text"].error {
+  background: #e74c3c;
+  color: #fff;
+}
+
 a{
     text-decoration: none;
 }
