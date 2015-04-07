@@ -76,11 +76,16 @@
 	    //echo '<li><a href="'.$url.'" class="'.$class.'">'.$onderdeel.'</a></li>';
 	    echo '<a href="'.$url.'" class="'.$class.'"><span>'.$image.'</span>'.$onderdeel.'</a>';
 	}
+	
+	// logout
+	if(isset($_GET['logout']) && $_GET['logout'] == true){
+		$loginClass->logout();	
+	}
 
     ?>
 
     <a href="#"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
-    <a href="#"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
+    <a href="?logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
 
 
     <!-- <a href="#"><span><img src="_img/icons/logboek.png" alt="Logboek"></span>Logboek</a>

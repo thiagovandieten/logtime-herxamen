@@ -128,5 +128,25 @@ class login extends database{
 		}
 	}
 	
+	public function loggedIn(){
+		if(empty($_SESSION['user'])){
+			header('Location: login');
+		}
+	}
+	
+	public function logged(){
+		if(!empty($_SESSION['user'])){
+			header('Location: dashboard');
+		}
+	}
+	
+	public function nav(){
+		if($_SESSION['user']['usertype_id'] == 1){
+		 	return 'navigatie_student';
+		}elseif($_SESSION['user']['usertype_id'] == 2){
+			return 'navigatie_docent';	
+		}
+	}
+	
 }
 ?>

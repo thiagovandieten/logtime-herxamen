@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-
+$loginClass->logged();
 if(isset($_POST['login'])){
 	$loginClass->setLoginData($_POST['userlogin'], $_POST['password']);
 	$loginClass->validateLogin();	

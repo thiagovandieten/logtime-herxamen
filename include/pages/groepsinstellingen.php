@@ -9,7 +9,6 @@ Groepsinstellingen
 $dir_dest = '_img/uploads/group_avatar';
 $dir_pics = $dir_dest;
 error_reporting(0);
-
 if ((isset($_POST['action']) ? $_POST['action'] : (isset($_GET['action']) ? $_GET['action'] : '')) == 'simple') {
 
     // ---------- SIMPLE UPLOAD ----------
@@ -56,8 +55,9 @@ if ((isset($_POST['action']) ? $_POST['action'] : (isset($_GET['action']) ? $_GE
 
 
 }
+
 if(isset($_POST['save_wage'])){
-	$groupClass->save_wage($_POST['studentwage']);
+	$groupClass->valildate_form($_POST);
 	
 	if($groupClass->getError()){
 		$msg['error'] = $groupClass->getError();
@@ -72,24 +72,40 @@ if($msg['no_error']){
 }else{
 	echo "<p>".$msg['error']."</p>";	
 }
-
-
-## de IMG
-echo $groupClass->getGroupImage();
 ?>
+<div class='personal-settings'>
+    <div class='img-omvang'>
+    <?php
+    ## de IMG
+    echo $groupClass->getGroupImage();
+    ?>
+    </div>
 <form name="form1" enctype="multipart/form-data" method="post" />
-    <p><input type="file" size="32" name="my_field" value="" /></p>
+    <p><input type="file" size="32" name="my_field" class="avatar-veranderen custom-file-input" /></p>
     <p class="button"><input type="hidden" name="action" value="simple" />
     <input type="submit" name="Submit" value="upload" /></p>
 </form>
 <form method='post'>
-<div>
-    	Uurloon
+    <div> 
+    	<input type='text' name='groepsnaam' placeholder='groepsnaam' value='<?=$groupClass->getGroupdata('projectgroup_name')?>' />
     </div>
     <div> 
-    	<input type='text' name='studentwage' value='<?php echo $groupClass->getStudentWage()?>' />
+    	<input type='text' name='straatnaam' placeholder='straatnaam' value='<?=$groupClass->getGroupdata('', true, 'street')?>' />
+    </div>
+    <div> 
+    	<input type='text' name='huisnummer' placeholder='huisnummer' value='<?=$groupClass->getGroupdata('', true, 'housenumber')?>' />
+    </div>
+    <div> 
+    	<input type='text' name='postcode' placeholder='postcode' value='<?=$groupClass->getGroupdata('', true, 'zipcode')?>' />
+    </div>
+    <div> 
+    	<input type='text' name='woonplaats' placeholder='woonplaats' value='<?=$groupClass->getGroupdata('', true, 'city')?>' />
+    </div>
+    <div> 
+    	<input type='text' name='wage' placeholder='uurloon' value='<?=$groupClass->getStudentWage()?>' />
     </div>
     <div>
     	<input type='submit' name='save_wage' value='Opslaan' />
     </div>
-</form>    
+</form>
+</div>  

@@ -1,7 +1,6 @@
 <?php
-error_reporting(0);
 ob_start();
-
+error_reporting(0);
 $url1 = $_GET['url1'];
 $url2 = $_GET['url2'];
 $url3 = $_GET['url3'];
@@ -11,9 +10,14 @@ session_start();
 
 include('include/config.php');
 include('include/content.php');
+
+## Check of user ingelogd is
+if($url1 != 'login'){
+	$loginClass->loggedIn($url1);
+}
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html lang="nl">
     <head>
          
@@ -34,16 +38,17 @@ include('include/content.php');
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+       
+        <?php
+			if($url1 == 'login'){
+				include ('include/pages/'.$pagina);
+			}else{
+		?> 
         <!-- Top Header -->
         <?php include('include/elements/top-header.php'); ?>
-
-
-
-
-
-        <div class="cbp-spmenu-push cbp-spmenu-push-toright" id="wrapper">           
-            <!-- Navigatie -->
-            <?php include('include/elements/navigatie.php'); ?>
+    	<div class="cbp-spmenu-push cbp-spmenu-push-toright" id="wrapper">           
+	        <!-- Navigatie -->
+            <?php include('include/elements/'.$loginClass->nav().'.php');?>
 
             <!-- Content inladen -->
             <?php include ('include/pages/'.$pagina); ?>
@@ -53,6 +58,7 @@ include('include/content.php');
                 <?php //include('include/elements/footer.php'); ?>
             </section>
         </div>
+        <?Php }?>
         
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 

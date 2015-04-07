@@ -74,13 +74,14 @@ class database extends PDO{
 	}
 	
 	public function rowCount(){
+		$this->execute();
 		return $this->stmt->rowCount();
 	}
-	/*
+	
 	public function lastInsertId(){
 		return $this->dbh->lastInsertId();
 	}
-	*/
+	
 	public function beginTransaction(){
    		return $this->dbh->beginTransaction();
 	}
