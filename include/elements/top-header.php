@@ -18,7 +18,7 @@
     </div>
     <!--Link naar persoonlijke instellingen -->
     <a href="persoonlijke-instellingen"><img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="destop-instellingen" title="Instellingen">
-        <p>Leerlingnaam</p><!--Leerlingnaam ophalen van db -->
+        <p><?php echo $userClass->getname();?></p><!--Leerlingnaam ophalen van db -->
     </a>
-    <img src="_img/icons/avatar-empty.png" alt="avatar" class="avatar"><!--Leerling avatar ophalen van db -->
+    <img src="<?php echo $userClass->getUserImage();?>" alt="avatar" class="avatar"><!--Leerling avatar ophalen van db -->
 </div>

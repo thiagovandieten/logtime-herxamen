@@ -35,18 +35,17 @@
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left menu-mob-width cbp-spmenu-open" id="cbp-spmenu-s1">
     <!--Profiel voor mobiele weergave-->
     <div class="profiel-mob">
-       <img src="_img/icons/avatar-empty.png" style="display: block; float: left!important" alt="avatar" class="avatar"><!--Avatar van leerling ophalen van db-->
-            <p>Volledige naam</p><!--Naam van leerlingen ophalen van db-->
+       <img src="<?php echo $userClass->getUserImage()?>" style="display: block; float: left!important" alt="avatar" class="avatar"><!--Avatar van leerling ophalen van db-->
+            <p><?php echo $userClass->getFullName()?></p><!--Naam van leerlingen ophalen van db-->
 
        <img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="mob-instellingen" title="Instellingen">
     </div>
     <div style="clear:both"></div>
     <a href="<?php echo $website; ?>"><span><img src="_img/icons/dashboard.png" alt="Dashboard"></span>Dashboard</a><!--link aankoppelen -->
-    <div id="urend"><a href="#"><span><img src="_img/icons/urenreg.png" alt="uren"></span>Uren registreren</a></div><!--link aankoppelen -->
     
     <?php
 
-    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' ORDER BY onderdeel_id ASC";
+    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' AND `is_docent`=1 ORDER BY onderdeel_id ASC";
 	//$result = mysqli_query($dbc, $query);
 	//$count = mysqli_num_rows($result);
 	
@@ -79,48 +78,15 @@
 
     // logout
 	if(isset($_GET['logout']) && $_GET['logout'] == true){
-		$loginClass->logout();	
+		echo $loginClass->logout();	
 	}
 
     ?>
 
     <a href="#"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
-    <a href="?logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
+    <a href="&logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
 
-
-    <!-- <a href="#"><span><img src="_img/icons/logboek.png" alt="Logboek"></span>Logboek</a>
-    <a href="#"><span><img src="_img/icons/instellingen.png" alt="Instellingen"></span>Groeps instellingen</a>
-    <a href="#"><span><img src="_img/icons/map.png" alt="Project aanmaken"></span>Project beheer</a>
-    <a href="#"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
-    <a href="#"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a> -->
     
 
-    <!--Uren registratie -->
-    <div id="urenreg">
-        <div class="uren-wrapper">
-            <h2>Uren bijwerken</h2>
-            <select name="project">
-                <!--Project keuze -->
-                <option>Project kiezen</option>
-                <option>Logtime</option>
-                <option>Malcome</option>
-            </select>
-            <!--Taak keuze -->
-            <select name="taak">
-                <option>Taak kiezen</option>
-                <option>Fase 0a de briefing</option>
-                <option>Fase 0b nulmeting</option>
-            </select>
-            <!--Hier de datum van vandaag tonen -->
-            <input type="date" name="datum" class="datum-pop">
-            <!--begintijd alleen cijfers mogelijk-->
-            <input type="text" name="starttijd" placeholder="00:00" class="uren">
-            <p class="uren-tot">tot</p>
-            <!--eindtijd alleen cijfers mogelijk-->
-            <input type="text" name="eindtijd" placeholder="00:00" class="uren">
-            <textarea name="omschrijving" placeholder="Omschrijving"></textarea>
-            <input type="submit" name="bijwerken" class="bijwerken">
-        </div>
-    </div>
 </nav>
 

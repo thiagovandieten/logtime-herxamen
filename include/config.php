@@ -28,4 +28,5 @@ $formClass = new form();
 if(!empty(PROJECTGROUP_ID)){
 	$groupClass = new groupsettings($db, PROJECTGROUP_ID, $formClass);
 }
+$userClass = new user($db, USER_ID);
 ?>

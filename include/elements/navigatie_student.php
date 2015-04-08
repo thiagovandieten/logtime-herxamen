@@ -35,8 +35,8 @@
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left menu-mob-width cbp-spmenu-open" id="cbp-spmenu-s1">
     <!--Profiel voor mobiele weergave-->
     <div class="profiel-mob">
-       <img src="_img/icons/avatar-empty.png" style="display: block; float: left!important" alt="avatar" class="avatar"><!--Avatar van leerling ophalen van db-->
-            <p>Volledige naam</p><!--Naam van leerlingen ophalen van db-->
+        <img src="<?php echo $userClass->getUserImage()?>" style="display: block; float: left!important" alt="avatar" class="avatar"><!--Avatar van leerling ophalen van db-->
+            <p><?php echo $userClass->getFullName()?></p><!--Naam van leerlingen ophalen van db-->
 
        <img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="mob-instellingen" title="Instellingen">
     </div>

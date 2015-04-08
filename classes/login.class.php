@@ -120,7 +120,7 @@ class login extends database{
 					self::setError('Het email adres of het wachtwoord is onjuist!');
 				}else{
 					self::setupUser();
-					self::setNotification('Succesvol ingelogd!');	
+					header('Location: login');
 				}
 			}else{
 				self::setError('Het email adres of het wachtwoord is onjuist!');
