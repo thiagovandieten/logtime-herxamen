@@ -46,5 +46,13 @@ class user extends database{
 		}
 	}
 	
+	public function nav(){
+		if($_SESSION['user']['usertype_id'] == 1){
+		 	return 'navigatie_student';
+		}elseif($_SESSION['user']['usertype_id'] == 2){
+			return 'navigatie_docent';	
+		}
+	}
+	
 }
 ?>

@@ -1,6 +1,9 @@
 <?php
-ob_start();
 error_reporting(0);
+ini_set('display_errors', '1');
+ob_start();
+
+
 $url1 = $_GET['url1'];
 $url2 = $_GET['url2'];
 $url3 = $_GET['url3'];
@@ -48,10 +51,13 @@ if($url1 != 'login'){
         <?php include('include/elements/top-header.php'); ?>
     	<div class="cbp-spmenu-push cbp-spmenu-push-toright" id="wrapper">           
 	        <!-- Navigatie -->
-            <?php include('include/elements/'.$loginClass->nav().'.php');?>
+            <?php include('include/elements/'.$userClass->nav().'.php');?>
+
+			
 
             <!-- Content inladen -->
             <?php include ('include/pages/'.$pagina); ?>
+        
 
             <!-- Footer -->
             <section class="footer">

@@ -1,6 +1,6 @@
 <form method="post">             
     <?php
-    $query_project  = "SELECT * FROM projects WHERE done = '0' AND active = '1'";
+    $query_project  = "SELECT * FROM `projects` WHERE `done` = '0' AND active = '1'";
     $db->query($query_project); 
     $data = $db->resultset();
     $count = $db->rowCount();
@@ -8,7 +8,8 @@
     // Project keuze
     echo '<select name="project">';
     foreach($data as $row_project){
-        echo '<option name="project" value="'.$row_project["project"].'" value="'.$row_project['project'].'">'.$row_project["project"].'</option>';
+		print_r($row_project);
+        echo "<option name='project' value='".$row_project['project']."' value='".$row_project['project']."'>".$row_project['project']."</option>";
     }
     ?>
     </select>

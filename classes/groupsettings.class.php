@@ -6,7 +6,6 @@ class groupsettings extends database{
 		$this->group_id = PROJECTGROUP_ID;
 		$this->user_id = USER_ID;
 		self::setGroupdata();
-		self::checkStudentWage();
 		self::setLocationData();
 	}
 	
