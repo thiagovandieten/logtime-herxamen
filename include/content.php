@@ -32,10 +32,6 @@ else{
  	$db->query($query);	
 	$row = $db->resultset();
 	$count = $db->rowCount();
-	//$result = mysqli_query($dbc, $query);
-    
-	//$row    = mysqli_fetch_array($result);
-   // $count  = mysqli_num_rows($result);
 	
     if($count >= 1) {
 		
@@ -46,9 +42,6 @@ else{
 
         // De pagina's selecteren
       	$query  = "SELECT * FROM paginas WHERE onderdeel_id = '".$onderdeel_id."' AND actief = '1' LIMIT 1";
-       // $result = mysqli_query($dbc, $query);
-       // $count  = mysqli_num_rows($result);
-        //$rec    = mysqli_fetch_array($result);
 		
 		$db->query($query);	
 		$rec = $db->resultset();

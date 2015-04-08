@@ -1,3 +1,20 @@
+<?php 
+$query  = "SELECT * FROM users WHERE user_id = '".$user_id."'";
+$db->query($query); 
+$data   = $db->resultset();
+$count  = $db->rowCount();
+
+foreach($data as $value){
+    $avatar     = $value['user_image_path'];
+    $firstname  = $value['firstname'];
+    $lastname   = $value['lastname'];
+}
+
+if($avatar == ''){
+    $avatar = 'placeholder.png';
+}
+?>
+
 <!-- Rechter navigatie notifications -->
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
     <div class="noti-mob-instellingen">
@@ -47,14 +64,11 @@
     <?php
 
     $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' ORDER BY onderdeel_id ASC";
-	//$result = mysqli_query($dbc, $query);
-	//$count = mysqli_num_rows($result);
 	
 	$db->query($query);	
 	$data = $db->resultset();
 	$count = $db->rowCount();
 	
-//    while($row = mysqli_fetch_array($result)) {
 	foreach($data as $row){
 	$ond_id       = $row['onderdeel_id'];
 	$onderdeel    = $row['onderdeel'];
@@ -73,7 +87,6 @@
 
     if($url1 == $url) { $class = 'active'; }
 	else { $class = ''; }
-	    //echo '<li><a href="'.$url.'" class="'.$class.'">'.$onderdeel.'</a></li>';
 	    echo '<a href="'.$url.'" class="'.$class.'"><span>'.$image.'</span>'.$onderdeel.'</a>';
 	}
 	
@@ -85,7 +98,7 @@
     ?>
 
     <a href="#"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
-    <a href="?logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
+    <a href="&logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
 
 
     <!-- <a href="#"><span><img src="_img/icons/logboek.png" alt="Logboek"></span>Logboek</a>
@@ -99,27 +112,8 @@
     <div id="urenreg">
         <div class="uren-wrapper">
             <h2>Uren bijwerken</h2>
-            <select name="project">
-                <!--Project keuze -->
-                <option>Project kiezen</option>
-                <option>Logtime</option>
-                <option>Malcome</option>
-            </select>
-            <!--Taak keuze -->
-            <select name="taak">
-                <option>Taak kiezen</option>
-                <option>Fase 0a de briefing</option>
-                <option>Fase 0b nulmeting</option>
-            </select>
-            <!--Hier de datum van vandaag tonen -->
-            <input type="date" name="datum" class="datum-pop">
-            <!--begintijd alleen cijfers mogelijk-->
-            <input type="text" name="starttijd" placeholder="00:00" class="uren">
-            <p class="uren-tot">tot</p>
-            <!--eindtijd alleen cijfers mogelijk-->
-            <input type="text" name="eindtijd" placeholder="00:00" class="uren">
-            <textarea name="omschrijving" placeholder="Omschrijving"></textarea>
-            <input type="submit" name="bijwerken" class="bijwerken">
+            <?php include('include/elements/uren-invullen-actie.php') ?>
+            <?php include('include/elements/uren-invullen-form.php') ?>
         </div>
     </div>
 </nav>

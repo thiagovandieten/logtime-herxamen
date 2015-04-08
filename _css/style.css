@@ -15,12 +15,21 @@ input, select{
     transition: 0.3s;
 }
 
+textarea {
+    outline: none;
+}
+
 input[type="submit"]:hover{
     opacity: 0.8;
 }
 
 input[type="submit"]:active{
     opacity: 1;
+}
+
+input[type="text"].error {
+  background: #e74c3c;
+  color: #fff;
 }
 
 a{
@@ -119,13 +128,22 @@ textarea, input::-moz-placeholder {
 
 .top-header input[type="submit"]{
     border: 0px;
-    background: url('../images/search.png') no-repeat;
+    background: url('../_img/search.png') no-repeat;
     width: 20px;
     height: 20px;
     float: left;
     margin: 13px 0px 0px -33px;
     outline: none;
     cursor: pointer;
+}
+
+#close {
+      right: 5px;
+      padding: 2px 5px;
+      color: #ffffff;
+      font-size: 20px;
+      position: absolute;
+      top: 0;
 }
 
 .noti{
@@ -167,7 +185,7 @@ nav select, #input_01{
 }
 
 .bijwerken{
-    margin: 0px 10px 10px 127px;
+    margin: 0px 10px 10px 139px;
     font-size: 13px;
     padding: 8px;
     border: 0px;
@@ -176,6 +194,8 @@ nav select, #input_01{
     background: #eb9001;
     cursor: pointer;
 }
+
+input.bijwerken {}
 
 .bijwerken:hover{
     opacity: 0.9;
@@ -206,7 +226,7 @@ nav select, #input_01{
 
 #wrapper{
     margin: 49px 0px 0px 0px;
-    /*width: 84.8%;*/
+    width: 84.8%;
 }
 
 .title-place{
@@ -1049,7 +1069,7 @@ nav select, #input_01{
 }
 
 #uren-klein{
-    width: 15%!important;
+    width: 33%!important;
     margin: 1px 5px 5px 16px!important;
     padding: 8px!important;
     border: 0px!important;
@@ -1069,7 +1089,7 @@ nav select, #input_01{
     border: 0px;
     color: #fff;
     border-radius: 0px!important;
-    background: #66bb6a url('../images/icons/opslaan.png') no-repeat center;
+    background: #66bb6a url('../_img/icons/opslaan.png') no-repeat center;
 }
 
 .login-wrap{
@@ -1090,7 +1110,7 @@ nav select, #input_01{
     font-size: 18px;
     border-radius: 3px;
     margin: 10px 0px 10px 0px;
-    background: rgba(255,255,255,0.5) url('../images/username-icon.png') no-repeat 16px 22px;
+    background: rgba(255,255,255,0.5) url('../_img/username-icon.png') no-repeat 16px 22px;
 }
 
 .login-wrap input[type='password']{
@@ -1101,7 +1121,7 @@ nav select, #input_01{
     font-size: 18px;
     border-radius: 3px;
     margin: 10px 0px 10px 0px;
-    background: rgba(255,255,255,0.5) url('../images/wachtwoord-icon.png') no-repeat 16px 22px;
+    background: rgba(255,255,255,0.5) url('../_img/wachtwoord-icon.png') no-repeat 16px 22px;
 }
 
 .error{
@@ -1170,7 +1190,7 @@ p:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 
 .email{
-    background: rgba(255,255,255,0.5) url('../images/e-mail-icon.png') no-repeat 16px 22px!important;
+    background: rgba(255,255,255,0.5) url('../_img/e-mail-icon.png') no-repeat 16px 22px!important;
 }
 
 .ww-vergeten-wrap{
@@ -1385,7 +1405,7 @@ p:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 .nieuw-knop{
      border: 0px;
-     background: #66bb6a url('../images/icons/nieuw.png') no-repeat 10px 13px;
+     background: #66bb6a url('../_img/icons/nieuw.png') no-repeat 10px 13px;
      padding: 15px 20px 15px 40px;
      border-radius: 3px;
      color: #fff;
@@ -1404,7 +1424,7 @@ button:active{
 
 .delete-knop{
     border: 0px;
-    background: #e83c46 url('../images/icons/verwijder.png') no-repeat 10px 13px;
+    background: #e83c46 url('../_img/icons/verwijder.png') no-repeat 10px 13px;
     padding: 15px 20px 15px 40px;
     border-radius: 3px;
     color: #fff;
@@ -1415,8 +1435,8 @@ button:active{
 
 .filter-omgeving{
     float: left;
-    margin-left: 20px;
-    width: 50%;
+    /* margin-left: 20px; */
+    width: 100%;
 }
 
 .buttons-wrap{
@@ -1512,7 +1532,8 @@ input[type='checkbox']:checked + span {
 
 .avatar-veranderen{
    position: absolute;
-    width: 70px;
+    
+   width: 80px;
     left: 0px;
     right: 0px;
     margin: auto;
@@ -1719,6 +1740,117 @@ tr.studenten-overzicht td{
     display: none;
 }
 
+.uren-overzicht{
+    overflow: auto;
+}
+
+.uren-overzicht td{
+    padding: 10px;
+}
+
+.uren-overzicht tbody::after{
+  content: '';
+  display: block;
+  height: 15px;
+
+}
+
+.uren-overzicht table{
+    width: 100%;
+    margin-top:20px;
+    font-size: 16px;
+    color: #999;
+}
+
+.uren-overzicht table p{
+    padding: 4px;
+}
+
+.uren-overzicht input[type="text"]{
+  background: none;
+  border: none;
+  width: 52%;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.13);
+}
+
+.uren-overzicht input[name="date"] {
+  background: none;
+  border: none;
+  width: 90%;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.13);
+}
+
+
+.uren-overzicht select{
+      outline: none;
+      background: none;
+      border: none;
+      width: 100%;
+      border-bottom: 1px solid rgba(51, 51, 51, 0.13);
+}
+
+.uren-overzicht textarea {
+  background: none;
+  border: none;
+  max-width: 380px;
+  max-height: 150px;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.13);
+  overflow-y: hidden;
+}
+
+/*.uren-overzicht tr:hover{
+     background: #cfdbe3!important;
+     cursor: pointer;
+     transition: 0.3s;
+ }*/
+
+.verwijderen{
+    padding: 10px;
+    border: 0px;
+    color: #fff;
+    border-radius: 3px;
+    background: #e83c46;
+    cursor: pointer;
+}
+
+.opslaan{
+    padding: 10px;
+    border: 0px;
+    color: #fff;
+    border-radius: 3px;
+    background: #eb9001;
+    /*background: #66bb6a;*/
+    cursor: pointer;
+}
+
+.uren-overzicht a{
+    text-decoration: none;
+    color: #999;
+}
+
+.uren-overzicht tr:first-child td:first-child {
+  background: #dcdcdc;
+  color: #616161;
+}
+
+.uren-overzicht td span.datum-dag{
+    font-size: 75px;
+}
+
+.uren-overzicht td span.datum-maand{
+    font-size: 15px;
+    display: -webkit-box;
+    margin-top: -13px;
+    margin-bottom: 13px;
+}
+
+.uren-overzicht td span.dagnaam{
+    font-size: 15px;
+    display: -webkit-box;
+    margin-top: -13px;
+    margin-bottom: 0px;
+}
+
 .uren-wrapper{
     position: fixed;
     margin: auto;
@@ -1747,7 +1879,7 @@ tr.studenten-overzicht td{
     padding: 10px;
 }
 
-.succseslog{
+.succeslog{
     width: 100%;
     background: #2ecc71;
     color: #fff;

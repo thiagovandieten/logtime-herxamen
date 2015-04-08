@@ -1,18 +1,5 @@
 <?php
-	/*$dbHost 	= 'localhost';
-	$dbUser 	= 'root'; 
-	$dbPassword = '';
-	$dbDatabase = 'logtime';
-
-	$dbc = mysqli_connect ($dbHost, $dbUser, $dbPassword, $dbDatabase);
-
-	if(!$dbc){
-		die ('Er kan geen verbinding tot stand worden gebracht. Foutmelding: ' . mysqli_connect_error());	
-	}
-	*/
-$website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
 error_reporting(E_ALL);
-
 spl_autoload_register(function ($class) {
     include 'classes/' . $class . '.class.php';
 });
@@ -24,9 +11,33 @@ define('USER_ID',$_SESSION['user']['user_id']);
 ## Inladen
 $db = new database;
 $loginClass = new login($db);
+date_default_timezone_set("Europe/Amsterdam");
+
+$website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
+
+define('MAXFILESIZE',10485760);
+define('MAXFILESIZEFILE',10485760);
+define('IMGTYPE','jpeg,jpg,gif,png');
+define('UPLOADDOWN','../_download/');
+define('FILETYPE','pdf,doc,xls,jpg,docx');
+
 $formClass = new form();
 if(!empty(PROJECTGROUP_ID)){
 	$groupClass = new groupsettings($db, PROJECTGROUP_ID, $formClass);
 }
 $userClass = new user($db, USER_ID);
+$groupClass = new groupsettings($db, PROJECTGROUP_ID);
+$user_id = '1';
+
+date_default_timezone_set("Europe/Amsterdam");
+
+$website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
+
+define('MAXFILESIZE',10485760);
+define('MAXFILESIZEFILE',10485760);
+define('IMGTYPE','jpeg,jpg,gif,png');
+define('UPLOADDOWN','../_download/');
+define('FILETYPE','pdf,doc,xls,jpg,docx');
+
+
 ?>
