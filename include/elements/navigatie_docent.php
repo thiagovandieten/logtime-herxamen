@@ -78,13 +78,15 @@
 
     // logout
 	if(isset($_GET['logout']) && $_GET['logout'] == true){
-		echo $loginClass->logout();	
+		//$loginClass->logout();  
+        //include('include/pages/logout.php');
+        //exit();
 	}
 
     ?>
 
     <a href="#"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
-    <a href="&logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
+    <a href="logout.php"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
 
     
 
