@@ -1,5 +1,4 @@
 <?php
-
 if(isset($_POST['bijwerken'])){
     $project        = $_POST['project'];
     $category       = $_POST['category'];
