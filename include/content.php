@@ -26,6 +26,19 @@ if($url1 == 'dashboard') {
 	$body = 'dashboard';
 	$onderdeel_id = '1';
 }
+elseif($url1 == 'projecten'){
+	$query  = "SELECT * FROM projects WHERE projectslug = '".$url2."' LIMIT 1";
+ 	$db 	->query($query);	
+	$row 	= $db->resultset();
+	$count 	= $db->rowCount();
+
+	if($count >= 1){
+		$pagina = 'project-detail.php';
+	}
+	else{
+		$pagina = 'handling/404.php';
+	}
+}
 else{
     // De onderdelen zoeken
     $query  = "SELECT * FROM onderdelen WHERE actief = '1' AND onderdeel_url = '".$url1."' LIMIT 1";

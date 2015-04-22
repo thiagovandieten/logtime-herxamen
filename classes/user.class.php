@@ -1,7 +1,7 @@
 <?php
 class user extends database{
 	
-	private $img_path = '_img/';
+	private $img_path = '_img/uploads/personal_avatar/';
 	
 	public function __construct($db, $userid){
 		$this->database = $db;
