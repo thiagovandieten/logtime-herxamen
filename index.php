@@ -1,8 +1,8 @@
 <?php
 error_reporting(0);
+error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ob_start();
-
 
 $url1 = $_GET['url1'];
 $url2 = $_GET['url2'];
