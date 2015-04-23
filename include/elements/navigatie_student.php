@@ -1,5 +1,5 @@
 <?php 
-$query  = "SELECT * FROM users WHERE user_id = '".$user_id."'";
+$query  = "SELECT * FROM users WHERE user_id = '".(USER_ID)."'";
 $db->query($query); 
 $data   = $db->resultset();
 $count  = $db->rowCount();
@@ -60,7 +60,15 @@ if($avatar == ''){
     <div style="clear:both"></div>
     <a href="<?php echo $website; ?>"><span><img src="_img/icons/dashboard.png" alt="Dashboard"></span>Dashboard</a><!--link aankoppelen -->
     <div id="urend"><a href="#"><span><img src="_img/icons/urenreg.png" alt="uren"></span>Uren registreren</a></div><!--link aankoppelen -->
-    
+
+    <!--Uren registratie -->
+    <div id="urenreg">
+        <div class="uren-wrapper">
+            <h2>Uren bijwerken</h2>
+            <?php include('include/elements/uren-invullen-form.php'); ?>
+        </div>
+    </div>
+
     <?php
 
     $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' ORDER BY onderdeel_id ASC";
@@ -92,13 +100,15 @@ if($avatar == ''){
 	
 	// logout
 	if(isset($_GET['logout']) && $_GET['logout'] == true){
-		$loginClass->logout();	
+		//$loginClass->logout();	
+        //include('logout.php');
+        //exit();
 	}
 
     ?>
 
     <a href="#"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
-    <a href="&logout=true"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
+    <a href="logout.php"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
 
 
     <!-- <a href="#"><span><img src="_img/icons/logboek.png" alt="Logboek"></span>Logboek</a>
@@ -109,12 +119,24 @@ if($avatar == ''){
     
 
     <!--Uren registratie -->
-    <div id="urenreg">
-        <div class="uren-wrapper">
-            <h2>Uren bijwerken</h2>
-            <?php include('include/elements/uren-invullen-actie.php') ?>
-            <?php include('include/elements/uren-invullen-form.php') ?>
-        </div>
-    </div>
 </nav>
 
+<script>
+    $(document).ready(
+            function() {
+                $("#urend").click(function() {
+                    $("#urenreg").toggle();
+                });
+            });
+
+    $(document).mouseup(function (e)
+    {
+        var container = $("#urenreg");
+
+        if (!container.is(e.target) // if the target of the click isn't the container...
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container.hide();
+        }
+    });
+</script>
