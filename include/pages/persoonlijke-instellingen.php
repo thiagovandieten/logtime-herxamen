@@ -49,14 +49,19 @@ if(isset($_POST['save_ps'])){
 
 	// Validation
 	if($firstname 					== ''){ $melding = 'Vul een voornaam in';}
+	elseif(!preg_match("/^([^0-9]*)$/", $firstname)){ $melding = 'Uw voornaam mag geen cijfers bevatten';}
 	elseif($lastname 				== ''){ $melding = 'Vul een achternaam in';}
+	elseif(!preg_match("/^([^0-9]*)$/", $lastname)){ $melding = 'Uw achternaam mag geen cijfers bevatten';}
 	elseif($email 					== ''){ $melding = 'Vul een email adres in';}
 	elseif(is_valid_email($email) 	!= 1){ $melding = 'Vul een geldig email adres in';}
 	elseif($phone_number 			== ''){ $melding = 'Vul een mobiele nummer in';}
 	elseif(checkTelefoon($phone_number)	!= 1){ $melding = 'Vul een geldig mobiele nummer in';}
 	elseif($street 					== ''){ $melding = 'Vul een straatnaam in';}
-	elseif($housenumber 			== ''){ $melding = 'Vul een huisnummer in';}
+	elseif(!preg_match("/^([^0-9]*)$/", $street)){ $melding = 'Uw straatnaam mag geen cijfers bevatten';}
+	elseif($housenumber 			== '' ){ $melding = 'Vul een huisnummer in';}
+	elseif(!is_numeric(substr($housenumber, 0, 1))){ $melding = 'Vul een geldig huisnummer in';}
 	elseif($city 					== ''){ $melding = 'Vul een woonplaats in';}
+	elseif(!preg_match("/^([^0-9]*)$/", $city)){ $melding = 'Uw woonplaats mag geen cijfers bevatten';}
 	elseif ((empty($numbers) || empty($characters))) { $melding = 'U heeft geen postcode ingevuld'; }
 	elseif (checkPC($numbers, $characters) != 1) { $melding = 'U heeft geen geldig postcode ingevuld'; }		
 

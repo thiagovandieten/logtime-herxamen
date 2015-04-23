@@ -14,10 +14,14 @@ if(isset($_POST['save'])){
     $duration       = date('H:i:s', $totaltime);   
     $time_part      = explode(':', $duration);
     
+    if($starttime == '' || $stoptime == '' || $description == '' || $date == ''){ $melding = '<p class="error">Vul alle velden in</p>'; }
+
     // Tijd exploden en uur -1 omdat deze standaard 1 uur teveel aangeeft.
     $hour           = $time_part[0] -1;
     $minute         = $time_part[1];
     //$second         = date('s');
+
+
 
     if($hour == '0'){ $hour = '00';}
 
@@ -120,6 +124,18 @@ elseif(isset($_POST['delete'])){
     </div>
 </div>
 <section class="ac-container">
+<!--Uren registratie voor mobiel -->
+<section class="ac-container container-mob">
+    <div>
+        <input id="ac-0" name="accordion-1" type="checkbox" />
+        <label class="uren-mob-invullen" for="ac-0"><img src="images/icons/uren-mob.png">Uren invullen</label>
+        <article class="ac-small-mob">
+
+            <h3>Uren bijwerken</h3>
+            <?php include('include/elements/uren-invullen-form.php'); ?>
+        </article>
+    </div>
+</section>
     <div class="uren-overzicht">
     <?php if(isset($melding)){ echo $melding;} ?>
     <?php if(isset($succes)){ echo $succes;} ?>
@@ -244,8 +260,8 @@ elseif(isset($_POST['delete'])){
                     echo '</td>';
 
 
-                    echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onblur = "autoTabTimes(this)"></td>';
-                    echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onblur = "autoTabTimes(this)"></td>';
+                    echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
+                    echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
                     echo '<td>'.$totaltime.'</td>';
                     echo '<td><input type="text" id="date" name="date" value="'.$date.'"></td>';
                     echo '<td><textarea id="description" name="description">'.$description.'</textarea></td>';
@@ -271,31 +287,31 @@ elseif(isset($_POST['delete'])){
 </section>
 
 <script type = "text/javascript">
-    function autoTabTimes(input) {
-    var len = input.value.length;
+     function autoTabTimes(input) {
+        var len = input.value.length;
         if (len<3) {
-        alert ("Invalid time - re-enter it");
-        input.value = "";
-        return false;
+            //alert ("Ongeldige tijdnotatie - vul de juiste notatie in");
+            input.value = "";
+            return false;
         }
         if (len==3){
-        input.value ="0" + input.value;
+            input.value ="0" + input.value;
         }
         var final = input.value.split("");
         var h = Number(final[0] + final[1]);
         var m = Number(final[2] + final[3]);
         if (h <0 || h >23 || m <0 || m >59) {
-        alert ("Invalid time - re-enter it");
-        input.value = "";
-        return false;
+            //alert ("Invalid time - re-enter it");
+            input.value = "";
+            return false;
         }
         var f = final[0]+final[1]+":"+final[2]+final[3];
         input.value = f;
         }
-         
+
         function strip(which) {
         var x = which.value;
-        x = x.replace(/[^0-9]/g,"");  // allow only digits
+        x = x.replace(/[^0-9:]/g,"");  // allow only digits
         which.value = x;
     }
 </script>

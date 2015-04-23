@@ -2,17 +2,15 @@
 if($_GET['actie'] != ''){
     include('include/pages/project-beheer_actie.php');
 }
-else{
-    if(isset($_POST['delete'])){
-        $project_id = $_POST['project'];
 
-        $delete_row = $db->query("DELETE FROM projects WHERE project_id = '".$project_id."'");
-        $db->execute();
-        $melding = 'De items zijn succesvol verwijderd.';
-        header('Location:project-beheer');
+if(isset($_POST['delete'])){
+    $project_id = $_POST['project'];
 
-    }
-    else{
+    $delete_row = $db->query("DELETE FROM projects WHERE project_id = '".$project_id."'");
+    $db->execute();
+    $melding = 'De items zijn succesvol verwijderd.';
+
+}
 
     ?>
         <form method="post" enctype="multipart/form-data">
@@ -310,6 +308,3 @@ else{
                 });
             })(document);
         </script>
-<?php
-}
-?>

@@ -1,7 +1,7 @@
 <?php
 // Waarden uit GET halen en gebruiken om gegevens uit database te halen
 $row_id = $_GET['row_id'];
-echo $query 	= "SELECT * FROM userlogs WHERE userlog_id = '".$row_id."' LIMIT 1";
+$query 	= "SELECT * FROM userlogs WHERE userlog_id = '".$row_id."' LIMIT 1";
 $result = mysqli_query ($dbc, $query) or die (mysqli_error () . " De query was: " . $query);
 $count 	= mysqli_num_rows($result);
 
