@@ -84,7 +84,7 @@ elseif(isset($_POST['delete'])){
 
             // Taak keuze
             echo '<select class="light-table-filter" data-table="order-table">';
-            echo '<option value=" ">Categorie</option>';
+            echo '<option value=" ">- Categorie -</option>';
             foreach($data_cat as $row_cat){
                 echo '<option value="'.$row_cat['category'].'">'.$row_cat['category'].'</option>';
             }
@@ -97,7 +97,7 @@ elseif(isset($_POST['delete'])){
 
             // Taak keuze
             echo '<select class="light-table-filter" data-table="order-table">';
-            echo '<option value=" ">Taak</option>';
+            echo '<option value=" ">- Taak -</option>';
             foreach($data_task as $row_task){
                 echo '<option value="'.$row_task['task'].'">'.$row_task['task'].'</option>';
             }
@@ -110,7 +110,7 @@ elseif(isset($_POST['delete'])){
 
             // Taak keuze
             echo '<select class="light-table-filter" data-table="order-table">';
-            echo '<option value=" ">Datum</option>';
+            echo '<option value=" ">- Datum -</option>';
             foreach($data_date as $row_date){
                 echo '<option value="'.$row_date['date'].'">'.$row_date['date'].'</option>';
             }

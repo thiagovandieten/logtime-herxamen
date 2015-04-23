@@ -6,9 +6,13 @@ spl_autoload_register(function ($class) {
 define('PROJECTGROUP_ID',$_SESSION['user']['projectgroup_id']);
 define('USER_ID',$_SESSION['user']['user_id']);
 
+$user_id = $_SESSION['user']['user_id'];
+
 ## Inladen
 $db = new database;
 $loginClass = new login($db);
+$groupClass = new groupsettings($db, PROJECTGROUP_ID);
+
 date_default_timezone_set("Europe/Amsterdam");
 
 $website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';

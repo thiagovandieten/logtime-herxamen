@@ -1,5 +1,5 @@
 <?php
-$query  = "SELECT * FROM users WHERE user_id = '".(USER_ID)."'";
+$query  = "SELECT * FROM users WHERE user_id = '".$user_id."'";
 $db->query($query); 
 $data 	= $db->resultset();
 $count 	= $db->rowCount();
@@ -87,7 +87,7 @@ if(isset($_POST['save_ps'])){
         `email`         	= '".$email."',
         `user_image_path`   = '".$update_img."',
         `phone_number`  	= '".$phone_number."'
-        WHERE `user_id` 	= '".(USER_ID)."'");
+        WHERE `user_id` 	= '".$user_id."'");
         
         $db->execute();
 
@@ -121,7 +121,7 @@ if(isset($_POST['save_pw'])){
 
 	$password = hash('sha512', $password_old);
 
-	$query = "SELECT * FROM `users` WHERE user_id = '".(USER_ID)."' AND password = '".$password."'";	
+	$query = "SELECT * FROM `users` WHERE user_id = '".$user_id."' AND password = '".$password."'";	
 	$db->query($query); 
 	$data 	= $db->resultset();
 	$count 	= $db->rowCount();
@@ -149,7 +149,7 @@ if(isset($_POST['save_pw'])){
 		
 		$db->query("UPDATE `users` SET 
         `password`       = '".$password."' 
-        WHERE `user_id` = '".(USER_ID)."'");
+        WHERE `user_id` = '".$user_id."'");
         
         $db->execute();
 

@@ -1,9 +1,5 @@
 <?php
-
 if(isset($_POST['bijwerken'])){
-    // Userid definieren (tijdelijk)
-    $user_id        = '1';
-
     $project        = $_POST['project'];
     $category       = $_POST['category'];
     $task           = $_POST['task'];
@@ -25,7 +21,7 @@ if(isset($_POST['bijwerken'])){
     $duration   = $hour.':'.$minute.':'.$second;
 
     $db->query("INSERT INTO `userlogs` (`starttime`, `stoptime`, `totaltime`, `description`, `date`, `user_id`, `project`, `category`, `task`) 
-    VALUES('".$starttime."', '".$stoptime."', '".$duration."', '".$description."', '".$date."', '".$user_id."', '".$project."', '".$category."', '".$task."')");
+    VALUES('".$starttime."', '".$stoptime."', '".$duration."', '".$description."', '".$date."', '".(USER_ID)."', '".$project."', '".$category."', '".$task."')");
     $db->execute();
 }
 

@@ -13,6 +13,7 @@ session_start();
 
 include('include/config.php');
 include('include/content.php');
+include('include/functions.php');
 
 ## Check of user ingelogd is
 if($url1 != 'login'){
@@ -53,9 +54,7 @@ if($url1 != 'login'){
 	        <!-- Navigatie -->
             <?php include('include/elements/'.$userClass->nav().'.php');?>
 
-			
-
-            <!-- Content inladen -->
+			<!-- Content inladen -->
             <?php include ('include/pages/'.$pagina); ?>
         
 
@@ -68,31 +67,10 @@ if($url1 != 'login'){
         
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 
-        <script src="_js/notificatie.js"></script>
-        <script src="_js/modernizr.custom.js"></script>
-        <script src="_js/menuleft.js"></script>
-        <script src="_js/legacy.js"></script>
-        <script src="_js/Chart.js"></script>
-
-        <script>
-            $(document).ready(
-                    function() {
-                        $("#urend").click(function() {
-                            $("#urenreg").toggle();
-                        });
-                    });
-
-            $(document).mouseup(function (e)
-            {
-                var container = $("#urenreg");
-
-                if (!container.is(e.target) // if the target of the click isn't the container...
-                        && container.has(e.target).length === 0) // ... nor a descendant of the container
-                {
-                    container.hide();
-                }
-            });
-        </script>
-        
+        <script src="<?php echo $website; ?>/_js/notificatie.js"></script>
+        <script src="<?php echo $website; ?>/_js/modernizr.custom.js"></script>
+        <script src="<?php echo $website; ?>/_js/menuleft.js"></script>
+        <script src="<?php echo $website; ?>/_js/legacy.js"></script>
+        <script src="<?php echo $website; ?>/_js/Chart.js"></script>        
     </body>
 </html>
