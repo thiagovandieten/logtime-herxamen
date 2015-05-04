@@ -1,4 +1,3 @@
-<?php include('include/elements/uren-invullen-actie.php'); ?>
 <?php if ($error != ''){ echo $error;} ?>
 <form method="post">             
     <?php

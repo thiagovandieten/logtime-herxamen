@@ -1,8 +1,4 @@
 <?php
-if($_GET['actie'] != ''){
-    include('include/pages/project-beheer_actie.php');
-}
-
 if(isset($_POST['delete'])){
     $project_id = $_POST['project'];
 
@@ -11,6 +7,11 @@ if(isset($_POST['delete'])){
     $melding = 'De items zijn succesvol verwijderd.';
 
 }
+
+if($_GET['actie'] != ''){
+    include('include/pages/project-beheer_actie.php');
+}
+else{
 
     ?>
         <form method="post" enctype="multipart/form-data">

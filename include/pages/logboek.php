@@ -1,4 +1,9 @@
 <?php
+if(isset($_SESSION['geslaagd'])){
+    echo '<p class="succeslog">'.$_SESSION['geslaagd'].'</p>';
+    unset($_SESSION['geslaagd']);
+}
+
 if(isset($_POST['save'])){
     $log_id         = $_POST['log_id'];
     $project        = $_POST['project'];
@@ -61,6 +66,81 @@ elseif(isset($_POST['delete'])){
     //echo '<meta http-equiv="refresh" content="0; url='.$website.'/'.$url1.'">';
 
 }
+elseif(isset($_POST['pdf'])){
+
+    require_once("dompdf/dompdf_config.inc.php");
+   
+    $query  = "SELECT * FROM userlogs ORDER BY date DESC";
+    $db->query($query); 
+    $data = $db->resultset();
+    $count = $db->rowCount();
+
+    $html =
+    '<html><body>
+        <table class="order-table table" cellspacing="0">
+            <div class="page" style="font-size: 15px">
+                <table style="width: 100%;" class="header">
+                    <tr>
+                        <td><h1 style="text-align: left">LOGBOEK</h1></td>
+                        <td><h1 style="text-align: right">2015</h1></td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td colspan="6">
+                            <h2>Logs:</h2>
+                        </td>
+                    </tr>
+                    <thead>
+                        <tr class="border_bottom">
+                            <td style="color: #666; width: 14%">Project</td>
+                            <td style="color: #666; width: 14%">Datum</td>
+                            <td style="color: #666; width: 14%">Taak</td>
+                            <td style="color: #666; width: 14%">Begintijd</td>
+                            <td style="color: #666; width: 14%">Eindtijd</td>
+                            <td style="color: #666; width: 14%">Totale uren</td>
+                            <td style="color: #666; width: 14%">Omschrijving</td>
+                        </tr>
+                    </thead>';
+                    
+                    foreach($data as $userlog){ 
+                        $html .= '
+                        <tr>
+                        <td style="text-align: left">'.$userlog['project'].'</td>
+                        <td style="text-align: left">'.$userlog['date'].'</td>
+                        <td style="text-align: left">'.$userlog['task'].'</td>
+                        <td style="text-align: left">'.$userlog['starttime'].'</td>
+                        <td style="text-align: left">'.$userlog['stoptime'].'</td>
+                        <td style="text-align: left">'.$userlog['totaltime'].'</td>
+                        <td style="text-align: left">'.$userlog['description'].'</td>
+                        </tr>'; 
+                    }
+                    $html .= '
+                </table>
+            </div>
+        </table>
+    </body></html>';
+                
+                $today = date("Y-m-d-H-i-s");
+                $filename = $today."-logboek.pdf";
+            
+                
+            
+                $dompdf = new DOMPDF();
+                $dompdf->load_html($html);
+                $dompdf->render();
+                $dompdf->stream($filename);
+                 
+                $output = $dompdf->output();
+                $file_to_save = './exports/pdf/'.$filename;
+                file_put_contents($file_to_save, $output);
+            
+                readfile($file_to_save);
+   
+}
+elseif(isset($_POST['excel'])){
+    header('Location: http://localhost/logtime/excel/export.php');
+}
 ?>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 <div class="filter-wrap">
@@ -90,7 +170,7 @@ elseif(isset($_POST['delete'])){
             echo '<select class="light-table-filter" data-table="order-table">';
             echo '<option value=" ">Categorie</option>';
             foreach($data_cat as $row_cat){
-                echo '<option value="'.$row_cat['category'].'">'.$row_cat['category'].'</option>';
+                echo '<option value="Categorie '.$row_cat['category'].'">'.$row_cat['category'].'</option>';
             }
             echo '</select>';
             
@@ -121,6 +201,10 @@ elseif(isset($_POST['delete'])){
             echo '</select>';
             ?>
         </form>
+        <form method="post">
+            <input type="submit" name="pdf" value="Genereer PDF">
+            <input type="submit" name="excel" value="Genereer Excel">
+        </form>
     </div>
 </div>
 <section class="ac-container">
@@ -143,12 +227,12 @@ elseif(isset($_POST['delete'])){
             <thead>
                 <tr class="border_bottom">
                     <td style="color: #666; min-width: 130px !important;width: 14%;"></td>
+                    <td style="color: #666; width: 15%">Project</td>
                     <td style="color: #666; width: 10%">Categorie</td>
                     <td style="color: #666; width: 12%">Taak</td>
                     <td style="color: #666; width: 10%">Begintijd</td>
                     <td style="color: #666; width: 10%">Eindtijd</td>
                     <td style="color: #666; width: 12%">Totaal uren</td>
-                    <td style="color: #666; width: 12%">Datum</td>
                     <td style="color: #666; width: 30%">Omschrijving</td>
                     <td style="color: #666">Bewerken</td>
                     <td style="color: #666">Verwijderen</td>
@@ -229,6 +313,7 @@ elseif(isset($_POST['delete'])){
 
                 
                     echo '<form method="post">';
+                    echo '<td><input type="text" id="project" name="project" value="'.$project.'"></td>';
                     echo '<td>';
 
                     $query_cat  = "SELECT DISTINCT category FROM categories";
@@ -236,7 +321,7 @@ elseif(isset($_POST['delete'])){
                     $data_cat = $db->resultset();
                     $count = $db->rowCount();
 
-                    // Taak keuze
+                    // Categorie keuze
                     echo '<select name="category">';
                     foreach($data_cat as $row_cat){
                         echo '<option name="category" value="'.$row_cat['category'].'"'; if($category == $row_cat['category']){ echo 'selected="selected"';} echo '>'.$row_cat['category'].'</option>';
@@ -263,7 +348,6 @@ elseif(isset($_POST['delete'])){
                     echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
                     echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
                     echo '<td>'.$totaltime.'</td>';
-                    echo '<td><input type="text" id="date" name="date" value="'.$date.'"></td>';
                     echo '<td><textarea id="description" name="description">'.$description.'</textarea></td>';
                     echo '<td>';
                     echo '<input type="hidden" name="log_id" value="'.$log_id.'">';

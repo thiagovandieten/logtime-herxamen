@@ -1,8 +1,9 @@
 <?php
+//include 'excel/PHPExcel.php';
+
 spl_autoload_register(function ($class) {
     include 'classes/' . $class . '.class.php';
 });
-
 
 define('PROJECTGROUP_ID',$_SESSION['user']['projectgroup_id']);
 define('USER_ID',$_SESSION['user']['user_id']);
