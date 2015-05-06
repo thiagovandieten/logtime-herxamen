@@ -1,14 +1,12 @@
 <?php
-//include 'excel/PHPExcel.php';
-
-spl_autoload_register(function ($class) {
-    include 'classes/' . $class . '.class.php';
-});
-
 define('PROJECTGROUP_ID',$_SESSION['user']['projectgroup_id']);
 define('USER_ID',$_SESSION['user']['user_id']);
 
 $user_id = $_SESSION['user']['user_id'];
+
+spl_autoload_register(function ($class) {
+    include 'classes/' . $class . '.class.php';
+});
 
 ## Inladen
 $db = new database;
@@ -29,8 +27,8 @@ $formClass = new form();
 if(!empty($_SESSION['user']['projectgroup_id'])){
 	$groupClass = new groupsettings($db, PROJECTGROUP_ID, $formClass);
 }
-$userClass = new user($db, USER_ID);
-$groupClass = new groupsettings($db, PROJECTGROUP_ID);
-$studentsettingClass = new studentsettings($db, USER_ID);
+$userClass 				= new user($db, USER_ID);
+$groupClass 			= new groupsettings($db, PROJECTGROUP_ID);
+$studentsettingClass 	= new studentsettings($db, USER_ID);
 
 ?>

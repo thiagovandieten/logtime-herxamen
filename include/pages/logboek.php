@@ -70,7 +70,7 @@ elseif(isset($_POST['pdf'])){
 
     require_once("dompdf/dompdf_config.inc.php");
    
-    $query  = "SELECT * FROM userlogs ORDER BY date DESC";
+    $query  = "SELECT * FROM userlogs ".$userClass->logbookData()." ORDER BY date DESC";
     $db->query($query); 
     $data = $db->resultset();
     $count = $db->rowCount();
@@ -121,21 +121,21 @@ elseif(isset($_POST['pdf'])){
         </table>
     </body></html>';
                 
-                $today = date("Y-m-d-H-i-s");
-                $filename = $today."-logboek.pdf";
-            
-                
-            
-                $dompdf = new DOMPDF();
-                $dompdf->load_html($html);
-                $dompdf->render();
-                $dompdf->stream($filename);
-                 
-                $output = $dompdf->output();
-                $file_to_save = './exports/pdf/'.$filename;
-                file_put_contents($file_to_save, $output);
-            
-                readfile($file_to_save);
+    $today = date("Y-m-d-H-i-s");
+    $filename = $today."-logboek.pdf";
+
+    
+
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($html);
+    $dompdf->render();
+    $dompdf->stream($filename);
+     
+    $output = $dompdf->output();
+    $file_to_save = './exports/pdf/'.$filename;
+    file_put_contents($file_to_save, $output);
+
+    readfile($file_to_save);
    
 }
 elseif(isset($_POST['excel'])){
@@ -143,10 +143,10 @@ elseif(isset($_POST['excel'])){
 }
 ?>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-<div class="filter-wrap">
+<div class="filter-wrap" >
     <div class="filter-omgeving">
-        <p>Filter op</p>
-        <form>
+        <!-- <p>Filter op</p> -->
+        <form style="display:none">
             <!-- <select class="light-table-filter" data-table="order-table">
                 <option value=" ">Leerjaar</option>
                 <option value="Leerjaar 1">Leerjaar 1</option>
@@ -187,7 +187,7 @@ elseif(isset($_POST['excel'])){
             }
             echo '</select>';
 
-            $query_date  = "SELECT DISTINCT `date` FROM userlogs";
+            $query_date  = "SELECT DISTINCT `date` FROM userlogs ".$userClass->logbookData()."";
             $db->query($query_date); 
             $data_date = $db->resultset();
             $count = $db->rowCount();
@@ -221,12 +221,17 @@ elseif(isset($_POST['excel'])){
     </div>
 </section>
     <div class="uren-overzicht">
-    <?php if(isset($melding)){ echo $melding;} ?>
-    <?php if(isset($succes)){ echo $succes;} ?>
+        <?php if(isset($melding)){ echo $melding;} ?>
+        <?php if(isset($succes)){ echo $succes;} ?>
         <table class="order-table table" cellspacing="0">
             <thead>
                 <tr class="border_bottom">
                     <td style="color: #666; min-width: 130px !important;width: 14%;"></td>
+                    <?php
+                    if($_SESSION['user']['usertype_id'] == 2){
+                        echo '<td style="color: #666; width: 15%">Student</td>';
+                    }  
+                    ?>
                     <td style="color: #666; width: 15%">Project</td>
                     <td style="color: #666; width: 10%">Categorie</td>
                     <td style="color: #666; width: 12%">Taak</td>
@@ -240,7 +245,7 @@ elseif(isset($_POST['excel'])){
             </thead>
             <?php
             
-            $query  = "SELECT DISTINCT date FROM userlogs ORDER BY date DESC";
+            $query  = "SELECT DISTINCT date FROM userlogs ".$userClass->logbookData()." ORDER BY date DESC";
             $db->query($query); 
             $data = $db->resultset();
             $count = $db->rowCount();
@@ -281,8 +286,12 @@ elseif(isset($_POST['excel'])){
                 elseif($dagnaam == 'Saturday')  { $dagnaam = 'zaterdag'; }
                 elseif($dagnaam == 'Sunday')    { $dagnaam = 'zondag'; }
 
+                if($_SESSION['user']['usertype_id'] == 2){
+                    $innerjoin = "INNER JOIN users ON userlogs.user_id = users.user_id";
+                }
+
                 $aantal = 1;
-                $query1  = "SELECT * FROM userlogs WHERE date LIKE '%".$ingevoerd_jaar.'-'.$ingevoerd_maand.'-'.$ingevoerd_dag."%'";
+                $query1  = "SELECT * FROM userlogs ".$innerjoin." WHERE userlogs.date LIKE '%".$ingevoerd_jaar.'-'.$ingevoerd_maand.'-'.$ingevoerd_dag."%' ".$userClass->logbookData2()."";
                 $db->query($query1); 
                 $data1 = $db->resultset();
                 $count1 = $db->rowCount();
@@ -295,6 +304,8 @@ elseif(isset($_POST['excel'])){
 
                 foreach($data1 as $row1){
                     $log_id         = $row1['userlog_id'];
+                    $firstname      = $row1['firstname'];
+                    $lastname       = $row1['lastname'];
                     $project        = $row1['project'];
                     $category       = $row1['category'];
                     $task           = $row1['task'];
@@ -311,8 +322,12 @@ elseif(isset($_POST['excel'])){
                     if($hour >= 1 && $hour <= 9){$hour = '0'.$hour;}
                     $totaltime      = $hour.':'.$minute;
 
-                
                     echo '<form method="post">';
+                    
+                    if($_SESSION['user']['usertype_id'] == 2){
+                        echo '<td>'.$firstname.' '.$lastname.'</td>';
+                    }
+
                     echo '<td><input type="text" id="project" name="project" value="'.$project.'"></td>';
                     echo '<td>';
 
@@ -343,7 +358,6 @@ elseif(isset($_POST['excel'])){
                     }
                     echo '</select>';
                     echo '</td>';
-
 
                     echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
                     echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
@@ -399,6 +413,7 @@ elseif(isset($_POST['excel'])){
         which.value = x;
     }
 </script>
+
 <script>
     $(document).ready(function()
     {

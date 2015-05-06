@@ -53,6 +53,21 @@ class user extends database{
 			return 'navigatie_docent';	
 		}
 	}
-	
+
+	public function logbookData(){
+		if($_SESSION['user']['usertype_id'] == 1){
+		 	return "WHERE user_id = '".$this->user_id."'";
+		}elseif($_SESSION['user']['usertype_id'] == 2){
+			return '';	
+		}
+	}
+
+	public function logbookData2(){
+		if($_SESSION['user']['usertype_id'] == 1){
+		 	return "AND user_id = '".$this->user_id."'";
+		}elseif($_SESSION['user']['usertype_id'] == 2){
+			return '';	
+		}
+	}
 }
 ?>

@@ -56,20 +56,27 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 // Add some data
 echo date('H:i:s') , " Add some data" , EOL;
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Project')
-            ->setCellValue('B1', 'Datum')
-            ->setCellValue('C1', 'Taak')
-            ->setCellValue('D1', 'Begintijd')
-            ->setCellValue('E1', 'Eindtijd')
-            ->setCellValue('F1', 'Totale uren')
-            ->setCellValue('G1', 'Omschrijving');
+            ->setCellValue('A1', 'Student')
+            ->setCellValue('B1', 'Project')
+            ->setCellValue('C1', 'Datum')
+            ->setCellValue('D1', 'Taak')
+            ->setCellValue('E1', 'Begintijd')
+            ->setCellValue('F1', 'Eindtijd')
+            ->setCellValue('G1', 'Totale uren')
+            ->setCellValue('H1', 'Omschrijving');
 
 // Miscellaneous glyphs, UTF-8
 // Fill cells with data
+if($_SESSION['user']['usertype_id'] == 1){
+    $where = "WHERE `userlogs`.`user_id` = '".$_SESSION['user']['user_id']."'";
+}elseif($_SESSION['user']['usertype_id'] == 2){
+    $where = '';  
+}
+
 include('../classes/database.class.php');
 $db = new database;
 
-$query  = "SELECT * FROM userlogs ORDER BY date DESC";
+echo $query  = "SELECT * FROM `userlogs` INNER JOIN `users` ON `userlogs`.`user_id` = `users`.`user_id` ".$where." ORDER BY date DESC";
 $db 	->query($query); 
 $data 	= $db->resultset();
 $count 	= $db->rowCount();
@@ -79,23 +86,24 @@ $i = 2;
 foreach ($data as $value) {
 
 	$objPHPExcel->setActiveSheetIndex(0)
-    ->setCellValue('A'.$i, $value['project'])
-    ->setCellValue('B'.$i, $value['date'])
-    ->setCellValue('C'.$i, $value['task'])
-    ->setCellValue('D'.$i, $value['starttime'])
-    ->setCellValue('E'.$i, $value['stoptime'])
-    ->setCellValue('F'.$i, $value['totaltime'])
-    ->setCellValue('G'.$i, $value['description']);
+    ->setCellValue('A'.$i, $value['firstname'].' '.$value['lastname'])
+    ->setCellValue('B'.$i, $value['project'])
+    ->setCellValue('C'.$i, $value['date'])
+    ->setCellValue('D'.$i, $value['task'])
+    ->setCellValue('E'.$i, $value['starttime'])
+    ->setCellValue('F'.$i, $value['stoptime'])
+    ->setCellValue('G'.$i, $value['totaltime'])
+    ->setCellValue('H'.$i, $value['description']);
 
     echo $i++;
 }
 
 
 
-$objPHPExcel->getActiveSheet()->getStyle('G2:G'.$objPHPExcel->getActiveSheet()->getHighestRow())->getAlignment()->setWrapText(true);
-$objPHPExcel->getActiveSheet()->getStyle('A1:G'.$count)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(40); 
-foreach(range('A','F') as $column_id){
+$objPHPExcel->getActiveSheet()->getStyle('H2:H'.$objPHPExcel->getActiveSheet()->getHighestRow())->getAlignment()->setWrapText(true);
+$objPHPExcel->getActiveSheet()->getStyle('A1:H'.$count)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(40); 
+foreach(range('A','H') as $column_id){
     $objPHPExcel->getActiveSheet()->getColumnDimension($column_id)->setAutoSize(true);
 }
 
@@ -106,9 +114,10 @@ $objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true);
 
 // Set filter
-$objPHPExcel->getActiveSheet()->setAutoFilter('A1:G'.$count);
+$objPHPExcel->getActiveSheet()->setAutoFilter('A1:H'.$count);
 
 $website    = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
 $today      = date("Y-m-d-H-i-s");

@@ -45,7 +45,7 @@
     
     <?php
 
-    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' AND `is_docent`=1 ORDER BY onderdeel_id ASC";
+    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' AND `is_docent` = 1 ORDER BY onderdeel_id ASC";
 	//$result = mysqli_query($dbc, $query);
 	//$count = mysqli_num_rows($result);
 	
