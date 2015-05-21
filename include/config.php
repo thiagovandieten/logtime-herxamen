@@ -4,10 +4,6 @@ define('USER_ID',$_SESSION['user']['user_id']);
 
 $user_id = $_SESSION['user']['user_id'];
 
-spl_autoload_register(function ($class) {
-    include 'classes/' . $class . '.class.php';
-});
-
 //Hier kijken of hij of productie draait of bij iemand lokaal
 
 if($_SERVER['HTTP_HOST'] == 'herlogtime.dev') {
