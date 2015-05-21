@@ -1,13 +1,16 @@
 <?php
-error_reporting(0);
-//error_reporting(E_ALL);
+//error_reporting(0);
+error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ob_start();
 
-$url1 = $_GET['url1'];
-$url2 = $_GET['url2'];
-$url3 = $_GET['url3'];
-$url4 = $_GET['url4'];
+//Om de onnodige undefined variables eruit te halen (om debug makkelijker te maken)
+//is er nu loop die kijkt of url1 t/m 4 bestaat in $_GET en daarna dynamisch $url met cijfer creert
+for($i = 1; $i < 5; $i++ ) {
+    if(isset($_GET["url{$i}"])) {
+        ${'url' . $i} = $_GET["url{$i}"];
+    }
+}
 
 session_start();
 
