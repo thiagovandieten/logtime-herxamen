@@ -1,6 +1,7 @@
 <?php
 define('PROJECTGROUP_ID',$_SESSION['user']['projectgroup_id']);
 define('USER_ID',$_SESSION['user']['user_id']);
+define('USERTYPE_ID',$_SESSION['user']['usertype_id']);
 
 $user_id = $_SESSION['user']['user_id'];
 

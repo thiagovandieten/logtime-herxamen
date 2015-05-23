@@ -5,6 +5,7 @@ class groupsettings extends database{
 		$this->database = $db;	
 		$this->group_id = PROJECTGROUP_ID;
 		$this->user_id = USER_ID;
+		$this->user_type = USERTYPE_ID;
 		self::setGroupdata();
 		self::setLocationData();
 	}
@@ -52,7 +53,45 @@ class groupsettings extends database{
 			}	
 		}
 	}
-	
+
+	/**
+	 * Docent functie
+	 * Haalt alle groepen op. 
+	 * @return $array of all groups
+	 */
+	public function getAllGroups()
+	{
+		$this->database->query("SELECT * FROM `projectgroup` WHERE active = 1");
+		$groups = $this->database->resultset();
+		foreach ($groups as $key => $group) {
+			$this->database->query("SELECT grade_name FROM `grade` WHERE grade_id = :grade_id");
+			$this->database->bind(':grade_id' , $group['grade_id']);
+			$this->data = $this->database->single();
+			$groups[$key]['grade_name'] = $this->data['grade_name'];
+			$this->database->query("SELECT user_id, firstname FROM `users` WHERE user_id = :coach_id OR user_id = :leader_id");
+			$this->database->bind(':coach_id' , $group['coach_id']);
+			$this->database->bind(':leader_id' , $group['leader_id']);
+			$users = $this->database->resultset();
+			foreach ($users as $user) {
+				if($group['coach_id'] == $user["user_id"])
+					{
+						$groups[$key]["coach"] = $user['firstname'];
+					}
+				if($group['leader_id'] == $user["user_id"])
+					{
+						$groups[$key]["leader"] = $user['firstname'];
+					}
+			}
+			/**
+			 * TODO project in groups zetten 
+			 * $groups[$key]["project"] = $project_name 
+			 */
+			unset($groups[$key]['grade_id'], $groups[$key]['level_type_id'], $groups[$key]['adress_id'], $this->data, $groups[$key]['coach_id'], $groups[$key]["leader_id"],$groups[$key]["leveltype_id"]);
+		}
+
+		return($groups);
+	}
+
 	public function saveImage($image){
 		if(!empty($image)){
 			$this->database->query('UPDATE `projectgroup` SET `image_path`="'.$image.'" WHERE `projectgroup_id`='.$this->group_id.'');
@@ -62,9 +101,10 @@ class groupsettings extends database{
 	
 	public function hasPermission(){
 		
-		if($this->leader_id != $this->user_id){
-			header('Location: /dashboard');	
+		if($this->leader_id == $this->user_id || $this->user_type == 2){
+			return;	
 		}
+			header('Location: /dashboard');	
 	}
 	
 	protected function checkStudentWage(){

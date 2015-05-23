@@ -1,6 +1,7 @@
 <?php
 	$groupClass->hasPermission();
 ?>
+                        <?php exit($pagina);?>
 <h1>
 Groepsinstellingen
 </h1>

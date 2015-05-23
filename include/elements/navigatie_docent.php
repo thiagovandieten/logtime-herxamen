@@ -52,7 +52,6 @@
 	$db->query($query);	
 	$data = $db->resultset();
 	$count = $db->rowCount();
-	
 //    while($row = mysqli_fetch_array($result)) {
 	foreach($data as $row){
 	$ond_id       = $row['onderdeel_id'];
