@@ -1,9 +1,10 @@
 <?php
 class studentsettings extends database{
 	
-	public function __construct($db, $userid){
+	public function __construct($db, $userid , $location_id){
+		$this->location_id = $location_id;
 		$this->database = $db;
-		$this->user_id = $userid;	
+		$this->user_id = $userid;
 	}
 	
 	protected function getProjectGroup($id){
@@ -62,7 +63,18 @@ class studentsettings extends database{
 		}
         echo '</tbody></table>';
 	}
-	
+
+	/**
+	 * gets all users with user type student
+	 * @return array multidimensional filled with all students
+	 */
+	public function getAllStudents()
+	{
+		$this->database->query("SELECT * FROM `users` WHERE usertype_id = 1 AND location_id = :location_id");
+		$this->database->bind(':location_id' , $this->location_id);
+		return $this->database->resultset();
+	}
+
 	public function allusertypes(){
 		$this->database->query('SELECT * FROM `usertypes`');	
 		$this->data = $this->database->resultset();

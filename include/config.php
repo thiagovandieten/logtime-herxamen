@@ -2,6 +2,8 @@
 define('PROJECTGROUP_ID',$_SESSION['user']['projectgroup_id']);
 define('USER_ID',$_SESSION['user']['user_id']);
 define('USERTYPE_ID',$_SESSION['user']['usertype_id']);
+define('LOCATION_ID', $_SESSION['user']['location_id']);
+
 
 $user_id = $_SESSION['user']['user_id'];
 
@@ -28,8 +30,9 @@ $formClass = new form();
 if(!empty($_SESSION['user']['projectgroup_id'])){
 	$groupClass = new groupsettings($db, PROJECTGROUP_ID, $formClass);
 }
-$userClass 				= new user($db, USER_ID);
-$groupClass 			= new groupsettings($db, PROJECTGROUP_ID);
-$studentsettingClass 	= new studentsettings($db, USER_ID);
-
+$userClass           = new user($db, USER_ID);
+$groupClass          = new groupsettings($db, PROJECTGROUP_ID);
+$studentsettingClass = new studentsettings($db, USER_ID, LOCATION_ID);
+$gradeClass          = new grade($db, LOCATION_ID);
+$projectClass        = new project($db, LOCATION_ID);
 ?>

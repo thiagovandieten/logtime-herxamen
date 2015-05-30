@@ -1,47 +1,93 @@
 <?php
 	$groupClass->hasPermission();
-    error_reporting(-1);
+    error_reporting(E_ALL);
     if(isset($_GET['new'])){
 ?>
 
 <section class="ac-container">
 <?php
     if(isset($_POST['newGroup'])){
+        try
+        {
+            $groupClass->saveNewGroup($_POST);
+        }
+        catch(Exception $e)
+        {
+            var_dump($e);
+        }
+
     }
+    // formulier om een nieuwe groep aan te maken //
 ?>
 <p> Nieuwe Groep aanmaken! </p>
   <br/>
   <form method='post'>
-    <select name='grade'>
-        <option>kies een leerjaar</option>
-        <?php ?>
+    <select name='grade' required>
+        <option disabled selected>Kies een leerjaar</option>
+        <?php
+            foreach ($gradeClass->getAllGrades() as $value)
+            {
+                echo "<option value='".$value['grade_id']."'>".$value['grade_name']."</option>";
+            }
+        ?>
     </select>*
     <br/>
-    <input type='text' name='groupName' placeholder="Groep naam" />*
+    <input type='text' name='groupName' placeholder="Groep naam" required/>*
     <br/>
-    <select name='coach'>
-        <option>kies een coach</option>
-        <?php ?>
+    <select name='coach' required>
+        <option disabled selected>Kies een coach</option>
+        <?php
+            foreach ($groupClass->getAllTeachers() as $value)
+            {
+                echo "<option value='".$value['user_id']."'>".$value['firstname']." ".$value['lastname']."</option>";
+            }
+        ?>
     </select>*
     <br/>
     <select name='project'>
-        <option>kies een project</option>
-        <?php ?>
+        <option disabled selected>Kies een project</option>
+        <?php
+            foreach ($projectClass->getAllProjects() as $value)
+            {
+                echo "<option value='".$value['project_id']."'>".$value['project']."</option>";
+            }
+        ?>
     </select>
-    <select multiple name='students'>
-        <option>kies een leerlingen</option>
+    </br>
+    <button type="button" onclick="add_student()" id="add_student">></button><button type="button" onclick="remove_student()" id="remove_student"><</button>
+    </br>
+    <select multiple id="choose_student">
+        <option disabled>Kies een leerlingen</option>
+        <?php
+            foreach ($studentsettingClass->getAllStudents() as $value)
+            {
+                echo "<option value='".$value['user_id']."'>".$value['firstname']." ".$value['lastname']."</option>";
+            }
+        ?>
+    </select>
+    <!-- TEMP HOE DE STUDENTS GEVULLED WORDT-->
+    <select multiple name='students' id="chosen_student" required>
+        <option disabled>Gekozen leerlingen</option>
+        <?php
+            foreach ($studentsettingClass->getAllStudents() as $value)
+            {
+                echo "<option value='".$value['user_id']."'>".$value['firstname']." ".$value['lastname']."</option>";
+            }
+        ?>
     </select>*
+    <br>
     <select name='projectleider'>
-        <option>kies een projectleider</option>
-        <?php ?>
+        <option disabled selected>kies een projectleider</option>
     </select>
     <br/>
-    <input type='submit' name='newGroup' value='Opslaan' />
+    <input type='submit' name='newGroup' value='Opslaan' me/>
   </form>
 </section>
 
 <?php }
-else{ ?>
+else{
+    // toont alle groepen //
+?>
 <div class="filter-wrap">
   <div class="buttons-wrap"> <a href='docentgroepsinstellingen?new'>
     <button class="nieuw-knop">Nieuw</button>
