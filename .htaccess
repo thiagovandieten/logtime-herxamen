@@ -32,6 +32,7 @@ RewriteRule ^([^/.]+)?$ index.php?url1=$1 [L,QSA]
 
 # ERROR LOGS
 php_flag log_errors on
+#Verander natuurlijk de waade na error_log
 php_value error_log /Users/nktakumi/Projects/logtime-herexamen/log/php-error.log
 
 

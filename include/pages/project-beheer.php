@@ -1,14 +1,17 @@
 <?php
+use Logtime\Project\ProjectGateway;
+use Logtime\Grade\GradeGateway;
+use Logtime\View\Template\SelectOption;
+
 if(isset($_POST['delete'])){
+    $project = new ProjectGateway($db);
     $project_id = $_POST['project'];
 
-    $delete_row = $db->query("DELETE FROM projects WHERE project_id = '".$project_id."'");
-    $db->execute();
-    $melding = 'De items zijn succesvol verwijderd.';
+    $melding = $project->delete($project_id);
 
 }
 
-if($_GET['actie'] != ''){
+if(isset($_GET['actie']) && $_GET['actie'] != ''){
     include('include/pages/project-beheer_actie.php');
 }
 else{
@@ -26,48 +29,14 @@ else{
                     <p>Filter op</p>
                     
                         <?php
-                        $query_grade  = "SELECT * FROM grade";
-        	            $db->query($query_grade); 
-        	            $data_grade = $db->resultset();
-        	            $count = $db->rowCount();
+                        //Klas keuze
+                        $gradeGateway = new GradeGateway($db);
+                        echo SelectOption::generate($gradeGateway->selectAll(),'grade', 'Leerjaar');
 
-        	            // Klas keuze
-        	            echo '<select class="light-table-filter" data-table="order-table">';
-        	            echo '<option>Leerjaar</option>';
-        	            foreach($data_grade as $row_grade){
-        	                echo '<option value="Leerjaar '.$row_grade['grade'].'">Leerjaar '.$row_grade['grade'].'</option>';
-        	            }
-        	            echo '</select>';
-        	            ?>
-
-                        <?php
-                        $query_periode  = "SELECT * FROM periodes";
-        	            $db->query($query_periode); 
-        	            $data_periode 	= $db->resultset();
-        	            $count 			= $db->rowCount();
-
-        	            // Periode keuze
-        	            echo '<select class="light-table-filter" data-table="order-table">';
-        	            echo '<option>Periode</option>';
-        	            foreach($data_periode as $row_periode){
-        	                echo '<option value="periode '.$row_periode['periode'].'">Periode '.$row_periode['periode'].'</option>';
-        	            }
-        	            echo '</select>';
-        	            ?>
-
-                        <?php
-                        $query_grade  = "SELECT * FROM grade";
-        	            $db->query($query_grade); 
-        	            $data_grade = $db->resultset();
-        	            $count = $db->rowCount();
-
-        	            // Klas keuze
-        	            echo '<select class="light-table-filter" data-table="order-table">';
-        	            echo '<option>Klas</option>';
-        	            foreach($data_grade as $row_grade){
-        	                echo '<option value="Klas '.$row_grade['grade_name'].'">'.$row_grade['grade_name'].'</option>';
-        	            }
-        	            echo '</select>';
+                        $periodeGateway = new \Logtime\Periode\PeriodeGateway($db);
+                        echo SelectOption::generate($periodeGateway->selectAll(),  'periode', 'Periode');
+                        // Periode keuze
+                        echo SelectOption::generate($gradeGateway->selectAll(), 'grade_name', 'Klas');
         	            ?>
                 </div>
             </div>
