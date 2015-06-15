@@ -1,15 +1,13 @@
 <?php
 error_reporting(0);
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+ini_set('display_errors', '0');
 ob_start();
+session_start();
 
 $url1 = $_GET['url1'];
 $url2 = $_GET['url2'];
 $url3 = $_GET['url3'];
 $url4 = $_GET['url4'];
-
-session_start();
 
 include('include/config.php');
 include('include/content.php');

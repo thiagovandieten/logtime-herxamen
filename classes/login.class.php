@@ -148,5 +148,19 @@ class login extends database{
 		}
 	}
 	
+	public function firstLogin($post){
+		if($this->emptyPost($post['firstname']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif($this->emptyPost($post['lastname']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif($this->emptyPost($post['password']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif($this->emptyPost($post['password_re']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif(ctype_alpha($post['firstname']) == false){
+			
+		}
+	}
+	
 }
 ?>
