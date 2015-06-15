@@ -571,7 +571,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `usercode`, `password`, `firstname`, `lastname`, `email`, `user_image_path`, `phone_number`, `lasttime_online`, `remember_token`, `usertype_id`, `location_id`, `projectgroup_id`, `adress_id`, `updated_at`, `active`) VALUES
-(5, '1337', '26c669cd0814ac40e5328752b21c4aa6450d16295e4eec30356a06a911c23983aaebe12d5da38eeebfc1b213be650498df8419194d5a26c7e0a50af156853c79', 'Yannick', 'Berendsen', 'mryannickz@live.nl', 'avatar1.png', '', '2015-04-08 12:59:57', NULL, 2, 1, 1, 1, '2015-04-08 18:50:12', 1);
+(5, '1337', '26c669cd0814ac40e5328752b21c4aa6450d16295e4eec30356a06a911c23983aaebe12d5da38eeebfc1b213be650498df8419194d5a26c7e0a50af156853c79', 'Yannick', 'Berendsen', 'mryannickz@live.nl', 'avatar1.png', '', '2015-04-08 12:59:57', NULL, 2, 1, 1, 1, '2015-04-08 18:50:12', 1),
+(6,'256116','985cee0415eec562abe933a75ac01335084ef338b9bc46838345d538771d68e8b5a16f6fbb526e51f9ab1ad184f5a1b6627813e2b8fe256e5fcc1d6053406b50','Thiago','van Dieten','thiago@tvdieten.com','placeholder.png','','2015-04-08 12:59:57',NULL,2,1,1,1,'2015-04-08 20:50:12',1);
 
 -- --------------------------------------------------------
 
