@@ -15,7 +15,7 @@ $groupClass = new groupsettings($db, PROJECTGROUP_ID);
 
 date_default_timezone_set("Europe/Amsterdam");
 
-$website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
+$website = 'http://'.$_SERVER['HTTP_HOST'].'/';
 
 define('MAXFILESIZE',10485760);
 define('MAXFILESIZEFILE',10485760);
@@ -30,5 +30,6 @@ if(!empty($_SESSION['user']['projectgroup_id'])){
 $userClass = new user($db, USER_ID);
 $groupClass = new groupsettings($db, PROJECTGROUP_ID);
 $studentsettingClass = new studentsettings($db, USER_ID);
+$notificationClass = new notification($db, USER_ID);
 
 ?>
