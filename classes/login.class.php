@@ -174,8 +174,6 @@ class login extends database{
 		}
 	}
 	
-<<<<<<< Updated upstream
-=======
 	public function firstLogin($post){
 		$temp_id = $post['temp_id'];
 		if($this->emptyPost($post['firstname']) == false){
@@ -200,6 +198,6 @@ class login extends database{
 		}
 	}
 	
->>>>>>> Stashed changes
+
 }
 ?>

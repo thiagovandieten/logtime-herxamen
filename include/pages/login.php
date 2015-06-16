@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 $loginClass->logged();
-if(!isset($_GET['firstlogin'])){
+if(!isset($_GET['firstlogin']) && !isset($_GET['lostpass'])){
 	if(isset($_POST['login'])){
 		$loginClass->setLoginData($_POST['userlogin'], $_POST['password']);
 		$loginClass->validateLogin();	
@@ -30,7 +30,12 @@ if(!isset($_GET['firstlogin'])){
     <input type='submit' name='login' value='Inloggen'>
 </form>
 
+<br/>
+<a href='login&lostpass'>Wachtwoord Opvragen</a>
+
 <?php
-}else{
+}elseif(isset($_GET['firstlogin'])){
 	include('include/elements/firstlogin.php');	
+}else{
+	include('include/elements/lostpass.php');	
 }
