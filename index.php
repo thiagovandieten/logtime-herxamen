@@ -1,7 +1,12 @@
 <?php
+<<<<<<< Updated upstream
 error_reporting(0);
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+=======
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+>>>>>>> Stashed changes
 ob_start();
 
 $url1 = $_GET['url1'];

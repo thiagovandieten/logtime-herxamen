@@ -23,6 +23,7 @@ if(!isset($_GET['firstlogin'])){
 			echo $message['no_errors'];	
 		}
 	}
+	
 ?>	
 <form method='post'>
 	<input type='text' name='userlogin' placeholder='Studentcode/EMail'><br/>
@@ -32,5 +33,6 @@ if(!isset($_GET['firstlogin'])){
 
 <?php
 }else{
+
 	include('include/elements/firstlogin.php');	
 }
