@@ -1,4 +1,9 @@
 <?php
+if(isset($_SESSION['geslaagd'])){
+    echo '<p class="succeslog">'.$_SESSION['geslaagd'].'</p>';
+    unset($_SESSION['geslaagd']);
+}
+
 if(isset($_POST['save'])){
     $log_id         = $_POST['log_id'];
     $project        = $_POST['project'];
@@ -14,10 +19,14 @@ if(isset($_POST['save'])){
     $duration       = date('H:i:s', $totaltime);   
     $time_part      = explode(':', $duration);
     
+    if($starttime == '' || $stoptime == '' || $description == '' || $date == ''){ $melding = '<p class="error">Vul alle velden in</p>'; }
+
     // Tijd exploden en uur -1 omdat deze standaard 1 uur teveel aangeeft.
     $hour           = $time_part[0] -1;
     $minute         = $time_part[1];
     //$second         = date('s');
+
+
 
     if($hour == '0'){ $hour = '00';}
 
@@ -57,12 +66,87 @@ elseif(isset($_POST['delete'])){
     //echo '<meta http-equiv="refresh" content="0; url='.$website.'/'.$url1.'">';
 
 }
+elseif(isset($_POST['pdf'])){
+
+    require_once("dompdf/dompdf_config.inc.php");
+   
+    $query  = "SELECT * FROM userlogs ".$userClass->logbookData()." ORDER BY date DESC";
+    $db->query($query); 
+    $data = $db->resultset();
+    $count = $db->rowCount();
+
+    $html =
+    '<html><body>
+        <table class="order-table table" cellspacing="0">
+            <div class="page" style="font-size: 15px">
+                <table style="width: 100%;" class="header">
+                    <tr>
+                        <td><h1 style="text-align: left">LOGBOEK</h1></td>
+                        <td><h1 style="text-align: right">2015</h1></td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td colspan="6">
+                            <h2>Logs:</h2>
+                        </td>
+                    </tr>
+                    <thead>
+                        <tr class="border_bottom">
+                            <td style="color: #666; width: 14%">Project</td>
+                            <td style="color: #666; width: 14%">Datum</td>
+                            <td style="color: #666; width: 14%">Taak</td>
+                            <td style="color: #666; width: 14%">Begintijd</td>
+                            <td style="color: #666; width: 14%">Eindtijd</td>
+                            <td style="color: #666; width: 14%">Totale uren</td>
+                            <td style="color: #666; width: 14%">Omschrijving</td>
+                        </tr>
+                    </thead>';
+                    
+                    foreach($data as $userlog){ 
+                        $html .= '
+                        <tr>
+                        <td style="text-align: left">'.$userlog['project'].'</td>
+                        <td style="text-align: left">'.$userlog['date'].'</td>
+                        <td style="text-align: left">'.$userlog['task'].'</td>
+                        <td style="text-align: left">'.$userlog['starttime'].'</td>
+                        <td style="text-align: left">'.$userlog['stoptime'].'</td>
+                        <td style="text-align: left">'.$userlog['totaltime'].'</td>
+                        <td style="text-align: left">'.$userlog['description'].'</td>
+                        </tr>'; 
+                    }
+                    $html .= '
+                </table>
+            </div>
+        </table>
+    </body></html>';
+                
+    $today = date("Y-m-d-H-i-s");
+    $filename = $today."-logboek.pdf";
+
+    
+
+    $dompdf = new DOMPDF();
+    $dompdf->load_html($html);
+    $dompdf->render();
+    $dompdf->stream($filename);
+     
+    $output = $dompdf->output();
+    $file_to_save = './exports/pdf/'.$filename;
+    file_put_contents($file_to_save, $output);
+
+    readfile($file_to_save);
+   
+}
+elseif(isset($_POST['excel'])){
+    header('Location: http://localhost/logtime/excel/export.php');
+}
 ?>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-<div class="filter-wrap">
+<div class="filter-wrap" >
     <div class="filter-omgeving">
-        <p>Filter op</p>
-        <form>
+        <!-- <p>Filter op</p> -->
+        <form style="display:none">
             <!-- <select class="light-table-filter" data-table="order-table">
                 <option value=" ">Leerjaar</option>
                 <option value="Leerjaar 1">Leerjaar 1</option>
@@ -86,7 +170,7 @@ elseif(isset($_POST['delete'])){
             echo '<select class="light-table-filter" data-table="order-table">';
             echo '<option value=" ">Categorie</option>';
             foreach($data_cat as $row_cat){
-                echo '<option value="'.$row_cat['category'].'">'.$row_cat['category'].'</option>';
+                echo '<option value="Categorie '.$row_cat['category'].'">'.$row_cat['category'].'</option>';
             }
             echo '</select>';
             
@@ -103,7 +187,7 @@ elseif(isset($_POST['delete'])){
             }
             echo '</select>';
 
-            $query_date  = "SELECT DISTINCT `date` FROM userlogs";
+            $query_date  = "SELECT DISTINCT `date` FROM userlogs ".$userClass->logbookData()."";
             $db->query($query_date); 
             $data_date = $db->resultset();
             $count = $db->rowCount();
@@ -117,22 +201,43 @@ elseif(isset($_POST['delete'])){
             echo '</select>';
             ?>
         </form>
+        <form method="post">
+            <input type="submit" name="pdf" value="Genereer PDF">
+            <input type="submit" name="excel" value="Genereer Excel">
+        </form>
     </div>
 </div>
 <section class="ac-container">
+<!--Uren registratie voor mobiel -->
+<section class="ac-container container-mob">
+    <div>
+        <input id="ac-0" name="accordion-1" type="checkbox" />
+        <label class="uren-mob-invullen" for="ac-0"><img src="images/icons/uren-mob.png">Uren invullen</label>
+        <article class="ac-small-mob">
+
+            <h3>Uren bijwerken</h3>
+            <?php include('include/elements/uren-invullen-form.php'); ?>
+        </article>
+    </div>
+</section>
     <div class="uren-overzicht">
-    <?php if(isset($melding)){ echo $melding;} ?>
-    <?php if(isset($succes)){ echo $succes;} ?>
+        <?php if(isset($melding)){ echo $melding;} ?>
+        <?php if(isset($succes)){ echo $succes;} ?>
         <table class="order-table table" cellspacing="0">
             <thead>
                 <tr class="border_bottom">
                     <td style="color: #666; min-width: 130px !important;width: 14%;"></td>
+                    <?php
+                    if($_SESSION['user']['usertype_id'] == 2){
+                        echo '<td style="color: #666; width: 15%">Student</td>';
+                    }  
+                    ?>
+                    <td style="color: #666; width: 15%">Project</td>
                     <td style="color: #666; width: 10%">Categorie</td>
                     <td style="color: #666; width: 12%">Taak</td>
                     <td style="color: #666; width: 10%">Begintijd</td>
                     <td style="color: #666; width: 10%">Eindtijd</td>
                     <td style="color: #666; width: 12%">Totaal uren</td>
-                    <td style="color: #666; width: 12%">Datum</td>
                     <td style="color: #666; width: 30%">Omschrijving</td>
                     <td style="color: #666">Bewerken</td>
                     <td style="color: #666">Verwijderen</td>
@@ -140,7 +245,7 @@ elseif(isset($_POST['delete'])){
             </thead>
             <?php
             
-            $query  = "SELECT DISTINCT date FROM userlogs ORDER BY date DESC";
+            $query  = "SELECT DISTINCT date FROM userlogs ".$userClass->logbookData()." ORDER BY date DESC";
             $db->query($query); 
             $data = $db->resultset();
             $count = $db->rowCount();
@@ -181,8 +286,12 @@ elseif(isset($_POST['delete'])){
                 elseif($dagnaam == 'Saturday')  { $dagnaam = 'zaterdag'; }
                 elseif($dagnaam == 'Sunday')    { $dagnaam = 'zondag'; }
 
+                if($_SESSION['user']['usertype_id'] == 2){
+                    $innerjoin = "INNER JOIN users ON userlogs.user_id = users.user_id";
+                }
+
                 $aantal = 1;
-                $query1  = "SELECT * FROM userlogs WHERE date LIKE '%".$ingevoerd_jaar.'-'.$ingevoerd_maand.'-'.$ingevoerd_dag."%'";
+                $query1  = "SELECT * FROM userlogs ".$innerjoin." WHERE userlogs.date LIKE '%".$ingevoerd_jaar.'-'.$ingevoerd_maand.'-'.$ingevoerd_dag."%' ".$userClass->logbookData2()."";
                 $db->query($query1); 
                 $data1 = $db->resultset();
                 $count1 = $db->rowCount();
@@ -195,6 +304,8 @@ elseif(isset($_POST['delete'])){
 
                 foreach($data1 as $row1){
                     $log_id         = $row1['userlog_id'];
+                    $firstname      = $row1['firstname'];
+                    $lastname       = $row1['lastname'];
                     $project        = $row1['project'];
                     $category       = $row1['category'];
                     $task           = $row1['task'];
@@ -211,8 +322,13 @@ elseif(isset($_POST['delete'])){
                     if($hour >= 1 && $hour <= 9){$hour = '0'.$hour;}
                     $totaltime      = $hour.':'.$minute;
 
-                
                     echo '<form method="post">';
+                    
+                    if($_SESSION['user']['usertype_id'] == 2){
+                        echo '<td>'.$firstname.' '.$lastname.'</td>';
+                    }
+
+                    echo '<td><input type="text" id="project" name="project" value="'.$project.'"></td>';
                     echo '<td>';
 
                     $query_cat  = "SELECT DISTINCT category FROM categories";
@@ -220,7 +336,7 @@ elseif(isset($_POST['delete'])){
                     $data_cat = $db->resultset();
                     $count = $db->rowCount();
 
-                    // Taak keuze
+                    // Categorie keuze
                     echo '<select name="category">';
                     foreach($data_cat as $row_cat){
                         echo '<option name="category" value="'.$row_cat['category'].'"'; if($category == $row_cat['category']){ echo 'selected="selected"';} echo '>'.$row_cat['category'].'</option>';
@@ -243,11 +359,9 @@ elseif(isset($_POST['delete'])){
                     echo '</select>';
                     echo '</td>';
 
-
-                    echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onblur = "autoTabTimes(this)"></td>';
-                    echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onblur = "autoTabTimes(this)"></td>';
+                    echo '<td><input id="starttime" type="text" name="starttime" value="'.$starttime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
+                    echo '<td><input id="stoptime" type="text" name="stoptime" value="'.$stoptime.'" maxlength="5" onkeyup = "strip(this)"; onchange = "autoTabTimes(this)"></td>';
                     echo '<td>'.$totaltime.'</td>';
-                    echo '<td><input type="text" id="date" name="date" value="'.$date.'"></td>';
                     echo '<td><textarea id="description" name="description">'.$description.'</textarea></td>';
                     echo '<td>';
                     echo '<input type="hidden" name="log_id" value="'.$log_id.'">';
@@ -271,34 +385,35 @@ elseif(isset($_POST['delete'])){
 </section>
 
 <script type = "text/javascript">
-    function autoTabTimes(input) {
-    var len = input.value.length;
+     function autoTabTimes(input) {
+        var len = input.value.length;
         if (len<3) {
-        alert ("Invalid time - re-enter it");
-        input.value = "";
-        return false;
+            //alert ("Ongeldige tijdnotatie - vul de juiste notatie in");
+            input.value = "";
+            return false;
         }
         if (len==3){
-        input.value ="0" + input.value;
+            input.value ="0" + input.value;
         }
         var final = input.value.split("");
         var h = Number(final[0] + final[1]);
         var m = Number(final[2] + final[3]);
         if (h <0 || h >23 || m <0 || m >59) {
-        alert ("Invalid time - re-enter it");
-        input.value = "";
-        return false;
+            //alert ("Invalid time - re-enter it");
+            input.value = "";
+            return false;
         }
         var f = final[0]+final[1]+":"+final[2]+final[3];
         input.value = f;
         }
-         
+
         function strip(which) {
         var x = which.value;
-        x = x.replace(/[^0-9]/g,"");  // allow only digits
+        x = x.replace(/[^0-9:]/g,"");  // allow only digits
         which.value = x;
     }
 </script>
+
 <script>
     $(document).ready(function()
     {

@@ -1,5 +1,10 @@
 <?php
-$query  = "SELECT * FROM `user_projects` INNER JOIN `projects` ON `user_projects`.`project_id` = `projects`.`project_id` WHERE `user_id` = '".(USER_ID)."'";
+if($_SESSION['user']['usertype_id'] == 2){
+    $query  = "SELECT * FROM `projects`";
+}
+else{
+   $query  = "SELECT * FROM `user_projects` INNER JOIN `projects` ON `user_projects`.`project_id` = `projects`.`project_id` WHERE `user_id` = '".(USER_ID)."'";
+}
 $db->query($query); 
 $data = $db->resultset();
 

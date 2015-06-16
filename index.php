@@ -1,12 +1,27 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', '0');
+ini_set("log_errors", 1);
+ini_set("error_log", "log/php-error.log");
+
 ob_start();
 
-$url1 = $_GET['url1'];
-$url2 = $_GET['url2'];
-$url3 = $_GET['url3'];
-$url4 = $_GET['url4'];
+//Initalizeer de autoloaders
+
+include('classes/autoloader.class.php');
+$autoloader = new Autoloader();
+spl_autoload_register(array($autoloader, 'oldLoader'));
+spl_autoload_register(array($autoloader, 'PSR4Loader'));
+
+
+//Om de onnodige undefined variables eruit te halen (om debug makkelijker te maken)
+//is er nu loop die kijkt of url1 t/m 4 bestaat in $_GET en daarna dynamisch $url met cijfer creert
+for($i = 1; $i < 5; $i++ ) {
+    if(isset($_GET["url{$i}"])) {
+        ${'url' . $i} = $_GET["url{$i}"];
+    }
+}
 
 session_start();
 
@@ -55,7 +70,6 @@ if($url1 != 'login'){
 
 			<!-- Content inladen -->
             <?php include ('include/pages/'.$pagina); ?>
-        
 
             <!-- Footer -->
             <section class="footer">

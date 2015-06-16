@@ -1,0 +1,10 @@
+diff a/include/config.php b/include/config.php	(rejected hunks)
+@@ -20,7 +20,7 @@
+ 
+ date_default_timezone_set("Europe/Amsterdam");
+ 
+-$website = 'http://'.$_SERVER['HTTP_HOST'].'/logtime';
++$website = 'http://'.$_SERVER['HTTP_HOST'];
+ 
+ define('MAXFILESIZE',10485760);
+ define('MAXFILESIZEFILE',10485760);

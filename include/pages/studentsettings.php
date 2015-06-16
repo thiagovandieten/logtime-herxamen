@@ -1,6 +1,7 @@
 <?php
 // Gebruikt studentsettingsClass
 // ALTER TABLE `users` ADD `firstlogin` BOOLEAN NOT NULL AFTER `active`;
+
 error_reporting(E_ALL);
 if(isset($_GET['new'])){
 ?>

@@ -65,6 +65,7 @@ if($avatar == ''){
     <div id="urenreg">
         <div class="uren-wrapper">
             <h2>Uren bijwerken</h2>
+            <?php include('include/elements/uren-invullen-actie.php'); ?>
             <?php include('include/elements/uren-invullen-form.php'); ?>
         </div>
     </div>
