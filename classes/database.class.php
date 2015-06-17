@@ -4,9 +4,9 @@
 */
 class database extends PDO{
 	private $host = 'localhost';
-	private $user;
-	private $pass;
-	private $dbname;
+	private $user = 'root';
+	private $pass = '';
+	private $dbname = 'logtime';
 	private $dbh;
 	private $error;
 	private $stmt;
@@ -16,11 +16,12 @@ class database extends PDO{
      * @param $user
      * @param $pass
      */
-    public function __construct($dbname, $user, $pass)
+    //public function __construct($dbname, $user, $pass)
+    public function __construct()
 	{
-        $this->dbname = $dbname;
-        $this->user = $user;
-        $this->pass = $pass;
+        //$this->dbname = $dbname;
+        //$this->user = $user;
+        //$this->pass = $pass;
 		// Set DSN
 		$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;	
 		

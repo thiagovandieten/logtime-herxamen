@@ -1,7 +1,6 @@
 <?php
 // Gebruikt studentsettingsClass
 // ALTER TABLE `users` ADD `firstlogin` BOOLEAN NOT NULL AFTER `active`;
-
 error_reporting(E_ALL);
 if(isset($_GET['new'])){
 ?>
@@ -37,7 +36,8 @@ if(isset($_GET['new'])){
   </form>
 </section>
 <?php
-}else{
+}
+else{
 ?>
 <div class="filter-wrap">
   <div class="buttons-wrap"> <a href='studentsettings?new'>
@@ -51,4 +51,7 @@ if(isset($_GET['new'])){
 	echo $studentsettingClass->returnAllUsers();
 ?>
 </section>
-<?php }?>
+<?php
+}
+?>
+

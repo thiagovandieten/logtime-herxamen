@@ -10,13 +10,13 @@ class notification extends database{
 		$this->database->query('SELECT * FROM `usertypes`');	
 		$data = $this->database->resultset();	
 		echo '<select name="usertype">';
-		if($this->database->rowCount() > 0){
-			foreach($data as $value){
-				echo '<option value="'.$value['usertype_id'].'">'.$value['usertype'].'</option>';	
+			if($this->database->rowCount() > 0){
+				foreach($data as $value){
+					echo '<option value="'.$value['usertype_id'].'">'.$value['usertype'].'</option>';	
+				}
+			}else{
+				echo '<option value="'.$data['usertype_id'].'">'.$data['usertype'].'</option>';	
 			}
-		}else{
-			echo '<option value="'.$data['usertype_id'].'">'.$data['usertype'].'</option>';	
-		}
 		echo '</select>';
 	}
 	
