@@ -5,7 +5,10 @@ ini_set('display_errors', '0');
 ini_set("log_errors", 1);
 ini_set("error_log", "log/php-error.log");
 
+error_reporting(0);
+ini_set('display_errors', '0');
 ob_start();
+session_start();
 
 //Initalizeer de autoloaders
 
@@ -22,8 +25,6 @@ for($i = 1; $i < 5; $i++ ) {
         ${'url' . $i} = $_GET["url{$i}"];
     }
 }
-
-session_start();
 
 include('include/config.php');
 include('include/content.php');

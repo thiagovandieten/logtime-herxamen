@@ -1,3 +1,9 @@
+<?php
+	if(isset($_POST['submit'])){
+		$loginClass->firstLogin($_POST);
+	}
+?>
+
 <h1>Eerste login</h1>
 <form method='post'>
 	<input type='text' name='firstname' placeholder='Voornaam'><br/>
