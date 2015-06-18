@@ -1,7 +1,7 @@
 <?php
 use Logtime\Project\ProjectGateway;
 use Logtime\Grade\GradeGateway;
-use Logtime\View\Template\SelectOption;
+use Logtime\View\Template\GenerateHTMLTags;
 
 if(isset($_POST['delete'])){
     $project = new ProjectGateway($db);
@@ -31,12 +31,12 @@ else{
                         <?php
                         //Klas keuze
                         $gradeGateway = new GradeGateway($db);
-                        echo SelectOption::generate($gradeGateway->selectAll(),'grade', 'Leerjaar');
+                        echo GenerateHTMLTags::selectOption($gradeGateway->selectAll(),'grade', 'Leerjaar');
 
                         $periodeGateway = new \Logtime\Periode\PeriodeGateway($db);
-                        echo SelectOption::generate($periodeGateway->selectAll(),  'periode', 'Periode');
+                        echo GenerateHTMLTags::selectOption($periodeGateway->selectAll(),  'periode', 'Periode');
                         // Periode keuze
-                        echo SelectOption::generate($gradeGateway->selectAll(), 'grade_name', 'Klas');
+                        echo GenerateHTMLTags::selectOption($gradeGateway->selectAll(), 'grade_name', 'Klas');
         	            ?>
                 </div>
             </div>

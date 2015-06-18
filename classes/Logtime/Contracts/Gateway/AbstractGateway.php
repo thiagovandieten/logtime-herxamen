@@ -20,8 +20,8 @@ abstract class AbstractGateway {
     }
 
     public function selectAll() {
-        $query_grade  = "SELECT * FROM {$this->tableName}";
-        $this->db->query($query_grade);
+        $query  = "SELECT * FROM {$this->tableName}";
+        $this->db->query($query);
         return $this->db->resultset();
     }
 }

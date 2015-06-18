@@ -2,6 +2,12 @@
 class user extends database{
 	
 	private $img_path = '_img/uploads/personal_avatar/';
+    public  $user_id,
+            $firstname,
+            $lastname,
+            $user_image_path,
+            $location_id,
+            $user_type_id;
 	
 	public function __construct($db, $userid){
 		$this->database = $db;
@@ -18,6 +24,8 @@ class user extends database{
 		$this->firstname = $data['firstname'];
 		$this->lastname = $data['lastname'];
 		$this->user_image_path = $data['user_image_path'];
+        $this->location_id = $data['location_id'];
+        $this->user_type_id = $data['usertype_id'];
 		
 		unset($data);
 	}
@@ -69,5 +77,6 @@ class user extends database{
 			return '';	
 		}
 	}
+
 }
 ?>

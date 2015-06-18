@@ -7,16 +7,15 @@
  */
 
 namespace Logtime\View\Template;
-use Logtime\Contracts\View\SelectOptionInterface;
 
-class SelectOption implements SelectOptionInterface {
+class GenerateHTMLTags  {
     /**
      * @param Array $array Array met DB resultaten via DB's resultset()
      * @param String $prefix
      * @param String $rowName DB kolom met de data die je wilt gebruiken
      * @return String $string
      */
-    public static function generate($array, $rowName, $prefix = '')  {
+    public static function selectOption($array, $rowName, $prefix = '')  {
         $string = "";
         $string .= "<select class=\"light-table-filter\" data-table=\"order-table\"> \n";
         if (!empty($prefix)) $string .= "\t <option>{$prefix}</option> \n";
@@ -26,5 +25,11 @@ class SelectOption implements SelectOptionInterface {
         }
         $string .= "</select> \n";
         return $string;
+    }
+
+    public static function checkbox($name, $value, $alt = '') {
+        if (empty($alt)) $alt = $value;
+        return "<input type=\"checkbox\" name=\"{$name}\" value=\"{$value}\" >{$alt}</input>  \n";
+
     }
 }
