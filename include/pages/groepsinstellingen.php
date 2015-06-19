@@ -1,10 +1,6 @@
 <?php
 	$groupClass->hasPermission();
 ?>
-<h1>
-Groepsinstellingen
-</h1>
-<br/>
 <?php
 $dir_dest = '_img/uploads/group_avatar';
 $dir_pics = $dir_dest;
@@ -35,11 +31,11 @@ if ((isset($_POST['action']) ? $_POST['action'] : (isset($_GET['action']) ? $_GE
         // we check if everything went OK
         if ($handle->processed) {
             // everything was fine !
-            $msg['no_errors'] = 'Succesvol het nieuwe plaatje geupload!';
+            $msg['no_errors'] = '<div class="goed">Succesvol het nieuwe plaatje geupload!</div>';
 			header('location: groepsinstellingen');
         } else {
             // one error occured
-            $msg['error'] = 'Het plaatje is niet upgeload wegens een probleem probeer het opnieuw!';
+            $msg['error'] = '<div class="error">Het plaatje is niet upgeload wegens een probleem probeer het opnieuw!</div>';
         }
 
         // we delete the temporary files
@@ -48,7 +44,7 @@ if ((isset($_POST['action']) ? $_POST['action'] : (isset($_GET['action']) ? $_GE
     } else {
         // if we're here, the upload file failed for some reasons
         // i.e. the server didn't receive the file
-        $msg['error'] = 'Het plaatje is niet upgeload wegens een probleem, probeer het opnieuw!';
+        $msg['error'] = '<div class="error">Het plaatje is niet upgeload wegens een probleem, probeer het opnieuw!</div>';
        // echo '  Error: ' . $handle->error . '';
 
     }
@@ -60,30 +56,35 @@ if(isset($_POST['save_wage'])){
 	$groupClass->valildate_form($_POST);
 	
 	if($groupClass->getError()){
-		$msg['error'] = $groupClass->getError();
+		$msg['error'] = "<div class='error'>".$groupClass->getError()."</div>";
 	}
 	if($groupClass->getNotification()){
-		$msg['no_error'] = $groupClass->getNotification();
+		$msg['no_error'] = "<div class='goed'>".$groupClass->getNotification()."</div>";
 	}
 }
 
 if($msg['no_error']){
 	echo "<p>".$msg['no_error']."</p>";	
 }else{
-	echo "<p>".$msg['error']."</p>";	
+	echo "<p>".$msg['error']."</p>";
 }
 ?>
 <div class='personal-settings'>
+    <h1>
+        Groepsinstellingen
+    </h1>
+
     <div class='img-omvang'>
     <?php
     ## de IMG
     echo $groupClass->getGroupImage();
     ?>
     </div>
+    <div class="formgroep">
 <form name="form1" enctype="multipart/form-data" method="post" />
     <p><input type="file" size="32" name="my_field" class="avatar-veranderen custom-file-input" /></p>
     <p class="button"><input type="hidden" name="action" value="simple" />
-    <input type="submit" name="Submit" value="upload" /></p>
+    <input type="submit" name="Submit" value="upload" style="position: absolute;"/></p>
 </form>
 <form method='post'>
     <div> 
@@ -108,4 +109,5 @@ if($msg['no_error']){
     	<input type='submit' name='save_wage' value='Opslaan' />
     </div>
 </form>
+    </div>
 </div>  

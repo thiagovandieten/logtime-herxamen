@@ -35,7 +35,7 @@ if(!isset($_GET['firstlogin'])){
 <?php echo $berichtgoed, $berichterror; ?>
 <form method='post'>
 	<input type='text' name='userlogin' placeholder='Studentcode/EMail'><br/>
-    <input type='password' name='password' placeholder='password'><br/>
+    <input type='password' name='password' placeholder='Password'><br/>
     <input type='submit' name='login' value='Inloggen'>
 </form>
 <script>

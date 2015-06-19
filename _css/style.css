@@ -1132,6 +1132,13 @@ input.bijwerken {}
     word-wrap: break-word;
 }
 
+.goed{
+    background: #66bb6a;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    word-wrap: break-word;
+}
 
 
 .login-wrap input[type='submit']{
@@ -1405,13 +1412,15 @@ p:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 .nieuw-knop{
      border: 0px;
-     background: #66bb6a url('../_img/icons/nieuw.png') no-repeat 10px 13px;
+     background: #66bb6a url('../_img/icons/nieuw.png') no-repeat 12px 17px;
      padding: 15px 20px 15px 40px;
      border-radius: 3px;
      color: #fff;
      font-size: 16px;
      cursor: pointer;
+    transition: 0.3s;
      outline: none;
+    margin-left: 10px;
  }
 
 button:hover{
@@ -1436,7 +1445,7 @@ button:active{
 .filter-omgeving{
     float: left;
     /* margin-left: 20px; */
-    width: 100%;
+
 }
 
 .buttons-wrap{
@@ -1576,12 +1585,18 @@ input[type='checkbox']:checked + span {
 .personal-settings input[type='submit']{
     padding: 12px 20px 12px 20px;
     color: #fff;
-    background: #eb9001;
+    background: #66bb6a;
     border-radius: 3px;
     border: 0px;
     float: right;
     cursor: pointer;
     transition: 0.3s;
+    /* margin: 0 auto; */
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: 92px;
+    top: 200px;
 }
 
 
@@ -1884,4 +1899,32 @@ tr.studenten-overzicht td{
     background: #2ecc71;
     color: #fff;
     padding: 10px;
+}
+
+
+.formgroep{
+    margin-top: 41px;
+}
+
+input[type='submit'], button{
+    transition: 0.3s;
+}
+
+
+.ac-container table{
+    width: 100%;
+}
+
+.ac-container table td{
+    color: #999;
+    padding: 10px;
+}
+
+.ac-container table tr{
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.ac-container table tr:hover{
+    background: #cfdbe3!important;
 }
