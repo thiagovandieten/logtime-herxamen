@@ -34,7 +34,7 @@ if(!isset($_GET['firstlogin'])){
 <h1>Logtime</h1>
 <?php echo $berichtgoed, $berichterror; ?>
 <form method='post'>
-	<input type='text' name='userlogin' placeholder='Studentcode/EMail'><br/>
+	<input type='text' name='userlogin' placeholder='Studentcode/E-mail'><br/>
     <input type='password' name='password' placeholder='Password'><br/>
     <input type='submit' name='login' value='Inloggen'>
 </form>
