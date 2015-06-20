@@ -1,14 +1,15 @@
-function add_student()
+function addStudent()
 {
-	var select = document.getElementById('choose_student');
-	var selected = select.options[select.selectedIndex];
-	console.log(selected);
+	var selected = $("#choose_student option:selected").clone();
+	$("#chosen_student").append(selected);
+	$("#projectleider").append($("#choose_student option:selected"));
+	$("#chosen_student option:not(:first)").attr("selected", "selected");
 
 }
 
-function remove_student()
+function removeStudent()
 {
-	var select = document.getElementById('chosen_student');
-	var selected = select.options[select.selectedIndex];
-	console.log(selected);
+	var selected = $("#chosen_student option:selected");
+	$("#choose_student").append(selected);
+	console.log(); $("#projectleider option[value='" + $(selected).val() + "']").remove();
 }

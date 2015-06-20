@@ -86,13 +86,8 @@ class groupsettings extends database{
 						$groups[$key]["leader"] = $user['firstname'];
 					}
 			}
-			/**
-			 * TODO project in groups zetten
-			 * $groups[$key]["project"] = $project_name
-			 */
 			unset($groups[$key]['grade_id'], $groups[$key]['level_type_id'], $groups[$key]['adress_id'], $this->data, $groups[$key]['coach_id'], $groups[$key]["leader_id"],$groups[$key]["leveltype_id"]);
 		}
-
 		return($groups);
 	}
 
@@ -103,23 +98,123 @@ class groupsettings extends database{
 	 */
 	public function getAllTeachers()
 	{
-		$this->database->query('SELECT * FROM `users` WHERE usertype_id = 2 AND location_id = :location_id');
+		$this->database->query('SELECT * FROM `users` WHERE active = 1 AND usertype_id = 2 AND location_id = :location_id');
 		$this->database->bind(':location_id' , $this->location_id);
 		return $this->database->resultset();
 	}
+
 	/**
 	 * Teacher function
 	 * saves new project groups
-	 * @return true or Exeption if fails
+	 * @return true or false if fails
 	 */
 	public function saveNewGroup($value)
 	{
-		$this->database->query('INSERT INTO `projectgroup` SET `grade_id`= :grade_id , `location_id`= :location_id , `coach_id`=:coach_id , `projectgroup_name`= :projectgroup_name');
+		if (!isset($value['projectleider'])) {
+			$value['projectleider'] = null;
+		}
+		$this->database->query('INSERT INTO `projectgroup` SET `grade_id`= :grade_id , `location_id`= :location_id , `coach_id`=:coach_id , `projectgroup_name`= :projectgroup_name , `leader_id` = :leader_id');
 		$this->database->bind(':grade_id',$value['grade']);
 		$this->database->bind(':location_id',$this->location_id);
 		$this->database->bind(':coach_id',$value['coach']);
 		$this->database->bind(':projectgroup_name',$value['groupName']);
-		// $this->database->execute();
+		$this->database->bind(':leader_id',$value['projectleider']);
+		if(!$this->database->execute())
+		{
+			return false;
+		}
+		$groupId = $this->database->lastInsertId();
+		$this->database->query('UPDATE `users` set `projectgroup_id` = :group_id WHERE `user_id` = :user_id');
+		$this->database->bind(':group_id', $groupId);
+		foreach ($value['students'] as $student) {
+			$this->database->bind(':user_id', $student);
+			if(!$this->database->execute())
+			{
+				return false;
+			}
+		}
+		return true;
+
+	}
+
+	/**
+	 * Teacher function
+	 * save changes to exiting groups
+	 * @return true or false if fails
+	 */
+	public function updateGroup($value)
+	{
+		if (!isset($value['projectleider'])) {
+			$value['projectleider'] = null;
+		}
+		$this->database->query('UPDATE `projectgroup` SET `grade_id`= :grade_id , `coach_id`=:coach_id , `projectgroup_name`= :projectgroup_name, `leader_id`= :leader_id WHERE `projectgroup_id` = :group_id');
+		$this->database->bind(':grade_id',$value['grade']);
+		$this->database->bind(':coach_id',$value['coach']);
+		$this->database->bind(':projectgroup_name',$value['groupName']);
+		$this->database->bind(':group_id', $value['group_id']);
+		$this->database->bind(':leader_id',$value['projectleider']);
+		$this->database->execute();
+		$this->database->query('UPDATE `users` set `projectgroup_id` = null WHERE `projectgroup_id` = :group_id');
+		$this->database->bind(':group_id', $value['group_id']);
+		$this->database->execute();
+		$this->database->query('UPDATE `users` set `projectgroup_id` = :group_id WHERE `user_id` = :user_id');
+		$this->database->bind(':group_id', $value['group_id']);
+		foreach ($value['students'] as $student) {
+			$this->database->bind(':user_id', $student);
+			if(!$this->database->execute())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Teacher function
+	 * deletes one or more groups
+	 * @return true or false if fails
+	 */
+	public function deleteGroup($value)
+	{
+
+		$this->database->query('UPDATE `projectgroup` set `active` = 0 WHERE `projectgroup_id` = :group_id');
+		if (is_array($value))
+		{
+			foreach ($value as $group) {
+				$this->database->bind(':group_id', $group);
+				$check = $this->database->execute();
+				if(!$check)
+				{
+					return false;
+				}
+			}
+			return true;
+
+		}
+		$this->database->bind(':group_id', $group);
+		if(!$this->database->execute())
+		{
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Teacher function
+	 * gets all data about a group
+	 * @return array with group data
+	 */
+	public function teacherGetGroup($groupId)
+	{
+		$this->database->query('SELECT * FROM `projectgroup` WHERE active = 1 AND location_id = :location_id and projectgroup_id = :group_id');
+		$this->database->bind(':location_id' , $this->location_id);
+		$this->database->bind(':group_id' , $groupId);
+		$group = $this->database->single();
+		$this->database->query('SELECT user_id, firstname, lastname FROM `users` WHERE active = 1 AND location_id = :location_id and projectgroup_id = :group_id');
+		$this->database->bind(':location_id' , $this->location_id);
+		$this->database->bind(':group_id' , $groupId);
+		$group['students'] = $this->database->resultset();
+		return $group;
 	}
 
 	public function saveImage($image){

@@ -70,7 +70,7 @@ class studentsettings extends database{
 	 */
 	public function getAllStudents()
 	{
-		$this->database->query("SELECT * FROM `users` WHERE usertype_id = 1 AND location_id = :location_id");
+		$this->database->query("SELECT `user_id`, `firstname`, `lastname` FROM `users` WHERE usertype_id = 1 AND location_id = :location_id");
 		$this->database->bind(':location_id' , $this->location_id);
 		return $this->database->resultset();
 	}
