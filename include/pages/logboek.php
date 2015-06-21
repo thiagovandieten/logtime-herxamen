@@ -202,8 +202,8 @@ elseif(isset($_POST['excel'])){
             ?>
         </form>
         <form method="post">
-            <input type="submit" name="pdf" value="Genereer PDF">
-            <input type="submit" name="excel" value="Genereer Excel">
+            <input type="submit" class="nieuw-knop" name="pdf" value="Genereer PDF">
+            <input type="submit" class="nieuw-knop" name="excel" value="Genereer Excel">
         </form>
     </div>
 </div>

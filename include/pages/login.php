@@ -16,19 +16,31 @@ if(!isset($_GET['firstlogin'])){
 			$message['no_errors'] = $loginClass->getNotification();	
 		}
 	}
+			$berichterror = "";
+		$berichtgoed = "";
 	if(isset($message)){
 		if(!empty($message['errors'])){
-			echo $message['errors'];
+			$berichterror = '<div class="error">'.$message['errors'].'</div>';
 		}else{
-			echo $message['no_errors'];	
+			$berichtgoed = $message['no_errors'];	
 		}
 	}
 ?>	
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script src="http://logtime.dev/js/jquery.backstretch.min.js"></script>
+
+<div class="login-wrap">
+<h1>Logtime</h1>
+<?php echo $berichtgoed, $berichterror; ?>
 <form method='post'>
-	<input type='text' name='userlogin' placeholder='Studentcode/EMail'><br/>
-    <input type='password' name='password' placeholder='password'><br/>
+	<input type='text' name='userlogin' placeholder='Studentcode/E-mail'><br/>
+    <input type='password' name='password' placeholder='Password'><br/>
     <input type='submit' name='login' value='Inloggen'>
 </form>
+<script>
+  $.backstretch( "http://logtime.dev/images/bg.png" );
+</script>
 
 <?php
 }else{

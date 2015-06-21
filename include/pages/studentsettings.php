@@ -9,13 +9,14 @@ if(isset($_GET['new'])){
   <?php
 	if(isset($_POST['newUser'])){
 		$studentsettingClass->newUser($_POST);
-		$getError = $studentsettingClass->getError();
+		$getError = "<div class='error'>".$studentsettingClass->getError()."</div>";
 		$getNotification = $studentsettingClass->getNotification();
 		var_dump($getError);
 		var_dump($getNotification);
 	}
 ?>
-  <p> Nieuwe gebruiker aanmaken! </p>
+  <div class="personal-settings">
+  <h1> Nieuwe gebruiker aanmaken! </h1>
   <br/>
   <form method='post'>
     <input type='text' name='usercode' placeholder="usercode" />
@@ -31,10 +32,10 @@ if(isset($_GET['new'])){
 	?>
     </select>
     <br/>
-    <br/>
     <input type='submit' name='newUser' value='Opslaan' />
   </form>
 </section>
+  </div>
 <?php
 }
 else{
@@ -46,7 +47,7 @@ else{
     <button class="delete-knop" style="margin-left: 5px;">Verwijderen</button>
   </div>
 </div>
-<section class="ac-container">
+<section class="ac-container" style="width: 100%; margin: 0px;">
   <?php
 	echo $studentsettingClass->returnAllUsers();
 ?>
@@ -54,4 +55,12 @@ else{
 <?php
 }
 ?>
+
+
+<script>
+  $(document).ready(function()
+  {
+    $("table tr:odd").css("background-color", "#ededed");
+  });
+</script>
 

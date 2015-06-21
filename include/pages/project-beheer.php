@@ -1,7 +1,7 @@
 <?php
 use Logtime\Project\ProjectGateway;
 use Logtime\Grade\GradeGateway;
-use Logtime\View\Template\SelectOption;
+use Logtime\View\Template\GenerateHTMLTags;
 
 if(isset($_POST['delete'])){
     $project = new ProjectGateway($db);
@@ -19,10 +19,10 @@ else{
     ?>
         <form method="post" enctype="multipart/form-data">
             <div class="filter-wrap">
-                <div class="buttons-wrap"> 
+                <div class="buttons-wrap">
+                    <a href="project-beheer?actie=nieuw" class="nieuw-knop" >Nieuw</a>
                     <input type="submit" name="delete" value="Verwijderen" class="delete-knop" style="margin-left: 5px;" 
                     onclick="return confirm('Je staat om een project te verwijderen. Weet je zeker dat je het project wilt verwijderen?')" >
-                    <a href="project-beheer?actie=nieuw" class="nieuw-knop" >Nieuw</a>
 
                 </div>
                 <div class="filter-omgeving">
@@ -31,16 +31,16 @@ else{
                         <?php
                         //Klas keuze
                         $gradeGateway = new GradeGateway($db);
-                        echo SelectOption::generate($gradeGateway->selectAll(),'grade', 'Leerjaar');
+                        echo GenerateHTMLTags::selectOption($gradeGateway->selectAll(),'grade', 'Leerjaar');
 
                         $periodeGateway = new \Logtime\Periode\PeriodeGateway($db);
-                        echo SelectOption::generate($periodeGateway->selectAll(),  'periode', 'Periode');
+                        echo GenerateHTMLTags::selectOption($periodeGateway->selectAll(),  'periode', 'Periode');
                         // Periode keuze
-                        echo SelectOption::generate($gradeGateway->selectAll(), 'grade_name', 'Klas');
+                        echo GenerateHTMLTags::selectOption($gradeGateway->selectAll(), 'grade_name', 'Klas');
         	            ?>
                 </div>
             </div>
-            <?php if($melding != ''){ echo $melding; } ?>
+            <?php if($melding != ''){ echo "<div class='goed'>".$melding."</div>"; } ?>
             <div class="projecten-overzicht">
                 <table class="order-table table" cellspacing="0">
                     <thead>
