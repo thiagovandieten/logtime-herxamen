@@ -95,7 +95,8 @@ class login extends database{
 				'voornaam' => $key['firstname'],
 				'achternaam' => $key['lastname'],
 				'usertype_id' => $key['usertype_id'],
-				'projectgroup_id' => $key['projectgroup_id']
+				'projectgroup_id' => $key['projectgroup_id'],
+				'location_id' => $key['location_id']
 			);
 		}
 	}

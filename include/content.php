@@ -59,7 +59,6 @@ else{
 		$db->query($query);	
 		$rec = $db->resultset();
 		$count = $db->rowCount();
-
         if($count >= 1) {
         	//Hier kiest hij dus welke pages file hij gaat gebruiken!
             foreach($rec as $value){
