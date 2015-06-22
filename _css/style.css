@@ -288,7 +288,7 @@ input.bijwerken {}
     color: #fff;
 }
 #notificationsBody {
-    height:300px;
+    min-height:20px;
     padding: 10px;
 }
 #notificationFooter {
@@ -364,8 +364,9 @@ input.bijwerken {}
 .mob-notification{
     padding: 10px;
     border-bottom: 1px solid #6588ae;
-    min-height: 90px;
+    min-height: 10px;
     font-size: 14px;
+    color: #fff;
 }
 
 .mob-notification img{
@@ -1937,4 +1938,9 @@ input[type='submit'], button{
     border-radius: 3px;
     background: #eb9001;
     margin: 0px 6px 6px 0px;
+}
+
+.noti_bor{
+    border-bottom: 1px solid #eee;
+    padding: 10px;
 }

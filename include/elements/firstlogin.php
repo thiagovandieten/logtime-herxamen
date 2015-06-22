@@ -38,6 +38,6 @@ if($loginClass->getNotification()){
 </div>
 
 <script>
-    $.backstretch( "_img/bg.png" );
+    $.backstretch( "<?php echo $website ;?>/_img/bg.png" );
 </script>
 

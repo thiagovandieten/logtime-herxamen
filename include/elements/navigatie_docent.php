@@ -1,12 +1,8 @@
 <!-- Rechter navigatie notifications -->
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
     <div class="noti-mob-instellingen">
-        <div class="mob-aantal-gelezen">
-            <a href="#">  9 ongelezen</a><!--Notifications voor mobiel -->
-        </div>
-        <div class="mob-markeer-alles">
-            <a href="#">Markeer alles als gelezen <img src="_img/icons/oog.png" alt="gelezen"></a><!--link om alles gelezen te zetten -->
-        </div>
+
+
     </div>
     <?php
     $notific = $notificationClass->getUserNotifications();
