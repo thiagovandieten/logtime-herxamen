@@ -1,20 +1,34 @@
 <?php
 // Gebruikt studentsettingsClass
 // ALTER TABLE `users` ADD `firstlogin` BOOLEAN NOT NULL AFTER `active`;
-error_reporting(E_ALL);
+
 if(isset($_GET['new'])){
 ?>
 
-<section class="ac-container">
+
   <?php
 	if(isset($_POST['newUser'])){
 		$studentsettingClass->newUser($_POST);
 		$getError = "<div class='error'>".$studentsettingClass->getError()."</div>";
-		$getNotification = $studentsettingClass->getNotification();
-		var_dump($getError);
-		var_dump($getNotification);
+		$getNotification = "<div class='goed'>".$studentsettingClass->getNotification()."</div>";
+
+
+      $berichtgoed="";
+      $berichterror="";
+        if(!empty($studentsettingClass->getError())){
+          $berichterror = $getError;
+        }
+        echo $berichterror;
+
+      if(!empty($studentsettingClass->getNotification())){
+        $berichtgoed = $getNotification;
+      }
+      echo $berichtgoed;
 	}
+
+
 ?>
+    <section class="ac-container">
   <div class="personal-settings">
   <h1> Nieuwe gebruiker aanmaken! </h1>
   <br/>

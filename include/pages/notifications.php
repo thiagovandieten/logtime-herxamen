@@ -28,6 +28,7 @@ if(isset($msg['no_error'])){
 <?php echo $error;?>
 <section class="ac-container">
 	<div class="personal-settings">
+		<h1>Notifications sturen</h1>
 	<form method='post'>
 
 		<?php echo $notificationClass->getUserTypes(); ?>

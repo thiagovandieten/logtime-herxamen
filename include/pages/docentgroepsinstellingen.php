@@ -78,7 +78,8 @@ elseif (isset($_GET['edit'])) {
     }
    ?>
 <script src="<?php echo $website; ?>/_js/selectStudent.js"></script>
-<p> Groep wijzigen </p>
+<div class="personal-settings" style="width: 40%;">
+<h1> Groep wijzigen </h2>
   <br/>
   <form method='post'>
     <select name='grade' required>
@@ -113,7 +114,7 @@ elseif (isset($_GET['edit'])) {
     </br>
     <button class="studentadd" type="button" onclick="javascript:addStudent();" id="add_student">></button><button type="button" class="studentadd" onclick="javascript:removeStudent();" id="remove_student"><</button>
     </br>
-    <select multiple id="choose_student">
+    <select multiple id="choose_student" style="width: 48%;float: left;margin-right: 10px;">
         <option disabled>Kies een leerlingen</option>
         <?php
             foreach ($studentsettingClass->getAllStudents() as $value)
@@ -127,7 +128,7 @@ elseif (isset($_GET['edit'])) {
             }
         ?>
     </select>
-    <select multiple name='students[]' id="chosen_student" required>
+    <select multiple name='students[]' id="chosen_student" style="width: 48%;float: left;" required>
         <option disabled>Gekozen leerlingen</option>
         <?php
             foreach ($group['students'] as $student) {
@@ -154,7 +155,7 @@ elseif (isset($_GET['edit'])) {
     <input type='submit' name='editGroup' value='Opslaan' me/>
   </form>
 </section>
-
+</div>
    <?php
 } 
 else{

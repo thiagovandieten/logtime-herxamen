@@ -13,23 +13,22 @@
         <div id="notificationTitle">Notificatie</div>
         <div id="notificationsBody" class="notifications">
 
-        	<?php
-			$notific = $notificationClass->getUserNotifications();
-			//print_r($notificationClass->getUserNotifications());
-			
-			foreach($notific as $data){
-				echo '<h1 style="font-size:12px">'.wordwrap($data['notification_name']).'</h1>';
-			}
+            <?php
+            $notific = $notificationClass->getUserNotifications();
+            //print_r($notificationClass->getUserNotifications());
+
+            foreach($notific as $data){
+                echo '<div class="noti_bor">'.wordwrap($data['notification_name']).'</div>';
+            }
             ?>
             <!--Notifications komen hier -->
             <?php $data = $notificationClass->getUserNotifications();
-					foreach($data as $value){
-						echo '<h4 style="color: black; text-align:left;">'.$value['notification_name'].'</p>';	
-					}
-
-			?>
+            // foreach($data as $value){
+            //  echo '<h4 style="color: black; text-align:left;">'.$value['notification_name'].'</p>';
+            // }
+            ?>
         </div>
-        <div id="notificationFooter"><a href="notificaties">Bekijk alles</a></div>
+        <div id="notificationFooter"></div>
     </div>
     <!--Link naar persoonlijke instellingen -->
     <a href="persoonlijke-instellingen"><img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="destop-instellingen" title="Instellingen">
