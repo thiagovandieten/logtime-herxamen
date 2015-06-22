@@ -1928,3 +1928,13 @@ input[type='submit'], button{
 .ac-container table tr:hover{
     background: #cfdbe3!important;
 }
+
+.studentadd{
+    font-size: 13px;
+    padding: 8px 12px 8px 12px;
+    border: 0px;
+    color: #fff;
+    border-radius: 3px;
+    background: #eb9001;
+    margin: 0px 6px 6px 0px;
+}

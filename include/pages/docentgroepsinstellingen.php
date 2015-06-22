@@ -12,7 +12,8 @@
     //----------------------------------------formulier om een nieuwe groep aan te maken----------------------------------------//
 ?>
 <script src="<?php echo $website; ?>/_js/selectStudent.js"></script>
-<p> Nieuwe Groep aanmaken! </p>
+    <div class="personal-settings" style="width: 40%;">
+<h1> Nieuwe Groep aanmaken! </h1>
   <br/>
   <form method='post'>
     <select name='grade' required>
@@ -23,10 +24,9 @@
                 echo "<option value='".$value['grade_id']."'>".$value['grade_name']."</option>";
             }
         ?>
-    </select>*
+    </select>
     <br/>
-    <input type='text' name='groupName' placeholder="Groep naam" required/>*
-    <br/>
+    <input type='text' name='groupName' placeholder="Groep naam" required/>
     <select name='coach' required>
         <option disabled selected>Kies een coach</option>
         <?php
@@ -35,11 +35,11 @@
                 echo "<option value='".$value['user_id']."'>".$value['firstname']." ".$value['lastname']."</option>";
             }
         ?>
-    </select>*
+    </select>
     </br>
-    <button type="button" onclick="javascript:addStudent();" id="add_student">></button><button type="button" onclick="javascript:removeStudent();" id="remove_student"><</button>
+    <button type="button" class="studentadd" onclick="javascript:addStudent();" id="add_student">></button><button type="button" class="studentadd" onclick="javascript:removeStudent();" id="remove_student"><</button>
     </br>
-    <select multiple id="choose_student">
+    <select multiple id="choose_student" style="width: 48%; float: left;margin-right: 4%">
         <option disabled>Kies een leerlingen</option>
         <?php
             foreach ($studentsettingClass->getAllStudents() as $value)
@@ -48,9 +48,9 @@
             }
         ?>
     </select>
-    <select multiple name='students[]' id="chosen_student" required>
+    <select multiple name='students[]' id="chosen_student" style="width: 48%;float: left" required>
         <option disabled>Gekozen leerlingen</option>
-    </select>*
+    </select>
     <br>
     <select name='projectleider' id="projectleider">
         <option disabled selected>kies een projectleider</option>
@@ -84,9 +84,9 @@ elseif (isset($_GET['edit'])) {
                 echo "<option value='".$value['grade_id']."'" . $selected . ">".$value['grade_name']."</option>";
             }
         ?>
-    </select>*
+    </select>
     <br/>
-    <input type='text' name='groupName' value="<?php echo $group['projectgroup_name']; ?>" required/>*
+    <input type='text' name='groupName' value="<?php echo $group['projectgroup_name']; ?>" required/>
     <br/>
     <select name='coach' required>
         <option disabled>Kies een coach</option>
@@ -100,9 +100,9 @@ elseif (isset($_GET['edit'])) {
                 echo "<option value='".$value['user_id']."'" . $selected . ">".$value['firstname']." ".$value['lastname']."</option>";
             }
         ?>
-    </select>*
+    </select>
     </br>
-    <button type="button" onclick="javascript:addStudent();" id="add_student">></button><button type="button" onclick="javascript:removeStudent();" id="remove_student"><</button>
+    <button class="studentadd" type="button" onclick="javascript:addStudent();" id="add_student">></button><button type="button" class="studentadd" onclick="javascript:removeStudent();" id="remove_student"><</button>
     </br>
     <select multiple id="choose_student">
         <option disabled>Kies een leerlingen</option>
@@ -126,7 +126,7 @@ elseif (isset($_GET['edit'])) {
                 echo "<option value='".$student['user_id']."' selected>".$student['firstname']." ".$student['lastname']."</option>";
             }
         ?>
-    </select>*
+    </select>
     <br>
     <select name='projectleider' id="projectleider">
         <option disabled>kies een projectleider</option>
@@ -164,7 +164,7 @@ else{
     <input type="submit" class="delete-knop" style="margin-left: 5px;" name="delete" value="Verwijderen">
   </div>
 </div>
-<section class="ac-container">
+<section class="ac-container" style="margin:0px; width: 100%">
     <table class="order-table table" cellspacing="0">
         <thead>
             <tr class="border_bottom">
@@ -202,5 +202,12 @@ else{
         </tbody>
     </table>
     </form>
-</section>  
+</section>
+    <script>
+        $(document).ready(function()
+        {
+            $("table tr:odd").css("background-color", "#ededed");
+        });
+    </script>
 <?php } ?>
+</div>

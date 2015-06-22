@@ -1,10 +1,6 @@
 <?php
 	$groupClass->hasPermission();
 ?>
-<h1>
-Groepsinstellingen
-</h1>
-<br/>
 <?php
 $dir_dest = '_img/uploads/group_avatar';
 $dir_pics = $dir_dest;
