@@ -1324,7 +1324,7 @@ p:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 
 .eenmalig-wrap input[type='text']{
-    width: 89%;
+    width: 100%;
     padding: 20px;
     color: #666;
     border: 0px;

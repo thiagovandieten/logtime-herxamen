@@ -59,16 +59,14 @@ class notification extends database{
 	}
 	
 	public function getUserNotifications(){
-		$this->database->query('SELECT * FROM `notifications` WHERE `to_id`= "'.$this->id.'" AND `active` = "1"');
+		$this->database->query('SELECT * FROM `notifications` WHERE `to_id`= "'.$this->id.'" AND `active` = "1" ORDER BY `notification_id` DESC ');
 		return $this->database->resultset();
 		
 	}
 	
 	// VALIDATE VOOR DOCENTEN AREA
 	public function Validate($post){
-		if(empty($post['onderwerp'])){
-			$this->setError('Je hebt geen onderwerp opgegeven!');
-		}elseif(empty($post['description'])){
+		if(empty($post['description'])){
 			$this->setError('Je hebt geen bericht opgegeven!');
 		}elseif($this->checkUserType($post['usertype']) == false){
 			$this->setError('Je hebt een ongeldig type opgegeven!');
