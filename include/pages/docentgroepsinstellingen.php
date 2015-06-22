@@ -1,6 +1,5 @@
 <?php
-	$groupClass->hasPermission();
-    error_reporting(E_ALL);
+	$groupClass->isTeacher();
     if(isset($_GET['new'])){
 ?>
 
