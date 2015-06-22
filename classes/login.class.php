@@ -95,7 +95,8 @@ class login extends database{
 				'voornaam' => $key['firstname'],
 				'achternaam' => $key['lastname'],
 				'usertype_id' => $key['usertype_id'],
-				'projectgroup_id' => $key['projectgroup_id']
+				'projectgroup_id' => $key['projectgroup_id'],
+				'location_id' => $key['location_id']
 			);
 		}
 	}
@@ -145,6 +146,20 @@ class login extends database{
 		 	return 'navigatie_student';
 		}elseif($_SESSION['user']['usertype_id'] == 2){
 			return 'navigatie_docent';	
+		}
+	}
+	
+	public function firstLogin($post){
+		if($this->emptyPost($post['firstname']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif($this->emptyPost($post['lastname']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif($this->emptyPost($post['password']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif($this->emptyPost($post['password_re']) == false){
+			self::setError('Alle velden moeten worden ingevuld!');
+		}elseif(ctype_alpha($post['firstname']) == false){
+			
 		}
 	}
 	
