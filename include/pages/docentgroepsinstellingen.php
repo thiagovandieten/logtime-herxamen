@@ -10,6 +10,10 @@
         $status = $groupClass->saveNewGroup($_POST);
     }
     //----------------------------------------formulier om een nieuwe groep aan te maken----------------------------------------//
+    if(isset($status))
+    {
+        echo "<div class='".$status['class']."'>".$status['message']."</div>";
+    }
 ?>
 <script src="<?php echo $website; ?>/_js/selectStudent.js"></script>
 <p> Nieuwe Groep aanmaken! </p>
@@ -66,6 +70,11 @@ elseif (isset($_GET['edit'])) {
     $group = $groupClass->teacherGetGroup($_GET['edit']);
     if(isset($_POST['editGroup'])){
         $status = $groupClass->updateGroup($_POST);
+
+    }
+    if(isset($status))
+    {
+        echo "<div class='".$status['class']."'>".$status['message']."</div>";
     }
    ?>
 <script src="<?php echo $website; ?>/_js/selectStudent.js"></script>
@@ -163,6 +172,12 @@ else{
     //----------------------------------------toont alle groepen----------------------------------------//
 ?>
 <div class="filter-wrap">
+<?php 
+    if(isset($status))
+    {
+        echo "<div class='".$status['class']."'>".$status['message']."</div>";
+    }
+?>
 <form method="POST">
   <div class="buttons-wrap"> <a href='docentgroepsinstellingen?new'>
     <button type="button" class="nieuw-knop">Nieuw</button>
