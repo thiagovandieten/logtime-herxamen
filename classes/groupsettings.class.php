@@ -106,7 +106,7 @@ class groupsettings extends database{
 	/**
 	 * Teacher function
 	 * saves new project groups
-	 * @return true or false if fails
+	 * @return error message or succes message
 	 */
 	public function saveNewGroup($value)
 	{
@@ -121,7 +121,7 @@ class groupsettings extends database{
 		$this->database->bind(':leader_id',$value['projectleider']);
 		if(!$this->database->execute())
 		{
-			return false;
+			return ['class'=>'error', 'message' => 'Group kon niet worden toe gevoegt'];
 		}
 		$groupId = $this->database->lastInsertId();
 		$this->database->query('UPDATE `users` set `projectgroup_id` = :group_id WHERE `user_id` = :user_id');
@@ -130,17 +130,17 @@ class groupsettings extends database{
 			$this->database->bind(':user_id', $student);
 			if(!$this->database->execute())
 			{
-				return false;
+				return ['class'=>'error', 'message' => 'Studenten konden niet worden toegewezen'];
 			}
 		}
-		return true;
+		return ['class'=>'goed', 'message' => 'Groep aan gemaakt'];
 
 	}
 
 	/**
 	 * Teacher function
 	 * save changes to exiting groups
-	 * @return true or false if fails
+	 * @return error message or succes message
 	 */
 	public function updateGroup($value)
 	{
@@ -163,16 +163,16 @@ class groupsettings extends database{
 			$this->database->bind(':user_id', $student);
 			if(!$this->database->execute())
 			{
-				return false;
+				return ['class'=>'error', 'message' => 'Group kon niet worden gewijzigt'];
 			}
 		}
-		return true;
+		return ['class'=>'goed', 'message' => 'Group gewijzigt'];
 	}
 
 	/**
 	 * Teacher function
 	 * deletes one or more groups
-	 * @return true or false if fails
+	 * @return error message or succes message
 	 */
 	public function deleteGroup($value)
 	{
@@ -185,24 +185,24 @@ class groupsettings extends database{
 				$check = $this->database->execute();
 				if(!$check)
 				{
-					return false;
+					return ['class'=>'error', 'message' => 'Groupen konden niet worden verwijdert'];
 				}
 			}
-			return true;
+			return ['class'=>'goed', 'message' => 'Groupen verwijdert'];
 
 		}
 		$this->database->bind(':group_id', $group);
 		if(!$this->database->execute())
 		{
-			return false;
+			return ['class'=>'error', 'message' => 'Group kond niet worden verwijdert'];
 		}
-		return true;
+		return ['class'=>'goed', 'message' => 'Group verwijdert'];
 	}
 
 	/**
 	 * Teacher function
 	 * gets all data about a group
-	 * @return array with group data
+	 * @return error message or succes message
 	 */
 	public function teacherGetGroup($groupId)
 	{
