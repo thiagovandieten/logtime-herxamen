@@ -12,10 +12,18 @@ if(isset($_POST['delete'])){
 }
 
 if(isset($_GET['actie']) && $_GET['actie'] != ''){
+    /*
+        'projectname' => string 'Blep' (length=4)
+        'projectslug' => string 'google.com' (length=10)
+        'groups' =>
+         array (size=1)
+            0 => string '1' (length=1)
+        'save' => string 'Opslaan' (length=7)
+     */
     include('include/pages/project-beheer_actie.php');
 }
 else{
-
+    echo GenerateHTMLTags::errorWarningSuccess();
     ?>
         <form method="post" enctype="multipart/form-data">
             <div class="filter-wrap">
