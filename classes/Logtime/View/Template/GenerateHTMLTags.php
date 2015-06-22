@@ -27,9 +27,31 @@ class GenerateHTMLTags  {
         return $string;
     }
 
-    public static function checkbox($name, $value, $alt = '') {
+    public static function checkbox($name, $value, $checked = false, $alt = '') {
+        if($checked === true) $checkedOutput = 'checked';
+        else $checkedOutput = '';
         if (empty($alt)) $alt = $value;
-        return "<input type=\"checkbox\" name=\"{$name}\" value=\"{$value}\" >{$alt}</input>  \n";
+        return "<input type=\"checkbox\" name=\"{$name}\" value=\"{$value}\" $checkedOutput >{$alt}</input>  \n";
 
+    }
+
+    public static function errorWarningSuccess() {
+        global $melding, $succes, $waarschuwing;
+        if(isset($_SESSION['melding']) || isset($_SESSION['success']) || isset($_SESSION['waarschuwing'])) {
+            $melding = $_SESSION['melding'];
+            $succes = $_SESSION['succes'];
+            $waarschuwing = $_SESSION['waarschuwing'];
+
+            unset($_SESSION['melding']);
+            unset($_SESSION['succes']);
+            unset($_SESSION['waarschuwing']);
+        }
+
+        $string = '';
+        if($melding != '') $string .= '<p class="error">'.$melding.'</p>';
+        if($waarschuwing != '') $string .= $waarschuwing;
+        if(isset($succes)) $string .= $succes;
+
+        return $string;
     }
 }
