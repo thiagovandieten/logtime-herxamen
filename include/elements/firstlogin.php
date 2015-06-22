@@ -21,8 +21,11 @@ if($loginClass->getNotification()){
 	$message['no_errors'] = $loginClass->getNotification();	
 }
 ?>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<h1>Eerste login</h1>
+<script src="http://logtime.dev/js/jquery.backstretch.min.js"></script>
+<div class="eenmalig-wrap">
+    <h1>Voer uw gegevens in</h1>
 <form method='post'>
 	<input type='text' name='firstname' placeholder='Voornaam'><br/>
     <input type='text' name='lastname'placeholder='Achternaam'><br/>
@@ -32,9 +35,9 @@ if($loginClass->getNotification()){
     <input type='submit' name='submit'><br/>
     
 </form>
+</div>
 
-    <input type='password' name='password' placeholder='Wachtwoord'><br/>
-    <input type='password' name='password_re' placeholder='Retyp je wachtwoord'><br/>
-    <input type='submit' name='submit'> <a href='/login'><input type='button' value='Annuleren' /></a><br/>
-</form>
+<script>
+    $.backstretch( "_img/bg.png" );
+</script>
 

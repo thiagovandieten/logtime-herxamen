@@ -41,7 +41,24 @@ class login extends database{
 			return true;
 		}	
 	}
-	
+
+	protected function checkFirstLogin(){
+		$this->database->query('SELECT * FROM `users` WHERE email = :email OR usercode = :usercode');
+		$this->database->bind(':email', $this->email);
+		$this->database->bind(':usercode', $this->email);
+		$data = $this->database->single();
+
+
+
+		if($data['firstname'] == ''){
+			$_SESSION['temp_user_id'] = $data['user_id'];
+			return true;
+		}else{
+			return false;
+		}
+
+	}
+
 	protected function user_code_exist(){
 		$this->database->query('SELECT * FROM `users` WHERE usercode = :usercode AND password = :password');	
 		$this->database->bind(':usercode', $this->email);
@@ -104,7 +121,9 @@ class login extends database{
 	public function validateLogin(){
 		if(self::emptyPost($this->email) == false){
 			self::setError('Alle velden moeten worden ingevuld!');
-		}elseif(self::emptyPost($this->password) == false){
+		}elseif($this->checkFirstLogin() == true){
+			header('location: login&firstlogin');
+		}elseif(empty($this->password) OR $this->password == ''){
 			self::setError('Alle velden moeten worden ingevuld!');
 		}else{
 			// Check of het email is of user code
@@ -148,8 +167,9 @@ class login extends database{
 			return 'navigatie_docent';	
 		}
 	}
-	
+
 	public function firstLogin($post){
+		$temp_id = $post['temp_id'];
 		if($this->emptyPost($post['firstname']) == false){
 			self::setError('Alle velden moeten worden ingevuld!');
 		}elseif($this->emptyPost($post['lastname']) == false){
@@ -159,7 +179,16 @@ class login extends database{
 		}elseif($this->emptyPost($post['password_re']) == false){
 			self::setError('Alle velden moeten worden ingevuld!');
 		}elseif(ctype_alpha($post['firstname']) == false){
-			
+			self::setError('Je naam en achternaam mogen alleen letters bevatten!');
+		}elseif(ctype_alpha($post['lastname']) == false){
+			self::setError('Je naam en achternaam mogen alleen letters bevatten!');
+		}elseif($post['password'] != $post['password_re']){
+			self::setError('De twee passworden matchen niet!');
+		}else{
+			$this->database->query('UPDATE `users` SET `firstname`="'.$post['firstname'].'", `lastname`="'.$post['lastname'].'", `password`="'.hash('sha512', $post['password']).'" WHERE `user_id`="'.$temp_id.'"');
+			$this->database->execute();
+			self::setNotification('Je heb succesvol je gegevens ingevoerd en kunt nu inloggen met je gegevens!');
+
 		}
 	}
 	

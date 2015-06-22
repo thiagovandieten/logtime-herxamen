@@ -11,6 +11,9 @@
 
 
 @media screen and (max-width: 850px){
+    .personal-settings{
+        width: 90%!important;
+    }
     .filter-wrap{
        margin: -20px 0px 0px -6px!important;
     }
