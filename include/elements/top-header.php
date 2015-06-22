@@ -29,7 +29,7 @@
 
 			?>
         </div>
-        <div id="notificationFooter"><a href="notificaties">Bekijk alles</a></div>
+        <div id="notificationFooter"></div>
     </div>
     <!--Link naar persoonlijke instellingen -->
     <a href="persoonlijke-instellingen"><img src="_img/icons/instellingen-mob.png" alt="Instellingen" class="destop-instellingen" title="Instellingen">
