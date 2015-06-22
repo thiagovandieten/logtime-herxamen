@@ -224,9 +224,21 @@ class groupsettings extends database{
 		}
 	}
 
+	/**
+	* Teacher function
+	* if user is not a teacher he/she gets redictid
+	*/
+	public function isTeacher()
+	{
+		if($this->user_type == 2){
+			return;	
+		}
+			header('Location: /dashboard');	
+	}
+
 	public function hasPermission(){
-		
-		if($this->leader_id == $this->user_id || $this->user_type == 2){
+
+		if($this->leader_id == $this->user_id){
 			return;	
 		}
 			header('Location: /dashboard');	
