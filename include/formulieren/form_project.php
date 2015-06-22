@@ -8,6 +8,8 @@ use \Logtime\View\Template\GenerateHTMLTags;
 	<h1>Project aanmaken</h1>
         <?php if($_GET['actie'] == 'nieuw'):  ?>
         <form id="project" method="post" action="?actie=aanmaken" enctype="multipart/form-data">
+        <?php elseif($_GET['actie'] == 'wijzig'): ?>
+        <form id="project" method="post" action="?actie=wijzigen&project_id=<?php echo $project_id ?>" enctype="multipart/form-data">
         <?php else: ?>
         <form id="project" method="post" action="" enctype="multipart/form-data">
         <?php endif; ?>
@@ -22,10 +24,13 @@ use \Logtime\View\Template\GenerateHTMLTags;
 		<input type="text" name="projectslug" value="<?php echo $projectslug; ?>">
 
         <p>Periodes</p>
-        <?php for($i = 1; $i < 5; $i++) {
-            if(in_array($i, $periodes)) echo GenerateHTMLTags::checkbox('periodes[]' , $i, true);
-            else echo  GenerateHTMLTags::checkbox('periodes[]' , $i);
-        } ?>
+        <select name="periode">
+            <?php for($i = 1; $i < 5; $i++) {
+                if($periode == $i) echo "<option value=\"$i\" selected >Periode $i</option>";
+                else echo "<option value=\"$i\" >Periode $i</option>";
+            } ?>
+        </select>
+
         <br/>
         <br/>
         <p>Groepen</p>
@@ -33,7 +38,12 @@ use \Logtime\View\Template\GenerateHTMLTags;
                 $pgGateway = new ProjectGroupGateway($db);//Groepen ophalen op basis van de gebruiker's locatie
                 $groups = $pgGateway->selectAllbyLocationIdWithGrade($userClass->location_id);
                 foreach($groups as $group) {
-                    echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], false, $group['grade_name']);
+                    if(in_array($group['projectgroup_id'], $projectGroupIds)) {
+                        echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], true, $group['grade_name']);
+                    } else {
+                        echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], false, $group['grade_name']);
+                    }
+
                 }
             }
         ?>

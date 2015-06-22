@@ -42,7 +42,9 @@ class GenerateHTMLTags  {
             $succes = $_SESSION['succes'];
             $waarschuwing = $_SESSION['waarschuwing'];
 
-            session_destroy();
+            unset($_SESSION['melding']);
+            unset($_SESSION['succes']);
+            unset($_SESSION['waarschuwing']);
         }
 
         $string = '';
