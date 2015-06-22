@@ -151,7 +151,14 @@ elseif (isset($_GET['edit'])) {
 else{
     //----------------------------------------Delete group----------------------------------------//
     if (isset($_POST['delete'])) {
-      $status = $groupClass->deleteGroup($_POST['group']);
+        if (isset($_POST['group'])) {
+            $status = $groupClass->deleteGroup($_POST['group']);
+        }
+        else
+        {
+            $status = false;
+        }
+      
     }
     //----------------------------------------toont alle groepen----------------------------------------//
 ?>
