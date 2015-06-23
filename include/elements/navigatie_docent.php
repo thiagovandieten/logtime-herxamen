@@ -28,14 +28,11 @@
     
     <?php
 
-    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' AND `is_docent` = 1 ORDER BY onderdeel_id ASC";
-	//$result = mysqli_query($dbc, $query);
-	//$count = mysqli_num_rows($result);
-	
+    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' AND `is_docent` = 1 ORDER BY onderdeel_id ASC";	
 	$db->query($query);	
 	$data = $db->resultset();
 	$count = $db->rowCount();
-//    while($row = mysqli_fetch_array($result)) {
+
 	foreach($data as $row){
 	$ond_id       = $row['onderdeel_id'];
 	$onderdeel    = $row['onderdeel'];

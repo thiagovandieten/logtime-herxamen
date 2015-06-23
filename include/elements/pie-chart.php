@@ -6,7 +6,7 @@
         $db         ->query($query_up); 
         $data_up    = $db->resultset();
         $count_up   = $db->rowCount();
-
+        
         foreach ($data_up as $row_up) {
             $user_id    = $row_up['user_id'];
 
@@ -18,17 +18,23 @@
             $firstname  = $data_u['firstname'];
             $lastname   = $data_u['lastname'];
 
-            $query_tt   = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(`totaltime`))) As total FROM userlogs WHERE user_id = '".$user_id."' AND project = '".$projectnaam."'";
-            $db->query($query_tt); 
-            $data_tt    = $db->single();
-            $count_tt   = $db->rowCount().'<br>';
+            $query_result = "SELECT * FROM userlogs WHERE user_id = '".$user_id."' AND project = '".$projectnaam."'";
+            $db->query($query_result); 
+            $data_result = $db->single();
+            $count       = $db->rowCount();
 
-            $totaltime  = $data_tt['total'];
-            
-            if($totaltime == '' ){ 
-                $totaltime = '0'; 
-            }
+            if($count >= 1){
 
+                $query_tt   = "SELECT COALESCESEC_TO_TIME(SUM(TIME_TO_SEC(`totaltime`))),0) As total FROM userlogs WHERE user_id = '".$user_id."' AND project = '".$projectnaam."'";
+                $db->query($query_tt); 
+                $data_tt    = $db->single();
+                $count_tt   = $db->rowCount().'<br>';
+                
+                $totaltime  = $data_tt['total'];
+                
+                if($totaltime == '' ){ 
+                    $totaltime = '0'; 
+                }
             ?>
                 
             <li>
@@ -37,11 +43,15 @@
             </li>
                 
             <?php 
+            }
+            else{
+                $melding = '<div style="width: 20%:">Er zijn geen resultaten gevonden</div>';
+            }
         }
         ?>
     </ul>
 </div>
-
+<?php echo $melding; ?>
 <!--Voortgang begint hier-->
 <div class="voortgang-leerlingen">
     <div id="canvas-holder">
@@ -119,6 +129,7 @@
     elseif($stop_maand  == '10'){ $stop_maand = 'oktober'; }
     elseif($stop_maand  == '11'){ $stop_maand = 'november'; }
     elseif($stop_maand  == '12'){ $stop_maand = 'december'; }
+
 
     ?>
     <div class="progress-project">
