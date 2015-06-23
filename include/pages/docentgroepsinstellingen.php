@@ -1,15 +1,18 @@
 <?php
-	$groupClass->hasPermission();
-    error_reporting(E_ALL);
+	$groupClass->isTeacher();
     if(isset($_GET['new'])){
 ?>
-
+ 
 <section class="ac-container">
 <?php
     if(isset($_POST['newGroup'])){
         $status = $groupClass->saveNewGroup($_POST);
     }
     //----------------------------------------formulier om een nieuwe groep aan te maken----------------------------------------//
+    if(isset($status))
+    {
+        echo "<div class='".$status['class']."'>".$status['message']."</div>";
+    }
 ?>
 <script src="<?php echo $website; ?>/_js/selectStudent.js"></script>
     <div class="personal-settings" style="width: 40%;">
@@ -66,6 +69,11 @@ elseif (isset($_GET['edit'])) {
     $group = $groupClass->teacherGetGroup($_GET['edit']);
     if(isset($_POST['editGroup'])){
         $status = $groupClass->updateGroup($_POST);
+
+    }
+    if(isset($status))
+    {
+        echo "<div class='".$status['class']."'>".$status['message']."</div>";
     }
    ?>
 <script src="<?php echo $website; ?>/_js/selectStudent.js"></script>
@@ -151,12 +159,29 @@ elseif (isset($_GET['edit'])) {
 } 
 else{
     //----------------------------------------Delete group----------------------------------------//
+
     if(isset($_POST['delete'])) {
       $status = $groupClass->deleteGroup($_POST['group']);
+    if (isset($_POST['delete'])) {
+        if (isset($_POST['group'])) {
+            $status = $groupClass->deleteGroup($_POST['group']);
+        }
+        else
+        {
+            $status = false;
+        }
+      
+
     }
     //----------------------------------------toont alle groepen----------------------------------------//
 ?>
 <div class="filter-wrap">
+<?php 
+    if(isset($status))
+    {
+        echo "<div class='".$status['class']."'>".$status['message']."</div>";
+    }
+?>
 <form method="POST">
   <div class="buttons-wrap"> <a href='docentgroepsinstellingen?new'>
     <button type="button" class="nieuw-knop">Nieuw</button>

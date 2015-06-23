@@ -43,38 +43,38 @@ if($avatar == ''){
 
     <?php
 
-    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' ORDER BY onderdeel_id ASC";
+    $query = "SELECT * FROM onderdelen WHERE actief = '1' AND menubar = '1' AND is_docent = '0' ORDER BY onderdeel_id ASC";
 	
 	$db->query($query);	
 	$data = $db->resultset();
 	$count = $db->rowCount();
 	
 	foreach($data as $row){
-	$ond_id       = $row['onderdeel_id'];
-	$onderdeel    = $row['onderdeel'];
-	$url          = $row['onderdeel_url'];
-	$menubalk     = $row['menubalk'];
-	$icon     	  = $row['icon'];
+    	$ond_id       = $row['onderdeel_id'];
+    	$onderdeel    = $row['onderdeel'];
+    	$url          = $row['onderdeel_url'];
+    	$menubalk     = $row['menubalk'];
+    	$icon     	  = $row['icon'];
 
-    if($ond_id == 1) { 
-		$onderdeel = 'home'; 
-		$url = '/'; 
-	}
+        if($ond_id == 1) { 
+    		$onderdeel = 'home'; 
+    		$url = '/'; 
+    	}
 
-	if($icon != ''){
-		$image = '<img src="_img/icons/'.$icon.'" alt="'.$onderdeel.'">';
-	}
+    	if($icon != ''){
+    		$image = '<img src="_img/icons/'.$icon.'" alt="'.$onderdeel.'">';
+    	}
 
-    if($url1 == $url) { $class = 'active'; }
-	else { $class = ''; }
-	    echo '<a href="'.$url.'" class="'.$class.'"><span>'.$image.'</span>'.$onderdeel.'</a>';
-	}
+        if($url1 == $url) { $class = 'active'; }
+    	else { $class = ''; }
+    	    echo '<a href="'.$url.'" class="'.$class.'"><span>'.$image.'</span>'.$onderdeel.'</a>';
+    	}
 	
-	// logout
-	if(isset($_GET['logout']) && $_GET['logout'] == true){
-		//$loginClass->logout();	
-        //include('logout.php');
-        //exit();
+    	// logout
+    	if(isset($_GET['logout']) && $_GET['logout'] == true){
+    		//$loginClass->logout();	
+            //include('logout.php');
+            //exit();
 	}
 
     ?>
