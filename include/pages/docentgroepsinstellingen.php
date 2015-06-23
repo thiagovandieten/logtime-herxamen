@@ -2,7 +2,7 @@
 	$groupClass->isTeacher();
     if(isset($_GET['new'])){
 ?>
- 
+
 <section class="ac-container">
 <?php
     if(isset($_POST['newGroup'])){

@@ -39,7 +39,7 @@ if(!isset($_GET['firstlogin'])){
     <input type='submit' name='login' value='Inloggen'>
 </form>
 <script>
-  $.backstretch( "_img/bg.png" );
+  $.backstretch( "<?php echo $website ;?>/_img/bg.png" );
 </script>
 
 <?php
