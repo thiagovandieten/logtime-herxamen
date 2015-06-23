@@ -9,7 +9,7 @@ $(document).ready(function()
 	{
 		$("#notificationContainer").fadeToggle(300);
 		$("#notification_count").fadeOut("slow");
-		return false;
+		event.stopPropagation();
 	});
 
 //Document Click
@@ -20,7 +20,7 @@ $(document).ready(function()
 //Popup Click
 	$("#notificationContainer").click(function()
 	{
-		return false
+		event.stopPropagation();
 	});
 
 });

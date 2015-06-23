@@ -3,7 +3,7 @@ use Logtime\ProjectGroup\ProjectGroupGateway;
 use \Logtime\View\Template\GenerateHTMLTags;
 
 ?>
-
+<?php if($melding != ''){ echo '<p class="error">'.$melding.'</p>'; } ?>
 <div class="personal-settings">
 	<h1>Project aanmaken</h1>
         <?php if($_GET['actie'] == 'nieuw'):  ?>
@@ -13,7 +13,6 @@ use \Logtime\View\Template\GenerateHTMLTags;
         <?php else: ?>
         <form id="project" method="post" action="" enctype="multipart/form-data">
         <?php endif; ?>
-		<?php if($melding != ''){ echo '<p class="error">'.$melding.'</p>'; } ?>
 		<?php if($waarschuwing != ''){ echo $waarschuwing; } ?>
 		<?php if(isset($succes)){ echo $succes; } ?>
 
@@ -33,15 +32,15 @@ use \Logtime\View\Template\GenerateHTMLTags;
 
         <br/>
         <br/>
-        <p>Groepen</p>
+        <p style="border-bottom: 1px solid #ccc;padding-bottom: 5px;margin-bottom: 5px;"><b>Groepen</b></p>
         <?php if ($userClass->user_type_id == 1 ) {
                 $pgGateway = new ProjectGroupGateway($db);//Groepen ophalen op basis van de gebruiker's locatie
                 $groups = $pgGateway->selectAllbyLocationIdWithGrade($userClass->location_id);
                 foreach($groups as $group) {
                     if(in_array($group['projectgroup_id'], $projectGroupIds)) {
-                        echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], true, $group['grade_name']);
+                        echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], true, $group['grade_name'])."<br />";
                     } else {
-                        echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], false, $group['grade_name']);
+                        echo GenerateHTMLTags::checkbox('groups[]' , $group['projectgroup_id'], false, $group['grade_name'])."<br />";
                     }
 
                 }

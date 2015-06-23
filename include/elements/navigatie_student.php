@@ -79,7 +79,7 @@ if($avatar == ''){
 
     ?>
 
-    <a href="downloads/Handleiding.pdf"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
+    <a href="downloads/Handleiding-student.pdf"><span><img src="_img/icons/handleiding.png" alt="Handleiding"></span>Handleiding</a>
     <a href="logout.php"><span><img src="_img/icons/uitloggen.png" alt="Uitloggen"></span>Uitloggen</a>
 
 

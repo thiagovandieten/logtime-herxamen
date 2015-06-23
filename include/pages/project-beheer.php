@@ -48,7 +48,7 @@ else{
         	            ?>
                 </div>
             </div>
-            <?php if($melding != ''){ echo "<div class='goed'>".$melding."</div>"; } ?>
+
             <div class="projecten-overzicht">
                 <table class="order-table table" cellspacing="0">
                     <thead>

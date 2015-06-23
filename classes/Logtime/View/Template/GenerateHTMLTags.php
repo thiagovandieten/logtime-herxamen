@@ -48,7 +48,7 @@ class GenerateHTMLTags  {
         }
 
         $string = '';
-        if($melding != '') $string .= '<p class="error">'.$melding.'</p>';
+        if($melding != '') $string .= '<p class="goed">'.$melding.'</p>';
         if($waarschuwing != '') $string .= $waarschuwing;
         if(isset($succes)) $string .= $succes;
 
