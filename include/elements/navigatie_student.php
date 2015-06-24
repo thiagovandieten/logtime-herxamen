@@ -64,6 +64,10 @@ if($avatar == ''){
     	if($icon != ''){
     		$image = '<img src="_img/icons/'.$icon.'" alt="'.$onderdeel.'">';
     	}
+        //--- hack van de eeuw ---//
+        if ($row['onderdeel_url'] == 'groepsinstellingen' && $groupClass->getGroupdata('leader_id') != $userClass->user_id) {
+            continue;
+        }
 
         if($url1 == $url) { $class = 'active'; }
     	else { $class = ''; }
