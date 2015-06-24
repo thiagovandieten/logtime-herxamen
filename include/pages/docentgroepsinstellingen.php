@@ -208,18 +208,43 @@ else{
                 ?>
                 <tr>
                     <td><input type="checkbox" style="display: block" name="group[]"value="<?php echo $group['projectgroup_id'];?>" ></td>
-                        <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"> <?php echo $group['grade_name']; ?>      </td>
-                        <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"> <?php echo $group['projectgroup_name'];?></td>
-                        <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"><?php echo $group['coach'];?>            </td>
-                        <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"><?php if(!isset($group['leader']))
-                                    {
-                                        echo "Geen project leider";
-                                    }
-                                    else
-                                    {
-                                        echo $group['leader'];
-                                    } 
-                        ?>      </td>
+                    <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"> <?php if(!isset($group['grade_name']))
+                                {
+                                    echo "Geen project groep naam";
+                                }
+                                else
+                                {
+                                    echo $group['grade_name'];
+                                }?>          
+                                </td>
+                    <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"> <?php if(!isset($group['projectgroup_name']))
+                                {
+                                    echo "Geen project groep naam";
+                                }
+                                else
+                                {
+                                    echo $group['projectgroup_name'];
+                                }?>          
+                                </td>
+                    <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"><?php if(!isset($group['coach']))
+                                {
+                                    echo "Geen coach";
+                                }
+                                else
+                                {
+                                    echo $group['coach'];
+                                }?>          
+                                </td>
+                    <td onclick="document.location = 'docentgroepsinstellingen?edit=<?php echo $group['projectgroup_id'];?>';"><?php if(!isset($group['leader']))
+                                {
+                                    echo "Geen project leider";
+                                }
+                                else
+                                {
+                                    echo $group['leader'];
+                                } 
+                                ?>      
+                    </td>
                 </tr>
                 
                 <?php
@@ -238,4 +263,4 @@ else{
     <?php 
 } 
 ?>
-</div>
+
