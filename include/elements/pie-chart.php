@@ -7,10 +7,11 @@
         $data_up    = $db->resultset();
         $count_up   = $db->rowCount();
         
+        $i = 1;
         foreach ($data_up as $row_up) {
             $user_id    = $row_up['user_id'];
 
-            $query_u    = "SELECT * FROM users WHERE user_id = '".$user_id."' AND active = 1";
+            $query_u    = "SELECT * FROM users INNER JOIN userlogs ON users.user_id = userlogs.user_id WHERE users.user_id = '".$user_id."' AND active = 1";
             $db         ->query($query_u); 
             $data_u     = $db->single();
             $count_u    = $db->rowCount();
@@ -18,14 +19,10 @@
             $firstname  = $data_u['firstname'];
             $lastname   = $data_u['lastname'];
 
-            $query_result = "SELECT * FROM userlogs WHERE user_id = '".$user_id."' AND project = '".$projectnaam."'";
-            $db->query($query_result); 
-            $data_result = $db->single();
-            $count       = $db->rowCount();
+            if($count_u >= 1){
 
-            if($count >= 1){
-
-                $query_tt   = "SELECT COALESCESEC_TO_TIME(SUM(TIME_TO_SEC(`totaltime`))),0) As total FROM userlogs WHERE user_id = '".$user_id."' AND project = '".$projectnaam."'";
+                $result = 1;
+                $query_tt   = "SELECT COALESCE(SEC_TO_TIME(SUM(TIME_TO_SEC(`totaltime`))),0) As total FROM userlogs WHERE user_id = '".$user_id."' AND project = '".$projectnaam."'";
                 $db->query($query_tt); 
                 $data_tt    = $db->single();
                 $count_tt   = $db->rowCount().'<br>';
@@ -44,14 +41,15 @@
                 
             <?php 
             }
-            else{
+            elseif($result != 1 && $count_u <= 0){
                 $melding = '<div style="width: 20%:">Er zijn geen resultaten gevonden</div>';
             }
+            $i++;
         }
         ?>
     </ul>
 </div>
-<?php echo $melding; ?>
+<?php if($count <= 0){ echo $melding; } ?>
 <!--Voortgang begint hier-->
 <div class="voortgang-leerlingen">
     <div id="canvas-holder">
@@ -61,9 +59,7 @@
     
 
     <?php 
-    $query_periode      = "SELECT * FROM projectgroup_periode 
-    INNER JOIN periodes ON projectgroup_periode.periode_id = periodes.periode_id
-    WHERE project_id    = '".$project_id."' AND projectgroup_id = '".(PROJECTGROUP_ID)."'";
+    $query_periode      = "SELECT * FROM projectgroup_periode INNER JOIN periodes ON projectgroup_periode.periode_id = periodes.periode_id WHERE project_id = '".$project_id."' AND projectgroup_id = '".(PROJECTGROUP_ID)."'";
     $db->query($query_periode); 
     $data_periode       = $db->single();
     $count_periode      = $db->rowCount();
