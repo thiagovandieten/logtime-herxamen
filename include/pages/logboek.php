@@ -212,7 +212,7 @@ elseif(isset($_POST['excel'])){
 <section class="ac-container container-mob">
     <div>
         <input id="ac-0" name="accordion-1" type="checkbox" />
-        <label class="uren-mob-invullen" for="ac-0"><img src="images/icons/uren-mob.png">Uren invullen</label>
+        <label class="uren-mob-invullen" for="ac-0"><img src="_img/icons/uren-mob.png">Uren invullen</label>
         <article class="ac-small-mob">
 
             <h3>Uren bijwerken</h3>
