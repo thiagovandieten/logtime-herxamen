@@ -153,7 +153,10 @@ class groupsettings extends database{
 		$this->database->bind(':projectgroup_name',$value['groupName']);
 		$this->database->bind(':group_id', $value['group_id']);
 		$this->database->bind(':leader_id',$value['projectleider']);
-		$this->database->execute();
+		if(!$this->database->execute())
+		{
+			return ['class'=>'error', 'message' => 'Group kon niet worden gewijzigt'];
+		}
 		$this->database->query('UPDATE `users` set `projectgroup_id` = null WHERE `projectgroup_id` = :group_id');
 		$this->database->bind(':group_id', $value['group_id']);
 		$this->database->execute();
